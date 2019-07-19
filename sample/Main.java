@@ -6,14 +6,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("main-window.fxml"));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 1000, 800));
+        primaryStage.setScene(new Scene(root, (int) (screenSize.getWidth()*0.6), (int) (0.9*screenSize.getHeight())));
         primaryStage.show();
+
+
+
     }
 
 
