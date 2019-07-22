@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="306.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <ListView prefHeight="200.0" prefWidth="200.0" style="-fx-border-radius: 18px; -fx-background-radius: 20px; -fx-border-width: 3px; -fx-border-color: white; -fx-background-color: linear-gradient(from 0% -22% to 0% 58%,#dcdcdc,#000000)linear-gradient(from 0% -22% to 0% 58%,#dcdcdc,#000000);" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

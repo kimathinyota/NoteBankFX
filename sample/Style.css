@@ -1,0 +1,51 @@
+.arrow{
+	-fx-background-color: transparent;
+	-fx-padding: 0px;
+	-fx-label-padding: 0px;
+}
+
+.arrow:hover{
+	-fx-text-fill: #d9d9d9;
+}
+
+.menu{
+	-fx-background-color: transparent;
+	-fx-text-fill: #d9d9d9;
+}
+
+.menu:hover{
+	-fx-text-fill: white;
+	-fx-alignment: BASELINE_LEFT;
+}
+
+.new{
+	-fx-background-color: transparent;
+	-fx-text-fill: #d9d9d9;
+	-fx-alignment: BASELINE_LEFT;
+}
+
+.new:hover{
+	-fx-text-fill: white;
+	-fx-alignment: CENTER;
+}
+
+.settings{
+	-fx-background-color: transparent;
+	-fx-graphic: url('/icons/settings.png');
+	-fx-padding: 0px;
+}
+
+.settings:hover{
+	-fx-background-color: transparent;
+	-fx-background-size: 30px;
+	-fx-background-repeat: no-repeat;
+    -fx-background-position: 90%;
+	-fx-background-image: url('/icons/hoversettings.png');
+
+	-fx-padding: 0px;
+}
+
+
+
+
+
