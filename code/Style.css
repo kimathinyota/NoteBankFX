@@ -5,12 +5,12 @@
 }
 
 .arrow:hover{
-	-fx-text-fill: #d9d9d9;
+	-fx-text-fill: #D1D1D1;
 }
 
 .menu{
 	-fx-background-color: transparent;
-	-fx-text-fill: #d9d9d9;
+	-fx-text-fill: #D1D1D1;
 }
 
 .menu:hover{
@@ -20,7 +20,7 @@
 
 .new{
 	-fx-background-color: transparent;
-	-fx-text-fill: #d9d9d9;
+	-fx-text-fill: #D1D1D1;
 	-fx-alignment: BASELINE_LEFT;
 }
 
@@ -31,7 +31,7 @@
 
 .settings{
 	-fx-background-color: transparent;
-	-fx-graphic: url('/icons/settings.png');
+	-fx-image: url('/icons/settings.png');
 	-fx-padding: 0px;
 }
 
@@ -43,6 +43,11 @@
 	-fx-background-image: url('/icons/hoversettings.png');
 
 	-fx-padding: 0px;
+}
+
+.menuTop:hover{
+	-fx-text-fill:  #00FF00;
+	-fx-text-size: 27px;
 }
 
 

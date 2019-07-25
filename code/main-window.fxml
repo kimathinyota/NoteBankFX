@@ -133,9 +133,9 @@
                                     <Line endX="-8.0" endY="-12.999996185302734" layoutX="33.0" layoutY="36.0" startX="-15.0" startY="-18.000003814697266" strokeLineCap="ROUND" strokeWidth="3.0" />
                                  </children>
                               </AnchorPane>
-                              <Button alignment="BOTTOM_LEFT" ellipsisString="" layoutX="336.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="28.0" style="-fx-background-color: transparent; -fx-padding: 0px;">
+                              <Button alignment="BOTTOM_LEFT" ellipsisString="" layoutX="359.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="28.0" style="-fx-background-color: transparent; -fx-padding: 0px;">
                                  <graphic>
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" >
+                                    <ImageView fitHeight="22.0" fitWidth="22.0" onMouseEntered="#handleSettingsMouseEnter" onMouseExited="#handleSettingsMouseExit">
                                        <image>
                                           <Image url="@../icons/settings.png" />
                                        </image>
@@ -173,7 +173,7 @@
                         <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" text=" FEATURED" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                        <Button alignment="CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text=" FEATURED" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                            <font>
                               <Font name="Inter Semi Bold" size="21.0" />
                            </font>
@@ -194,7 +194,7 @@
                         <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" text="NOTES" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                        <Button alignment="CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text="NOTES" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                            <font>
                               <Font name="Inter Semi Bold" size="21.0" />
                            </font>
@@ -276,7 +276,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0">
                            <image>
-                              <Image url="@/icons/quiz-icon.png" />
+                              <Image url="@../icons/quiz-icon.png" />
                            </image>
                         </ImageView>
                      </graphic>
