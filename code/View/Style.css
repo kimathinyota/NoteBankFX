@@ -1,3 +1,114 @@
+.exit:hover{
+	-fx-text-fill: black;
+	-fx-background-color: white;
+}
+
+.exit{
+	-fx-padding: 0px;
+	-fx-background-color: transparent;
+	-fx-background-color: black;
+	-fx-text-fill: white;
+
+}
+
+
+.subjectList{
+	-fx-background-color: transparent;
+	-fx-background: transparent;
+	-fx-font-size: 17;
+	-fx-font-family: Inter-Extra-Light-BETA;
+}
+
+
+.subjectList .list-cell:filled:selected:focused, .subjectList .list-cell:filled:selected {
+  
+    -fx-text-fill: green;
+}
+
+
+.subjectList .list-cell:filled:hover {
+    -fx-text-fill: green;
+}
+
+.subjectList .list-cell:even {
+-fx-background-color: transparent;
+-fx-text-fill: white;
+}
+.subjectList .list-cell:odd {
+-fx-background-color: transparent;
+-fx-text-fill: white;
+}
+
+
+
+/* The main scrollbar CSS class of ListView */
+.subjectList .scroll-bar:horizontal ,
+.subjectList .scroll-bar:vertical{
+    -fx-background-color:transparent;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+ 
+}
+
+
+
+ 
+/* The increment and decrement button CSS class of scrollbar */
+.subjectList .increment-button , .subjectList .decrement-button {
+    -fx-background-color:transparent;
+	-fx-border-color:transparent;
+	-fx-border-width: 0px;
+}
+ 
+/* The main scrollbar **track** CSS class  */
+.subjectList .scroll-bar:horizontal .track ,
+.subjectList .scroll-bar:vertical .track{
+     -fx-background-color: transparent;
+	 -fx-border-color:transparent;
+	 -fx-background-radius: 5px;
+	 -fx-border-radius: 5px;
+	}
+ 
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.subjectList .scroll-bar:horizontal .thumb,
+.subjectList .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(grey,70%);
+	-fx-background-insets: 0, 0, 0;
+	-fx-background-radius: 5px;
+	-fx-border-radius: 5px;
+}
+ 
+/* ------------------------------------------------------------------------------------- */
+/** EVENT CSS **/
+/* ------------------------------------------------------------------------------------- */
+ 
+/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
+ 
+.subjectList .scroll-bar:horizontal:hover .track ,
+.subjectList .scroll-bar:horizontal:pressed .track ,
+.subjectList .scroll-bar:vertical:hover .track,
+.subjectList .scroll-bar:vertical:pressed .track{
+     -fx-background-color: derive(#434343,20%);
+	 -fx-opacity: 0.2;
+	 -fx-background-radius: 0em;
+ 
+}
+ 
+/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
+
+.subjectList .scroll-bar .thumb:hover,
+.subjectList .scroll-bar .thumb:pressed{
+    -fx-background-color: derive(black,50%);
+}
+ 
+.subjectList .increment-button:hover , .subjectList .decrement-button:hover {
+	-fx-border-color:derive(gray,80%);
+	-fx-text-fill: derive(gray,80%);
+
+}
+
+
+
 .arrow{
 	-fx-background-color: transparent;
 	-fx-padding: 0px;
@@ -29,25 +140,26 @@
 	-fx-alignment: CENTER;
 }
 
-.settings{
-	-fx-background-color: transparent;
-	-fx-image: url('/icons/settings.png');
-	-fx-padding: 0px;
-}
-
-.settings:hover{
-	-fx-background-color: transparent;
-	-fx-background-size: 30px;
-	-fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
-	-fx-background-image: url('/icons/hoversettings.png');
-
-	-fx-padding: 0px;
-}
 
 .menuTop:hover{
-	-fx-text-fill:  #00FF00;
+	-fx-text-fill: #9FF9A2;
 	-fx-text-size: 27px;
+}
+
+.menuTop:pressed{
+	-fx-text-fill: #9FF9A2;
+	-fx-text-size: 27px;
+}
+
+.menuTop{
+	-fx-text-fill: white;
+	-fx-text-size: 27px;
+}
+
+
+.scroll{
+	-fx-background: transparent;
+	-fx-background-color: transparent;
 }
 
 
