@@ -1,0 +1,41 @@
+/* Window */
+.window{
+	-fx-border-radius: 45px;
+	-fx-background-radius: 45px;
+	-fx-background-color:  #272727;
+	-fx-border-color: #272727;
+	-fx-border-width: 2px;
+}
+
+/* Create and Cancel buttons */
+.create{
+	-fx-background-radius: 20px;
+	-fx-border-radius: 20px;
+	-fx-padding: 0px;
+	-fx-border-width: 0px;
+	-fx-background-color: green;
+}
+
+.create:hover{
+	-fx-background-radius: 20px;
+	-fx-border-radius: 20px;
+	-fx-padding: 0px;
+	-fx-border-width: 0px;
+	-fx-background-color: #339933;
+}
+
+.cancel{
+	-fx-background-radius: 20px;
+	-fx-border-radius: 20px;
+	-fx-padding: 0px;
+	-fx-border-width: 0px;
+	-fx-background-color: grey;
+}
+
+.cancel:hover{
+	-fx-background-radius: 20px;
+	-fx-border-radius: 20px;
+	-fx-padding: 0px;
+	-fx-border-width: 0px;
+	-fx-background-color: #989898;
+}

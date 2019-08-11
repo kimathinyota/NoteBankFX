@@ -1,0 +1,7 @@
+.exit{
+	-fx-text-fill: #e6e6e6;
+}
+
+.exit:hover{
+	-fx-text-fill: white;
+}

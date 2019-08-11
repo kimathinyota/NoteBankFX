@@ -1,0 +1,12 @@
+.choice-box {
+    -fx-pref-width: 718;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-background-color: white;
+    -fx-font-size: 25px;
+}
+
+.choice-box .context-menu {
+    -fx-pref-width: 718; /* Your width for the context menu background shown */
+    -fx-background-color: grey;
+}

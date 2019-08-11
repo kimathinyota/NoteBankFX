@@ -1,0 +1,162 @@
+
+/* Window */
+.window{
+	-fx-border-radius: 45px;
+	-fx-background-radius: 45px;
+	-fx-background-color:  #272727;
+	-fx-border-color: #272727;
+	-fx-border-width: 2px;
+}
+
+/* Prompt */
+
+.prompt{
+	-fx-background-radius: 8px;
+	-fx-border-radius: 8px;
+}
+
+/* Choose Prompt-type */
+.choice-box {
+    -fx-pref-width: 718;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-background-color: white;
+    -fx-font-size: 25px;
+}
+
+.choice-box .context-menu {
+    -fx-pref-width: 718; /* Your width for the context menu background shown */
+    -fx-background-color: grey;
+}
+
+/* Key word textfield */
+.keyWord{
+	-fx-background-radius: 8px;
+	-fx-border-radius: 8px;
+	-fx-background-color: grey;
+}
+
+/*-----------------------------
+ *      Tag List View
+ *-----------------------------*/
+
+
+/* Tag exit button */
+
+.exit{
+	-fx-text-fill: #d6d6d6;
+}
+
+.exit:hover{
+	-fx-text-fill: white;
+}
+
+/* Add keyword button */
+
+.add{
+	-fx-background-color: transparent;
+	-fx-font-fill: #868686;
+}
+
+.add:hover{
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+}
+
+
+/* Tag ListView Scroll-bar */
+
+/* The main scrollbar CSS class of ListView */
+.mylistview .scroll-bar:horizontal ,
+.mylistview  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+ 
+}
+ 
+/* The increment and decrement button CSS class of scrollbar */
+.mylistview .increment-button ,.mylistview .decrement-button {
+    -fx-background-color:transparent;
+	-fx-border-color:transparent;
+	-fx-border-width: 0px;
+}
+ 
+/* The main scrollbar **track** CSS class  */
+.mylistview .scroll-bar:horizontal .track ,
+.mylistview .scroll-bar:vertical .track{
+     -fx-background-color: transparent;
+	 -fx-border-color:transparent;
+	 -fx-background-radius: 5px;
+	 -fx-border-radius: 5px;
+	}
+ 
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.mylistview .scroll-bar:horizontal .thumb,
+.mylistview .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(grey,70%);
+	-fx-background-insets: 0, 0, 0;
+	-fx-background-radius: 5px;
+	-fx-border-radius: 5px;
+}
+ 
+
+/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
+ 
+.mylistview .scroll-bar:horizontal:hover .track ,
+.mylistview .scroll-bar:horizontal:pressed .track ,
+.mylistview .scroll-bar:vertical:hover .track,
+.mylistview .scroll-bar:vertical:pressed .track{
+     -fx-background-color: derive(#434343,20%);
+	 -fx-opacity: 0.2;
+	 -fx-background-radius: 0em;
+ 
+}
+ 
+/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
+
+.mylistview .scroll-bar .thumb:hover,
+.mylistview .scroll-bar .thumb:pressed{
+    -fx-background-color: derive(black,50%);
+}
+ 
+.mylistview .increment-button:hover ,.mylistview .decrement-button:hover {
+	-fx-border-color:derive(gray,80%);
+	-fx-text-fill: derive(gray,80%);
+
+}
+
+/* CREATE AND CANCEL BUTTONS */
+.create{
+	-fx-background-radius: 20px;
+	-fx-border-radius: 20px;
+	-fx-padding: 0px;
+	-fx-border-width: 0px;
+	-fx-background-color: green;
+}
+
+.create:hover{
+	-fx-background-radius: 20px;
+	-fx-border-radius: 20px;
+	-fx-padding: 0px;
+	-fx-border-width: 0px;
+	-fx-background-color: #339933;
+}
+
+.cancel{
+	-fx-background-radius: 20px;
+	-fx-border-radius: 20px;
+	-fx-padding: 0px;
+	-fx-border-width: 0px;
+	-fx-background-color: grey;
+}
+
+.cancel:hover{
+	-fx-background-radius: 20px;
+	-fx-border-radius: 20px;
+	-fx-padding: 0px;
+	-fx-border-width: 0px;
+	-fx-background-color: #989898;
+}
+
+

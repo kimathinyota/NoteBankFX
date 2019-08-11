@@ -1,0 +1,24 @@
+ToolBar{
+	-fx-background-color: transparent;
+}
+
+GridPane{
+	-fx-background-color: transparent;
+}
+
+ToggleButton{
+	-fx-background-color: white;
+	-fx-border-color: white;
+}
+
+WebView{
+	-fx-background-color: transparent;
+}
+
+ComboBox{
+	-fx-background-color: white;
+}
+
+html-editor-cut{
+	-fx-background-color: white;
+}
