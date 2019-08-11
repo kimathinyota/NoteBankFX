@@ -21,4 +21,5 @@ public class TagCellFactory implements Callback<ListView<String>, ListCell<Strin
     public TagCellFactory(ListView<String>list){
         this.list = list;
     }
+
 }

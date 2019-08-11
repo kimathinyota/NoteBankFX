@@ -122,6 +122,22 @@ public class Topic {
 		if( a instanceof Topic)
 			this.subTopics.add( (Topic) a  );
 	}
+
+	public int getNumberOfConnections(Note n){
+		int j = 0;
+		for(Idea i: ideas){
+			if(i.contains(n)){
+				j+=1;
+			}
+		}
+
+		for(Topic t: subTopics){
+			j += t.getNumberOfConnections(n);
+		}
+
+		return j;
+
+	}
 	
 	public Topic(String name) {
 		initialise(name,null,null,null);

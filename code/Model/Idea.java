@@ -51,6 +51,7 @@ public class Idea {
 
 	}
 
+
 	public Idea(HashMap<Note,Integer>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote){
 		this.notes = new HashMap<Note,Integer>();
 		this.keyWords = new HashSet<>();
@@ -74,6 +75,7 @@ public class Idea {
 			this.uniqueID = UUID.randomUUID().toString();
 		this.initialise(notes,keyWords,prompt,promptType,finalNote);
 	}
+
 
 
 

@@ -1,5 +1,8 @@
 package Code.Controller;
 
+/**
+ * Class designed to handle advanced searching
+ */
 public class AdvancedSearchSettings {
 
     public boolean isSearchInPage() {

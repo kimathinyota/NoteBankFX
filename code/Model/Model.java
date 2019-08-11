@@ -1,9 +1,12 @@
 package Code.Model;
 
+import Code.Controller.FilterSettings;
 import Code.Controller.RefreshIdeasController;
 import Code.Controller.RefreshNotesController;
 import Code.Controller.RefreshSubjectsController;
+
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListCell;
 import org.xml.sax.SAXException;
 
 import javax.imageio.ImageIO;
@@ -12,21 +15,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 public class Model {
-
-
 
     private List<RefreshNotesController> refreshNotesControllers;
     private List<RefreshIdeasController> refreshIdeasControllers;
     private List<RefreshSubjectsController> refreshSubjectsControllers;
 
     Subject currentSubject;
-
 
     public void addRefreshNotesController(RefreshNotesController controller){
         refreshNotesControllers.add(controller);
@@ -63,6 +61,7 @@ public class Model {
 
 
 
+
     /*
         @TODO: Consider why you have chosen to go for a look-up approach (less memory, more CPU) instead of referencing
             Advantages for look-up:
@@ -94,9 +93,7 @@ public class Model {
      * @return
      */
     private List<Note> getAllNotes(String notesDirectory) {
-
         List<Note> notes = new ArrayList<Note>();
-
         try {
             File directory = new File(notesDirectory);
             String path ;
@@ -109,7 +106,6 @@ public class Model {
                     }
                 }
             }
-
         }catch (IOException e){
         }
         return notes;
@@ -134,7 +130,9 @@ public class Model {
 
         System.out.println("Path: " + path);
         File file = new File(path);
-
+        if(!file.exists()){
+            return null;
+        }
         if (ImageIO.read(file) != null) {
             return new Image(path);
         } else if (file.getPath().contains(".pdf")) {
@@ -170,7 +168,13 @@ public class Model {
         List<Note> notes = new ArrayList<>();
         for(String path: getNotesPaths(subject)){
             try{
-                notes.add(fromPath(path));
+
+                Note found = fromPath(path);
+                if(found!=null){
+                    notes.add(fromPath(path));
+                }
+
+
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -205,7 +209,11 @@ public class Model {
      */
     public void addBook(String name, String originalFilePath){
         try{
-            new Book(name,originalFilePath,notesDirectory);
+            Book b = new Book(name,originalFilePath,notesDirectory);
+            this.getSubject("All").add(b.getPath().toString());
+            if(!currentSubject.getName().equals("All")){
+                currentSubject.add(b.getPath().toString());
+            }
             refreshNotes();
         }catch (IOException e){
 
@@ -219,7 +227,11 @@ public class Model {
      */
     public void addImage(String name, String originalPath){
         try{
-            new Image(name,originalPath,notesDirectory);
+            Image i = new Image(name,originalPath,notesDirectory);
+            this.getSubject("All").add(i.getPath().toString());
+            if(!currentSubject.getName().equals("All")){
+                currentSubject.add(i.getPath().toString());
+            }
             refreshNotes();
         }catch (IOException e){
 
@@ -233,12 +245,33 @@ public class Model {
      */
     public void addText(String name, String textContent){
         try{
-            new Text(name,textContent,notesDirectory);
+            Text t = new Text(name,textContent,notesDirectory);
+            this.getSubject("All").add(t.getPath().toString());
+            if(!currentSubject.getName().equals("All")){
+                currentSubject.add(t.getPath().toString());
+            }
             refreshNotes();
         }catch (IOException e){
 
         }
     }
+
+    public boolean doesNoteNameExist(String name, String fileExtension){
+        return getNotesPaths("All").contains(Note.getPath(name,notesDirectory,fileExtension));
+    }
+
+
+    public boolean doesNoteNameExist(String fileExtension){
+        return getNotesPaths("All").contains(Note.getPath(fileExtension,notesDirectory));
+    }
+
+
+
+
+
+
+
+
 
     /**
      * Gets Text note given path
@@ -507,7 +540,13 @@ public class Model {
      */
     public void saveSubject(){
         try{
-            saveXML(Subject.toXML(subjects),subjectDirectory,"Subjects");
+            List<Subject> saveList = new ArrayList<>();
+            for(Subject s: subjects){
+                if(!s.getName().equals("All")){
+                    saveList.add(s);
+                }
+            }
+            saveXML(Subject.toXML(saveList),subjectDirectory,"Subjects");
         }catch (IOException e){
         }
     }
@@ -557,6 +596,7 @@ public class Model {
     }
 
     public Subject updateSubject(String currentName, String newName, List<Note>notes ){
+
         for(Subject s: subjects){
             if(s.getName().equals(currentName)){
                 if(newName!=null)
@@ -637,6 +677,81 @@ public class Model {
     }
 
 
+
+
+    /**
+     * Sort By Number of connections comparator
+     * @return
+     */
+    public Comparator<Note> sortByNumberOfConnectionsComparator() {
+
+        return (new Comparator<Note>() {
+            @Override
+            public int compare(Note o1, Note o2) {
+                return root.getNumberOfConnections(o1) - root.getNumberOfConnections(o2);
+            }
+        });
+
+    }
+
+
+    public List<Note> getHighlyUsedNotes(FilterSettings filterSettings, List<Note> underutilisedNotes, List<Note>allNotes){
+
+        List<Note> copy = allNotes.subList(0,allNotes.size());
+        copy.removeAll(underutilisedNotes);
+        return filterSettings.applyFilters(copy);
+
+    }
+
+
+
+    public List<Note> getUnderutilisedNotes(FilterSettings filterSettings, List<Note>allNotes){
+        allNotes.sort(sortByNumberOfConnectionsComparator());
+
+        if(allNotes.isEmpty()){
+            return allNotes;
+        }
+
+        int largest = root.getNumberOfConnections(allNotes.get(allNotes.size()-1));
+        int small = root.getNumberOfConnections(allNotes.get(0));
+
+
+        if(allNotes.isEmpty()){
+            return allNotes;
+        }
+
+        int tenPercent = (small + largest)/10;
+
+
+        int finalIndex = 0;
+
+        for(Note n: allNotes){
+
+            if(root.getNumberOfConnections(n) <= tenPercent ){
+                finalIndex += 1;
+            }else{
+                break;
+            }
+
+        }
+
+        finalIndex = (finalIndex < (0.4*allNotes.size()) ?  (int) (0.4*allNotes.size()) : finalIndex);
+
+
+        List<Note> fin = allNotes.subList(0,finalIndex);
+
+        fin = filterSettings.applyFilters(fin);
+
+        return fin;
+
+    }
+
+
+
+
+
+
+
     private List<Subject> subjects;
 
     /**
@@ -655,21 +770,25 @@ public class Model {
         this.rootDirectory = rootDirectory;
         this.subjectDirectory = subjectDirectory;
 
+        Subject allSubject = new Subject("All");
         try{
-            this.subjects = getSubjects();
-        }catch (IOException e){
-            Subject allSubject = new Subject("All");
             allSubject.setPaths(Model.getPaths(this.getAllNotes(notesDirectory)));
-            this.subjects = new ArrayList<>();
-            this.subjects.add(allSubject);
-            this.saveSubject();
+        }catch (Exception e){
+
         }
 
+        this.subjects = new ArrayList<>();
+        this.subjects.add(allSubject);
         this.setCurrentSubject("All");
 
+
+        try{
+            this.subjects.addAll(getSubjects());
+        }catch (IOException e){
+
+        }
+
         this.root = getRoot(rootDirectory);
-
-
 
     }
 
@@ -677,6 +796,7 @@ public class Model {
     public Subject getCurrentSubject(){
         return this.currentSubject;
     }
+
 
 
 

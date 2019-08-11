@@ -48,12 +48,14 @@ public class SearchInformation implements Comparable<SearchInformation>{
         String largestSegment = "";
 
         int segment = 0;
+        int noMatches = 0;
         for (int i = 0; i < splitCriteria.length; i++) {
             int j = 0;
             int largestSegmentFound = 0;
             String word = "";
             while (j < (splitCriteria.length - i)) {
                 word += splitCriteria[i + j];
+                noMatches +=1;
                 if (!input.contains(word)) {
                     break;
                 }
@@ -86,17 +88,28 @@ public class SearchInformation implements Comparable<SearchInformation>{
 
 
 
+        int containsWord = (input.contains(criteria) ? 500 : 1) ;
+        int matchesWord = (input.equals(criteria) ? 1500 : 1) ;
 
 
-        int containsWord = (input.contains(criteria) ? 100 : 1) ;
-        int matchesWord = (input.equals(criteria) ? 100 : 1) ;
+        float percentage = (segment*noMatches)/(noMatches*splitCriteria.length);
 
+        score = (containsWord + matchesWord)/2;
 
-        score = (containsWord + matchesWord)/2 * (segment * matches);
+        score = Math.round(percentage*score);
+
         this.searchObject = searchObject;
         this.reference = reference;
 
+
+        System.out.println("Score for " + searchObject + " is " + score);
+
+
+
     }
+
+
+    static final int MINIMUM = 50;
 
     public SearchInformation(String input, String criteria, Object searchObject, String reference, int percentageSegment){
         initialise(input,criteria,searchObject, reference, percentageSegment);

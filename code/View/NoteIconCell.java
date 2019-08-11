@@ -1,10 +1,8 @@
 package Code.View;
 
+import Code.Controller.View;
 import Code.Model.NoteType;
-import Code.View.menus.NoteCellFactory;
-import Code.View.menus.TagCellFactory;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import Code.View.menus.NoteIconCellFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -15,33 +13,27 @@ import java.io.IOException;
 
 
 import Code.Model.Note;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 
 
-public class NoteCell extends ListCell<Note> {
+public class NoteIconCell extends ListCell<Note> {
 
     @FXML protected Label name;
 
-    /*
-    @FXML protected ImageView image;
-    @FXML protected ImageView book;
-    @FXML protected ImageView text;
+    View view;
 
-*/
+
+    @FXML protected Button image;
+    @FXML protected Button book;
+    @FXML protected Button text;
+
 
     public void setView(boolean image, boolean book, boolean text){
-        /*
         this.image.setVisible(image);
         this.book.setVisible(book);
         this.text.setVisible(text);
-        */
     }
 
     public void setImage(NoteType type){
-
-        System.out.println("Type: " + type);
         switch (type){
             case Book:
                 setView(false,true,false);
@@ -58,15 +50,15 @@ public class NoteCell extends ListCell<Note> {
     }
 
 
-    public NoteCell(NoteCellFactory t) {
+    public NoteIconCell(NoteIconCellFactory t) {
         super();
         loadFXML();
-        System.out.println("Reinstantiated");
+        this.view = view;
     }
 
     private void loadFXML() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("note_cell2.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("note_cell3.fxml"));
             loader.setController(this);
             loader.setRoot(this);
             loader.load();
@@ -84,7 +76,6 @@ public class NoteCell extends ListCell<Note> {
     protected void updateItem(Note item, boolean empty) {
         super.updateItem(item, empty);
 
-        System.out.println("Baby girl good evening: " + empty + " " + item);
         if(empty) {
             setText(null);
             setContentDisplay(ContentDisplay.TEXT_ONLY);

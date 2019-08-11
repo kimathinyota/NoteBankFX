@@ -20,7 +20,7 @@ public abstract class Note {
 		return getName(path.toString());
 	}
 
-	private String getName(String path) {
+	public static String getName(String path) {
 
 		String name =  new File(path.toString()).getName();
 
@@ -52,6 +52,15 @@ public abstract class Note {
 		new File(path.toString()).renameTo(new File(newLocation + File.separator + name));
 	}
 
+
+	public static String getPath(String name, String pathToNotesDirectory, String fileExtension){
+		return pathToNotesDirectory + File.separator + name.trim().replaceAll(" ","-") + "." + fileExtension;
+	}
+
+	public static String getPath(String fileNameExtension, String pathToNotesDirectory){
+		return pathToNotesDirectory + File.separator + fileNameExtension.trim().replaceAll(" ","-");
+	}
+
 	/**
 	 *
 	 * @param name
@@ -63,17 +72,16 @@ public abstract class Note {
 			throw new IOException();
 
 		String fileExtension = getFileExtension(originalFilePath);
-		this.path = new StringBuilder(pathToNotesDirectory + File.separator + name.replaceAll(" ","-") + "." + fileExtension);
+		this.path = new StringBuilder(getPath(name,pathToNotesDirectory,fileExtension));
 
 		this.type = type;
-
 
 
 		File directory = new File(pathToNotesDirectory);
 		if(!directory.exists())
 			directory.mkdir();
 
-		File dest = new File(pathToNotesDirectory + File.separator + name + "." + fileExtension );
+		File dest = new File(path.toString() );
 
 	    Files.copy(new File(originalFilePath).toPath(),dest.toPath() , StandardCopyOption.REPLACE_EXISTING);
 	}

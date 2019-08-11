@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -21,7 +22,7 @@
 
 <StackPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.NotesPageController">
    <children>
-      <BorderPane prefHeight="632.0" prefWidth="900.0" style="-fx-background-color: rgb(43, 43, 43)rgb(43, 43, 43) rgb(43, 43, 43)rgb(43, 43, 43) rgb(43, 43, 43)rgb(43, 43, 43) rgb(43, 43, 43)rgb(43, 43, 43);">
+      <BorderPane prefHeight="632.0" prefWidth="900.0" style="-fx-background-color: rgb(43, 43, 43);">
          <center>
             <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
@@ -40,13 +41,13 @@
                               <ListView fx:id="underusedNotes" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" styleClass="mylistview" stylesheets="@../../notes.css" BorderPane.alignment="CENTER" />
                            </center>
                            <top>
-                              <GridPane prefHeight="0.0" prefWidth="825.0" BorderPane.alignment="CENTER">
+                              <GridPane prefHeight="3.0" prefWidth="820.0" BorderPane.alignment="CENTER">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="3.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="7.5" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
                                     <Pane maxHeight="-Infinity" prefHeight="1.5" prefWidth="825.0" style="-fx-background-color: white;" />
@@ -58,23 +59,23 @@
                      <top>
                         <BorderPane prefHeight="25.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                            <left>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="248.0" text="Underutilised notes" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="241.0" text="Rarely used notes" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
                                  <font>
                                     <Font name="Inter Light BETA" size="19.0" />
                                  </font>
                               </Label>
                            </left>
                            <right>
-                              <AnchorPane prefHeight="39.0" prefWidth="180.0" BorderPane.alignment="CENTER">
+                              <AnchorPane prefHeight="39.0" prefWidth="176.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="110.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@../../Style.css" text="&gt;" textFill="WHITE">
+                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="110.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleRightClick" prefHeight="36.0" prefWidth="22.0" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="arrow" stylesheets="@../../notes.css" text="&gt;" textFill="WHITE">
                                        <font>
-                                          <Font name="Inter Semi Bold" size="40.0" />
+                                          <Font name="Inter Light BETA" size="30.0" />
                                        </font>
                                     </Button>
-                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="77.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@../../Style.css" text="&lt;" textFill="WHITE">
+                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="86.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleLeftClick" prefHeight="36.0" prefWidth="22.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@../../notes.css" text="&lt;" textFill="WHITE">
                                        <font>
-                                          <Font name="Inter Semi Bold" size="40.0" />
+                                          <Font name="Inter Light BETA" size="30.0" />
                                        </font>
                                     </Button>
                                  </children>
@@ -88,19 +89,130 @@
                      <right>
                         <Pane prefHeight="137.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
                      </right></BorderPane>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                  <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <center>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <center>
+                              <ListView fx:id="utilisedNotes" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" styleClass="mylistview" stylesheets="@../../notes.css" BorderPane.alignment="CENTER" />
+                           </center>
+                           <top>
+                              <GridPane prefHeight="3.0" prefWidth="820.0" BorderPane.alignment="CENTER">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="3.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="7.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Pane maxHeight="-Infinity" prefHeight="1.5" prefWidth="825.0" style="-fx-background-color: white;" />
+                                 </children>
+                              </GridPane>
+                           </top>
+                        </BorderPane>
+                     </center>
+                     <top>
+                        <BorderPane prefHeight="25.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+                           <left>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="281.0" text="Frequently used notes" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Inter Light BETA" size="19.0" />
+                                 </font>
+                              </Label>
+                           </left>
+                           <right>
+                              <AnchorPane prefHeight="39.0" prefWidth="176.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="110.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleRight2Click" prefHeight="36.0" prefWidth="22.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@../../notes.css" text="&gt;" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter Light BETA" size="30.0" />
+                                       </font>
+                                    </Button>
+                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="86.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleLeft2Click" prefHeight="36.0" prefWidth="24.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@../../notes.css" text="&lt;" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter Light BETA" size="30.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                           </right>
+                        </BorderPane>
+                     </top>
+                     <left>
+                        <Pane prefHeight="137.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+                     </left>
+                     <right>
+                        <Pane prefHeight="137.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+                     </right>
+                  </BorderPane>
+                  <BorderPane layoutX="10.0" layoutY="195.0" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <center>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <center>
+                              <ListView fx:id="allNotes" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" styleClass="mylistview" stylesheets="@../../notes.css" BorderPane.alignment="CENTER" />
+                           </center>
+                           <top>
+                              <GridPane prefHeight="3.0" prefWidth="820.0" BorderPane.alignment="CENTER">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="3.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="7.5" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Pane maxHeight="-Infinity" prefHeight="1.5" prefWidth="825.0" style="-fx-background-color: white;" />
+                                 </children>
+                              </GridPane>
+                           </top>
+                        </BorderPane>
+                     </center>
+                     <top>
+                        <BorderPane prefHeight="25.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+                           <left>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="158.0" text="All notes" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Inter Light BETA" size="19.0" />
+                                 </font>
+                              </Label>
+                           </left>
+                           <right>
+                              <AnchorPane prefHeight="39.0" prefWidth="176.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="110.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleRight3Click" prefHeight="27.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@../../notes.css" text="&gt;" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter Light BETA" size="30.0" />
+                                       </font>
+                                    </Button>
+                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="86.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleLeft3Click" prefHeight="36.0" prefWidth="24.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@../../notes.css" text="&lt;" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter Light BETA" size="30.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                           </right>
+                        </BorderPane>
+                     </top>
+                     <left>
+                        <Pane prefHeight="137.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+                     </left>
+                     <right>
+                        <Pane prefHeight="137.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+                     </right>
+                  </BorderPane>
                </children>
             </GridPane>
          </center>
          <top>
-            <AnchorPane prefHeight="83.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="79.0" prefWidth="900.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label layoutX="57.0" layoutY="23.0" text="NOTES" textFill="WHITE">
+                  <Label layoutX="57.0" layoutY="22.0" text="NOTES" textFill="WHITE">
                      <font>
                         <Font name="Inter Extra Light BETA" size="35.0" />
                      </font>
                   </Label>
-                  <GridPane layoutX="190.0" layoutY="28.0" style="-fx-border-color: white;">
+                  <GridPane layoutX="190.0" layoutY="27.0" style="-fx-border-color: white;">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" />
                      </columnConstraints>
@@ -127,7 +239,7 @@
                         </BorderPane>
                      </children>
                   </GridPane>
-                  <Button fx:id="openFilter" layoutX="6.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleOpenFilterAction" style="-fx-background-color: transparent;" styleClass="filter" stylesheets="@../../notes.css">
+                  <Button fx:id="openFilter" layoutX="5.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleOpenFilterAction" style="-fx-background-color: transparent;" styleClass="filter" stylesheets="@../../notes.css">
                      <graphic>
                         <AnchorPane prefHeight="37.0" prefWidth="37.0">
                            <children>
@@ -143,7 +255,7 @@
             </AnchorPane>
          </top>
       </BorderPane>
-      <BorderPane fx:id="filter" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="190.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-background-color: #1d1e1f#1d1e1f;" visible="false" StackPane.alignment="TOP_LEFT">
+      <BorderPane fx:id="filter" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="190.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-background-color: #1d1e1f#1d1e1f;" StackPane.alignment="TOP_LEFT">
          <StackPane.margin>
             <Insets left="12.0" top="23.0" />
          </StackPane.margin>
@@ -172,49 +284,68 @@
             </AnchorPane>
          </top>
          <center>
-            <AnchorPane prefHeight="265.0" prefWidth="190.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="304.0" prefWidth="190.0" BorderPane.alignment="CENTER">
                <children>
-                  <ToggleButton layoutX="111.0" layoutY="43.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="55.0" stylesheets="@../../notes.css" />
-                  <Label layoutX="10.0" layoutY="8.0" prefHeight="30.0" prefWidth="66.0" text="Include" textFill="WHITE">
+                  <ToggleButton fx:id="includeBooks" layoutX="111.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleIncludeBooksAction" prefHeight="27.0" prefWidth="55.0" stylesheets="@../../notes.css" />
+                  <Label layoutX="10.0" layoutY="53.0" prefHeight="30.0" prefWidth="66.0" text="Include" textFill="WHITE">
                      <font>
                         <Font name="Inter Medium" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="31.0" layoutY="40.0" prefHeight="30.0" prefWidth="66.0" text="Books" textFill="WHITE">
+                  <Label layoutX="31.0" layoutY="85.0" prefHeight="30.0" prefWidth="66.0" text="Books" textFill="WHITE">
                      <font>
                         <Font name="Inter Medium" size="17.0" />
                      </font>
                   </Label>
-                  <ToggleButton layoutX="111.0" layoutY="75.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="55.0" stylesheets="@../../notes.css" />
-                  <Label layoutX="31.0" layoutY="72.0" prefHeight="30.0" prefWidth="66.0" text="Images" textFill="WHITE">
+                  <ToggleButton fx:id="includeImages" layoutX="111.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleIncludeImagesAction" prefHeight="27.0" prefWidth="55.0" stylesheets="@../../notes.css" />
+                  <Label layoutX="31.0" layoutY="117.0" prefHeight="30.0" prefWidth="66.0" text="Images" textFill="WHITE">
                      <font>
                         <Font name="Inter Medium" size="17.0" />
                      </font>
                   </Label>
-                  <ToggleButton layoutX="110.0" layoutY="109.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="55.0" stylesheets="@../../notes.css" />
-                  <Label layoutX="30.0" layoutY="106.0" prefHeight="30.0" prefWidth="66.0" text="Texts" textFill="WHITE">
+                  <ToggleButton fx:id="includeTexts" layoutX="110.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleIncludeTextsAction" prefHeight="27.0" prefWidth="55.0" stylesheets="@../../notes.css" />
+                  <Label layoutX="30.0" layoutY="151.0" prefHeight="30.0" prefWidth="66.0" text="Texts" textFill="WHITE">
                      <font>
                         <Font name="Inter Medium" size="17.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="sortBy" layoutX="96.0" layoutY="150.0" prefHeight="27.0" prefWidth="69.0" style="-fx-border-color: white; -fx-background-color: transparent;" stylesheets="@../../notes.css" />
-                  <Label layoutX="10.0" layoutY="148.0" prefHeight="30.0" prefWidth="66.0" text="Sort by" textFill="WHITE">
+                  <ChoiceBox fx:id="sortBy" layoutX="96.0" layoutY="195.0" prefHeight="27.0" prefWidth="69.0" style="-fx-border-color: white; -fx-background-color: transparent;" stylesheets="@../../notes.css" />
+                  <Label layoutX="10.0" layoutY="193.0" prefHeight="30.0" prefWidth="66.0" text="Sort by" textFill="WHITE">
                      <font>
                         <Font name="Inter Medium" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="10.0" layoutY="187.0" prefHeight="30.0" prefWidth="66.0" text="Order" textFill="WHITE">
+                  <Label layoutX="10.0" layoutY="232.0" prefHeight="30.0" prefWidth="66.0" text="Order" textFill="WHITE">
                      <font>
                         <Font name="Inter Medium" size="18.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="order" layoutX="97.0" layoutY="188.0" prefHeight="27.0" prefWidth="69.0" style="-fx-border-color: white; -fx-background-color: transparent;" stylesheets="@../../notes.css" />
-                  <Label layoutX="10.0" layoutY="226.0" prefHeight="30.0" prefWidth="66.0" text="View" textFill="WHITE">
+                  <ChoiceBox fx:id="order" layoutX="97.0" layoutY="233.0" prefHeight="27.0" prefWidth="69.0" style="-fx-border-color: white; -fx-background-color: transparent;" stylesheets="@../../notes.css" />
+                  <Label layoutX="10.0" layoutY="271.0" prefHeight="30.0" prefWidth="66.0" text="View" textFill="WHITE">
                      <font>
                         <Font name="Inter Medium" size="18.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="view" layoutX="97.0" layoutY="227.0" prefHeight="27.0" prefWidth="69.0" style="-fx-border-color: white; -fx-background-color: transparent;" stylesheets="@../../notes.css" />
+                  <ChoiceBox fx:id="view" layoutX="97.0" layoutY="272.0" prefHeight="27.0" prefWidth="69.0" style="-fx-border-color: white; -fx-background-color: transparent;" stylesheets="@../../notes.css" />
+                  <AnchorPane layoutX="10.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="18.0" prefWidth="162.0" style="-fx-background-color: white; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+                     <children>
+                        <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="0.0" layoutX="3.0" layoutY="-1.0" mnemonicParsing="false" onAction="#handleSearchAction" prefHeight="25.0" prefWidth="24.0" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="search" stylesheets="@../../notes.css">
+                           <graphic>
+                              <AnchorPane layoutX="3.0" prefHeight="26.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px;">
+                                 <children>
+                                    <Circle fill="WHITE" layoutX="9.0" layoutY="12.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                                    <Line endX="-8.0" endY="-12.999996185302734" layoutX="30.0" layoutY="35.0" startX="-15.0" startY="-18.000003814697266" strokeLineCap="ROUND" strokeWidth="3.0" />
+                                 </children>
+                              </AnchorPane>
+                           </graphic>
+                        </Button>
+                        <TextField fx:id="search" layoutX="28.0" layoutY="-3.0" onKeyPressed="#handleSearchEnterPress" prefHeight="27.0" prefWidth="133.0" promptText="Search" style="-fx-background-color: transparent;">
+                           <font>
+                              <Font name="Inter Light BETA" size="13.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </center>

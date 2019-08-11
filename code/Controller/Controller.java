@@ -1,10 +1,8 @@
 package Code.Controller;
 
-import javafx.scene.layout.Pane;
-
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Designed to handle inter-controller communication
+ */
 public class Controller {
 
     MainWindowController controller;
@@ -13,6 +11,13 @@ public class Controller {
         controller.setPage(page);
     }
 
+    public void disable(AppFeatures features, boolean disable){
+        switch (features){
+            case SubjectList:
+                controller.disableSubjectList(disable);
+                break;
+        }
+    }
 
     public void setMainWindowController(MainWindowController controller){
         this.controller = controller;
