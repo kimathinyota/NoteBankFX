@@ -2,11 +2,12 @@ package Code.Controller;
 
 import Code.Model.Model;
 import Code.Model.Note;
-import Code.Model.Subject;
-import Code.View.menus.NoteIconCellFactory;
 
+import Code.View.menus.NoteIconCellFactory;
 import Code.View.menus.NoteTextCellFactory;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
@@ -14,7 +15,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-import java.security.Key;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,6 +25,7 @@ import java.util.concurrent.Executors;
 public class NotesPageController implements RefreshNotesController, RefreshSubjectsController {
     @FXML protected Button openFilter;
     @FXML protected Pane filter;
+    @FXML protected Pane filterNoSearch;
 
     @FXML protected ListView<Note> underusedNotes;
     @FXML protected ListView<Note> utilisedNotes;
@@ -41,7 +42,18 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
 
     @FXML protected TextField search;
 
+    @FXML protected Button rareNotesDisplay;
+    @FXML protected Button usedNotesDisplay;
+    @FXML protected Button allNotesDisplay;
+
+    private Model model;
+    private Controller controller;
+
     private FilterSettings filterSettings;
+
+    private IntegerValue allIndex = new IntegerValue(-1);
+    private IntegerValue underusedIndex = new IntegerValue(-1);
+    private IntegerValue utilisedIndex = new IntegerValue(-1);
 
     public void setFilterInclude(boolean includeBooks, boolean includeImages, boolean includeTexts){
         this.includeBooks.setSelected(includeBooks);
@@ -55,17 +67,16 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         this.view.getSelectionModel().select(view.name());
     }
 
-
-
     @FXML protected void handleSearchAction(ActionEvent e){
         this.filterSettings.setSearch(search.getText());
         refreshSubjects();
+        this.search.setText("");
+        this.search.requestFocus();
     }
 
 
+    Label label;
 
-    Model model;
-    Controller controller;
     public void initialize(){
         filterSettings = new FilterSettings();
         controller = Controller.getInstance();
@@ -92,7 +103,8 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         model = Model.getInstance();
         model.addRefreshSubjectsController(this);
         model.addRefreshNotesController(this);
-        currentSubject = model.getCurrentSubject();
+
+
 
         refreshSubjects();
 
@@ -100,12 +112,43 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         addSelectedItemListener(utilisedNotes, utilisedIndex);
         addSelectedItemListener(allNotes,allIndex);
 
+
+        rareNotesDisplay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                controller.displayNotes(underusedNotes.getItems(), ViewMode.ViewFull);
+            }
+        });
+
+        usedNotesDisplay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                controller.displayNotes(utilisedNotes.getItems(), ViewMode.ViewFull);
+            }
+        });
+
+        allNotesDisplay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                controller.displayNotes(allNotes.getItems(), ViewMode.ViewFull);
+            }
+        });
+
+
         search.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue.equals("") && !newValue.equals(oldValue)){
                 filterSettings.setSearch("");
                 refreshSubjects();
             }
         });
+
+        label = new Label();
+        label.textProperty().bind(search.textProperty());
+        label.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterSettings.setSearch(label.getText());
+            refreshSubjects();
+        });
+
 
         sortBy.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             filterSettings.setSortBy(SortBy.valueOf(newValue));
@@ -138,8 +181,7 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
 
     }
 
-
-    public void setLeftRightKeyPressed(ListView<Note>list, Integer index){
+    public void setLeftRightKeyPressed(ListView<Note>list, IntegerValue index){
         list.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.LEFT){
 
@@ -150,8 +192,6 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         });
     }
 
-
-
     @FXML protected void handleSearchEnterPress(KeyEvent e){
         if(e.getCode() == KeyCode.ENTER){
             filterSettings.setSearch(search.getText());
@@ -159,33 +199,23 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         }
     }
 
-
-    public void addSelectedItemListener(ListView<Note> notes, Integer notesIndex){
+    public void addSelectedItemListener(ListView<Note> notes, IntegerValue notesIndex){
         notes.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> setIndex(notesIndex,newValue.intValue()));
     }
 
-
-    public void setIndex(Integer i, int val){
+    public void setIndex(IntegerValue i, int val){
         i.setInteger(val);
     }
-
 
     public void changeToIconDisplay(ListView<Note> allNotes){
         allNotes.setCellFactory(new NoteIconCellFactory(allNotes));
         allNotes.setOrientation(Orientation.HORIZONTAL);
     }
 
-
     public void changeToTextDisplay(ListView<Note> allNotes){
         allNotes.setCellFactory(new NoteTextCellFactory(allNotes));
         allNotes.setOrientation(Orientation.HORIZONTAL);
     }
-
-
-    private Integer allIndex = new Integer(-1);
-    private Integer underusedIndex = new Integer(-1);
-    private Integer utilisedIndex = new Integer(-1);
-
 
     @FXML protected void handleIncludeBooksAction(ActionEvent e){
         filterSettings.setIncludeBooks(includeBooks.isSelected());
@@ -201,7 +231,6 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         filterSettings.setIncludeTexts(includeTexts.isSelected());
         refreshSubjects();
     }
-
 
     @FXML protected void handleRightClick(ActionEvent e){
         handleRightClick(underusedNotes,underusedIndex);
@@ -227,8 +256,7 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         handleLeftClick(allNotes,allIndex);
     }
 
-
-    private void handleLeftClick(ListView<Note>allNotes,Integer allIndex){
+    private void handleLeftClick(ListView<Note>allNotes, IntegerValue allIndex){
 
         if(allNotes.getItems().isEmpty()){
             return;
@@ -248,7 +276,7 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
 
     }
 
-    private void handleRightClick(ListView<Note>allNotes,Integer allIndex){
+    private void handleRightClick(ListView<Note>allNotes, IntegerValue allIndex){
 
         if(allNotes.getItems().isEmpty()){
             return;
@@ -260,7 +288,6 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
 
     }
 
-
     @FXML protected void handleOpenFilterAction(ActionEvent e){
         filter.setVisible(true);
     }
@@ -269,20 +296,15 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         filter.setVisible(false);
     }
 
-    Subject currentSubject;
-
     @Override
     public void refreshNotes() {
         refreshSubjects();
     }
 
-
-
     @Override
     public void refreshSubjects() {
 
-        this.currentSubject = model.getCurrentSubject();
-        subjectLine.setText(this.currentSubject.getName());
+        subjectLine.setText(model.getCurrentSubject().getName());
 
         try{
             AllNotesListTask task = new AllNotesListTask(filterSettings);
@@ -306,37 +328,37 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
             allNotes.setItems(task.getValue());
 
             task.setOnRunning( (runningAllNotes) -> {
-                filter.setDisable(true);
+                filterNoSearch.setDisable(true);
                 controller.disable(AppFeatures.SubjectList,true);
             });
 
             task.setOnSucceeded((completedEvent) -> {
                 allNotes.setItems(task.getValue());
-                filter.setDisable(false);
+                filterNoSearch.setDisable(false);
                 controller.disable(AppFeatures.SubjectList,false);
 
                 UnderusedNotesListTask task2 = new UnderusedNotesListTask(filterSettings,task.getValue());
 
                 task2.setOnRunning( (runningUnderusedNotes) -> {
-                    filter.setDisable(true);
+                    filterNoSearch.setDisable(true);
                     controller.disable(AppFeatures.SubjectList,true);
                 });
 
                 task2.setOnSucceeded(event -> {
 
-                    filter.setDisable(false);
+                    filterNoSearch.setDisable(false);
                     controller.disable(AppFeatures.SubjectList,false);
                     underusedNotes.setItems(task2.getValue());
 
                     UtilisedNotesListTask task3 = new UtilisedNotesListTask(filterSettings,task2.getValue(),task.getValue());
 
                     task3.setOnRunning( (runningUsedNotes) -> {
-                        filter.setDisable(true);
+                        filterNoSearch.setDisable(true);
                         controller.disable(AppFeatures.SubjectList,true);
                     });
 
                     task3.setOnSucceeded(event1 -> {
-                        filter.setDisable(false);
+                        filterNoSearch.setDisable(false);
                         controller.disable(AppFeatures.SubjectList,false);
                         utilisedNotes.setItems(task3.getValue());
                     });
@@ -397,6 +419,5 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
 
 
     }
-
 
 }

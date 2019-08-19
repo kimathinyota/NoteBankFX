@@ -5,6 +5,8 @@ import Code.Controller.RefreshIdeasController;
 import Code.Controller.RefreshNotesController;
 import Code.Controller.RefreshSubjectsController;
 
+import com.sun.tools.corba.se.idl.constExpr.Not;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import org.xml.sax.SAXException;
@@ -111,6 +113,11 @@ public class Model {
         return notes;
     }
 
+
+    public List<Note> getAllNotes(){
+        return getNotes("All");
+    }
+
     /**
      * Find and returns a list of subjects from the subjectDirectory
      * subjectDirectory: contains Subjects.xml file
@@ -128,7 +135,6 @@ public class Model {
      */
     public static Note fromPath(String path) throws IOException{
 
-        System.out.println("Path: " + path);
         File file = new File(path);
         if(!file.exists()){
             return null;
@@ -189,7 +195,6 @@ public class Model {
      */
     private Topic getRoot(String rootDirectory){
         try{
-            System.out.println();
             return Topic.fromXML(rootDirectory + File.separator + "Topics.xml");
         }catch (Exception e){
             Topic allTopics = new Topic("All Topics");
@@ -366,7 +371,6 @@ public class Model {
 
         Idea idea = root.findIdea(ideaID);
 
-        System.out.println("Found idea: " + idea);
 
         if(idea==null){
             idea = new Idea(ideaID,notes,keyWords,prompt,promptType,finalNote);
@@ -380,6 +384,20 @@ public class Model {
 
         return idea;
     }
+
+
+    public void addNoteToIdea(Idea i, Note note){
+        Idea idea = root.findIdea(i.getID());
+        if(idea==null){
+            return;
+        }
+        idea.addNote(note);
+        refreshIdeas();
+    }
+
+
+
+
 
     private Idea addIdea(String ideaID,HashMap<Note,Integer>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
         Idea idea = new Idea(ideaID,notes,keyWords,prompt,promptType,finalNote);
@@ -612,6 +630,15 @@ public class Model {
     }
 
 
+    public void addNoteToSubject(String subjectName, Note note){
+        Subject subject = getSubject(subjectName);
+        if(!subject.memberOf(note)){
+            getSubject(subjectName).add(note.getPath().toString());
+        }
+        refreshSubjects();
+    }
+
+
 
     public Subject getSubject(String name){
         for(Subject s: subjects){
@@ -621,10 +648,6 @@ public class Model {
         }
         return null;
     }
-
-
-
-
 
 
     /**
@@ -650,18 +673,62 @@ public class Model {
      * @return
      */
     public List<Subject> getSubjects(Note note){
-        List<Subject> subs = new ArrayList<>();
-        for(Subject s: subjects){
-            if(s.memberOf(note)){
-                subs.add(s);
-            }
-        }
+        List<Subject> subs = FXCollections.observableArrayList(Subject.getSubjects(subjects,note));
+        subs.remove(getSubject("All"));
         return subs;
     }
 
+    public List<Subject> getAllSubjects(){
+        return subjects;
+    }
+
+
+    public List<Idea> getIdeas(Note note){
+        return root.getIdeas(note);
+    }
+
+
+
+    public void limitNoteToTheseSubjects(Note note, List<Subject>subjects){
+        for(Subject s: this.getAllSubjects()){
+            if(!s.getName().equals("All")){
+                if(subjects.contains(s)){
+                    //note should be added to subject
+                    s.add(note);
+                }else{
+                    s.remove(note);
+                }
+            }
+        }
+        refreshSubjects();
+    }
+
+    public HashMap<Idea,String> getIdeasMap(Note note){
+        HashMap<Idea,String> map = new HashMap<>();
+        for(Idea i: root.getIdeas(note)){
+            map.put(i,i.getNoteType(note));
+        }
+        return map;
+    }
+
+
+    public void limitNoteToTheseIdeas(Note note, HashMap<Idea,String>map){
+        for(Idea i: this.getAllIdeas()){
+            if(map.containsKey(i)){
+                //note should be added to idea
+                System.out.println(i + " " + map.get(i));
+                root.findIdea(i).addNote(note,map.get(i).equals("Prompt"));
+            }else {
+                System.out.println(i + " need to remove");
+                root.findIdea(i).removeNote(note);
+            }
+        }
+        refreshIdeas();
+    }
+
+
     public List<String> getSubjectStrings(){
         List<String> subjects = new ArrayList<String>();
-
         for(Subject s: this.subjects){
             subjects.add(s.getName());
         }
@@ -702,6 +769,16 @@ public class Model {
         return filterSettings.applyFilters(copy);
 
     }
+
+
+    public List<Idea> getAllIdeas(){
+        return this.root.getAllIdeas();
+    }
+
+
+
+
+
 
 
 

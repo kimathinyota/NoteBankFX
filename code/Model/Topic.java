@@ -1,5 +1,7 @@
 package Code.Model;
 
+import Code.View.ObservableObject;
+import com.sun.tools.corba.se.idl.constExpr.Not;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -16,7 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-public class Topic {
+public class Topic implements ObservableObject {
 	private List<Topic> subTopics;
 	private List<Idea> ideas;
 	private String name;
@@ -353,6 +355,22 @@ public class Topic {
 		return completTopicSearch;
 
 	}
+
+
+	public List<Idea> getIdeas(Note note){
+		List<Idea> ideas = new ArrayList<>();
+		for(Idea i: this.getAllIdeas()){
+			if(i.contains(note)){
+				ideas.add(i);
+			}
+		}
+		return ideas;
+	}
+
+
+
+
+
 	
 	public String toString() {
 		return ("Topic: " + name);
@@ -361,6 +379,15 @@ public class Topic {
 	public boolean equals(Object object){
 		return (object instanceof  Topic) && ( uniqueID.equals(((Idea) object).getID()) );
 	}
-	
 
+
+	@Override
+	public String getDisplayName() {
+		return toString();
+	}
+
+	@Override
+	public boolean contains(Object object) {
+		return (object instanceof Note) && (contains((Note) object));
+	}
 }

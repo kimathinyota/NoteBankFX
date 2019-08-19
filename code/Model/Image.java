@@ -81,4 +81,7 @@ public class Image extends Note{
 		return "Image: "+getName();
 	}
 
+
+
+
 }

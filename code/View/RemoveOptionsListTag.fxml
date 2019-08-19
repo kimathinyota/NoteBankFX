@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListCell?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root type="javafx.scene.control.ListCell" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <BorderPane>
+         <center>
+            <BorderPane BorderPane.alignment="CENTER_LEFT">
+               <left>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <center>
+                        <BorderPane BorderPane.alignment="CENTER">
+                           <center>
+                              <ComboBox fx:id="options" style="-fx-font-family: Inter-Medium;" styleClass="combo-box" stylesheets="@viewnote.css" />
+                           </center>
+                           <left>
+                              <Pane prefWidth="5.0" BorderPane.alignment="CENTER" />
+                           </left>
+                        </BorderPane>
+                     </center>
+                     <left>
+                        <Button fx:id="labelButton" mnemonicParsing="false" onAction="#handleLabelButtonClick" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="cell-button" stylesheets="@viewnote.css" BorderPane.alignment="CENTER">
+                           <graphic>
+                              <Label fx:id="label" stylesheets="@viewnote.css" text="Donkey" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font name="Inter Medium" size="21.0" />
+                                 </font>
+                              </Label>
+                           </graphic>
+                        </Button>
+                     </left>
+                  </BorderPane>
+               </left>
+            </BorderPane>
+         </center>
+         <left>
+            <BorderPane BorderPane.alignment="CENTER">
+               <center>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRemoveAction" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 20px; -fx-border-radius: 20px;" styleClass="add" stylesheets="@viewnote.css" text="-" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Inter Medium" size="28.0" />
+                     </font>
+                  </Button>
+               </center>
+               <right>
+                  <Pane prefHeight="42.0" prefWidth="5.0" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+         </left>
+      </BorderPane>
+   </graphic>
+</fx:root>

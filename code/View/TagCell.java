@@ -35,7 +35,7 @@ public class TagCell extends ListCell<String> {
 
     private void loadFXML() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("tag_cell.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Code/View/tag_cell.fxml"));
             loader.setController(this);
             loader.setRoot(this);
             loader.load();

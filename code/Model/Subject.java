@@ -1,5 +1,8 @@
 package Code.Model;
 
+import Code.View.ObservableObject;
+import com.sun.jmx.mbeanserver.NamedObject;
+import com.sun.tools.corba.se.idl.constExpr.Not;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -14,11 +17,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Subject {
+public class Subject implements ObservableObject {
 
     String name;
     List<String> paths;
     String currentSubject;
+
+    public boolean equals(Object object){
+        return (object instanceof Subject) && ((Subject) object).getName().equals(name);
+    }
+
+    public int hashCode(){
+        return name.hashCode();
+    }
+
+    public void remove(Note note){
+        remove(note.getPath().toString());
+    }
+
+    public void remove(String path){
+        paths.remove(path);
+    }
 
 
     public void setName(String name){
@@ -43,8 +62,15 @@ public class Subject {
     }
 
     public void add(String path){
-        this.paths.add(path);
+        if(!paths.contains(path))
+            this.paths.add(path);
     }
+
+    public void add(Note note){
+        add(note.getPath().toString());
+    }
+
+
 
     private static Subject toSubject(Element subject) throws IOException {
         String name = ((Element) subject.getElementsByTagName("Name").item(0)).getTextContent() ;
@@ -105,6 +131,16 @@ public class Subject {
     }
 
 
+    public static List<Subject> getSubjects(List<Subject>subjects, Note note){
+        List<Subject> subs = new ArrayList<>();
+        for(Subject s: subjects){
+            if(s.memberOf(note)){
+                subs.add(s);
+            }
+        }
+        return subs;
+    }
+
 
     public String toXML(){
         String xml = "";
@@ -118,5 +154,14 @@ public class Subject {
     }
 
 
+    @Override
+    public String getDisplayName() {
+        return "Subject: " + getName();
+    }
+
+    @Override
+    public boolean contains(Object object) {
+        return false;
+    }
 
 }

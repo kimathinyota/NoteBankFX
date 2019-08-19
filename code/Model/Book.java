@@ -66,6 +66,11 @@ public class Book extends Note {
 		return numberOfPages;
 	}
 
+
+	public int getMaximumNumberOfPages(){
+		return numberOfPages;
+	}
+
 	private String getSpecifyPages(int numberOfPages){
 		String pages = "";
 		for(int i=1; i<numberOfPages+1; i++){
@@ -171,7 +176,7 @@ public class Book extends Note {
 	 * @param pages
 	 * @return List<Integer> list of integers
 	 */
-	private static List<Integer> getIntegers(String pages){
+	public static List<Integer> getIntegers(String pages){
 		pages = pages.trim();
 
 		pages = pages.replaceAll("\\(","");
@@ -243,6 +248,18 @@ public class Book extends Note {
 		if(specifyPages==null || specifyPages.equals(""))
 			return "";
 		List<Integer> sorted = getIntegers(specifyPages);
+
+		return displayName(sorted);
+	}
+
+
+	public static String displayName(List<Integer> list){
+
+		if(list.isEmpty()){
+			return null;
+		}
+
+		List<Integer> sorted = list;
 		Collections.sort(sorted);
 
 		String temp = (sorted.size()>0 ? sorted.get(0).toString() : "");
@@ -267,9 +284,10 @@ public class Book extends Note {
 	public String toString() {
 		String ext = displayName(this.specifyPages);
 
-		return ("Book: " + this.getName().replaceAll("-"," ") + " " +  ext);
+		return ("Book: " + this.getName().replaceAll("-"," ") + " (" +  (ext) + ")");
 
 	}
+
 
 
 }

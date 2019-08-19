@@ -161,9 +161,7 @@
 	-fx-background: transparent;
 }
 
-.mylistview ListCell{
-	-fx-background-color: red;
-}
+
 
 
 
@@ -242,6 +240,12 @@
 
 
 
+
+
+
+.title:hover{
+	-fx-text-fill: grey;
+}
 
 
 

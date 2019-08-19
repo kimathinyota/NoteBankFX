@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<fx:root prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: #404040#404040; -fx-background-radius: 15px; -fx-border-radius: 15px;" type="GridPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <BorderPane>
+         <center>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <center>
+                        <BorderPane style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px;">
+                           <left>
+                              <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleSearchAction" prefHeight="25.0" prefWidth="24.0" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="search" stylesheets="@notes.css" BorderPane.alignment="CENTER">
+                                 <graphic>
+                                    <AnchorPane layoutX="3.0" prefHeight="26.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px;">
+                                       <children>
+                                          <Circle fill="WHITE" layoutX="10.0" layoutY="12.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+                                          <Line endX="-8.0" endY="-12.999996185302734" layoutX="31.0" layoutY="35.0" startX="-15.0" startY="-18.000003814697266" strokeLineCap="ROUND" strokeWidth="3.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </graphic>
+                              </Button>
+                           </left>
+                           <center>
+                              <TextField fx:id="search" onKeyPressed="#handleSearchEnterPress" prefHeight="27.0" prefWidth="133.0" promptText="Search" style="-fx-background-color: transparent;">
+                                 <font>
+                                    <Font name="Inter Light BETA" size="13.0" />
+                                 </font>
+                              </TextField>
+                           </center>
+                        </BorderPane>
+                     </center>
+                     <top>
+                        <Pane prefHeight="7.0" prefWidth="357.0" BorderPane.alignment="CENTER" />
+                     </top>
+                     <right>
+                        <Pane prefWidth="10.0" BorderPane.alignment="CENTER" />
+                     </right>
+                  </BorderPane>
+               </top>
+               <center>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <center>
+                        <ListView fx:id="firstList" styleClass="mylistview" stylesheets="@viewnote.css" />
+                     </center>
+                     <top>
+                        <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+                     </top>
+                     <bottom>
+                        <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+               </center>
+               <right>
+                  <Pane prefWidth="10.0" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+         </center>
+         <left>
+            <Pane prefWidth="10.0" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Pane prefWidth="1.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+      <BorderPane layoutX="10.0" layoutY="10.0" GridPane.columnIndex="1">
+         <center>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <top>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <top>
+                        <Pane prefHeight="5.0" BorderPane.alignment="CENTER" />
+                     </top>
+                     <right>
+                        <Pane prefWidth="5.0" BorderPane.alignment="CENTER" />
+                     </right>
+                  </BorderPane>
+               </top>
+               <center>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <center>
+                        <ListView fx:id="secondList" styleClass="mylistview" stylesheets="@viewnote.css" />
+                     </center>
+                     <bottom>
+                        <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+               </center>
+               <right>
+                  <Pane prefWidth="5.0" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+         </center>
+         <left>
+            <Pane prefWidth="5.0" BorderPane.alignment="CENTER" />
+         </left>
+      </BorderPane>
+   </children>
+</fx:root>

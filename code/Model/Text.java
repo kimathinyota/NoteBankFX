@@ -88,5 +88,7 @@ public class Text extends Note {
 		return title;
 
 	}
+
+
 }
 

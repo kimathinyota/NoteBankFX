@@ -1,6 +1,6 @@
 package Code.Controller;
 
-public class Integer {
+public class IntegerValue {
 
     int integer;
 
@@ -12,7 +12,7 @@ public class Integer {
         return integer;
     }
 
-    public Integer(int integer){
+    public IntegerValue(int integer){
         this.integer = integer;
     }
 

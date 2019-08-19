@@ -688,5 +688,6 @@
       </AnchorPane>
       <fx:include fx:id="createNote" source="createnote.fxml" />
       <fx:include fx:id="createIdea" source="createidea.fxml" />
+      <fx:include fx:id="viewNote" source="viewnote.fxml" />
    </children>
 </StackPane>

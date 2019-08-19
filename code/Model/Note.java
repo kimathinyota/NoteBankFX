@@ -1,14 +1,21 @@
 package Code.Model;
 
+import Code.View.ObservableObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-public abstract class Note {
+public abstract class Note implements ObservableObject {
 
-	private StringBuilder path;
-	private NoteType type;
+	protected StringBuilder path;
+	protected NoteType type;
+
+
+	public boolean contains(Object o){
+		return false;
+	}
 
 
 	/**
@@ -18,6 +25,10 @@ public abstract class Note {
 
 	public String getName(){
 		return getName(path.toString());
+	}
+
+	public String getDisplayName(){
+		return this.toString();
 	}
 
 	public static String getName(String path) {
@@ -104,6 +115,21 @@ public abstract class Note {
 
 
 
+	/**
+	 * Object is equal if they share the same file path
+	 */
+	@Override
+	public boolean equals(Object n) {
+		return (n instanceof Note) && this.path.toString().equals( ((Note) n).getPath().toString() );
+	}
+
+	/**
+	 * Override hash code to match equals
+	 */
+	@Override
+	public int hashCode() {
+		return path.toString().hashCode();
+	}
 
 
 
@@ -128,22 +154,6 @@ public abstract class Note {
 	}
 
 
-	
-	/**
-	 * Object is equal if they share the same file path
-	 */
-	@Override
-	public boolean equals(Object n) {
-		return (n instanceof Note) && this.path.equals( ((Note) n).getPath() );
-	}
-
-	/**
-	 * Override hash code to match equals
-	 */
-	@Override
-	public int hashCode() {
-		return path.hashCode();
-	}
 
 
 	public abstract SearchInformation search(String searchInput);

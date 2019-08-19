@@ -78,7 +78,7 @@ public class FilterSettings {
     private List<Note> filter(List<Note>notes){
         List<Note> after = new ArrayList<>();
         for(Note n: notes){
-            if( (search.equals("") || n.search(search).getScore() > 50)  &&  ((n.getNoteType().equals(NoteType.Image) && includeImages) ||
+            if( (search.equals("") || n.getName().toLowerCase().contains(search.toLowerCase()))  &&  ((n.getNoteType().equals(NoteType.Image) && includeImages) ||
                  (n.getNoteType().equals(NoteType.Book) && includeBooks) ||
                  (n.getNoteType().equals(NoteType.Text) && includeTexts) )){
                 after.add(n);

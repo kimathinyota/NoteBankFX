@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
@@ -78,6 +79,9 @@ public class MainWindowController implements RefreshSubjectsController {
     @FXML protected ToggleButton includeIdeasToggle;
     @FXML protected ToggleButton includeStudyPlansToggle;
     @FXML protected ListView<String> subjectList;
+
+    @FXML protected Pane viewNote;
+
 
     Pane homeFeaturedPanel, homeNotesPanel;
     Pane ideasIdeaPanel, ideasMindMapPanel, ideasOverviewPanel;
@@ -273,23 +277,29 @@ public class MainWindowController implements RefreshSubjectsController {
         /**
          * Monitor visibility property for outer windows to disable/enable mainwindow when required
          */
-        createIdea.visibleProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue!=oldValue)
-                handleOuterDialogVisibilityChange(oldValue,newValue);
-        });
 
-        createNote.visibleProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue!=oldValue)
-                handleOuterDialogVisibilityChange(oldValue,newValue);
-        });
+        enableAndShowMainWindowOnClosingNode(createIdea);
+        enableAndShowMainWindowOnClosingNode(createNote);
+        enableAndShowMainWindowOnClosingNode(advancedSearch);
+        enableAndShowMainWindowOnClosingNode(viewNote);
 
-        advancedSearch.visibleProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue!=oldValue)
-                handleOuterDialogVisibilityChange(oldValue,newValue);
-        });
+
+
+        Node node;
 
 
         this.numberOfSubjects = this.subjectList.getItems().size();
+
+
+
+    }
+
+
+    private void enableAndShowMainWindowOnClosingNode(Node node){
+        node.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!=oldValue)
+                handleOuterDialogVisibilityChange(oldValue,newValue);
+        });
     }
 
     private String currentlyEditingSubject = null;
@@ -523,6 +533,7 @@ public class MainWindowController implements RefreshSubjectsController {
         createIdea.setVisible(false);
         advancedSearch.setVisible(false);
         searchlistpane.setVisible(false);
+        viewNote.setVisible(false);
     }
 
     /**
@@ -571,6 +582,11 @@ public class MainWindowController implements RefreshSubjectsController {
     @FXML protected void handleNewIdeaAction(ActionEvent e){
         closeOuterWindows();
         createIdea.setVisible(true);
+    }
+
+
+    public void viewNotes(){
+
     }
 
 

@@ -1,10 +1,12 @@
 package Code.Model;
 
+import Code.View.ObservableObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.io.IOException;
 import java.util.*;
+import java.lang.Integer;
 
 
 /**
@@ -16,7 +18,7 @@ import java.util.*;
  *
  */
 
-public class Idea {
+public class Idea implements ObservableObject {
 	private HashMap<Note,Integer> notes;
 	private Set<String>keyWords;
 	private String uniqueID;
@@ -39,6 +41,7 @@ public class Idea {
 		if(notes!=null)
 			this.notes = new HashMap<Note,Integer>(notes);
 
+
 		if(keyWords!=null){
 			this.keyWords = new HashSet<>(keyWords);
 		}
@@ -48,6 +51,9 @@ public class Idea {
 		if(finalNote!=null){
 			this.finalNote = finalNote;
 		}
+
+		this.notes.remove(null);
+		this.keyWords.remove(null);
 
 	}
 
@@ -78,6 +84,9 @@ public class Idea {
 
 
 
+	public String getNoteType(Note note){
+		return (notes.get(note).equals(Idea.PROMPT_NOTE) ? "Prompt" : "Non-Prompt");
+	}
 
 
 	
@@ -96,6 +105,7 @@ public class Idea {
 	public List<Note> getNotes(){
 		ArrayList<Note> notes = new ArrayList<Note>();
 		notes.addAll(this.notes.keySet());
+		notes.remove(null);
 		return notes;
 	}
 	
@@ -109,14 +119,15 @@ public class Idea {
 			if(this.notes.get(n).intValue()==type)
 				notes.add(n);
 		}
+		notes.remove(null);
 		return notes;
 	}
 
-	public List<Note> getPromptNotes(int type){
+	public List<Note> getPromptNotes(){
 		return getNotes(Idea.PROMPT_NOTE);
 	}
 
-	public List<Note> getNonPromptNotes(int type){
+	public List<Note> getNonPromptNotes(){
 		return getNotes(Idea.NON_PROMPT_NOTE);
 	}
 	
@@ -169,9 +180,7 @@ public class Idea {
 	
 	public void addNote(Note note, boolean isPromptNote) {
 		if(note==null) return;
-
-		int type = (isPromptNote ? Idea.NON_PROMPT_NOTE : Idea.PROMPT_NOTE);
-
+		int type = (isPromptNote ? Idea.PROMPT_NOTE : Idea.NON_PROMPT_NOTE);
 		this.notes.put(note, type);
 	}
 
@@ -184,20 +193,19 @@ public class Idea {
 		return null;
 	}
 	
-	
 	public void removeNote(Note note) {
 		if(note==null) return;
 		if(this.finalNote!=null && this.finalNote.equals(note))
 			this.finalNote = null;
 		notes.remove(note);
 	}
-	
+
 	public void addNotes(Collection<Note> notes) {
 		for(Note n: notes) {
 			if(n!=null) this.addNote(n);
 		}
 	}
-	
+
 	public void addNotes(HashMap<Note, Integer> notes) {
 		for(Note n: notes.keySet()) {
 			this.notes.put(n, notes.get(n));
@@ -216,9 +224,7 @@ public class Idea {
 		this.keyWords.remove(word);
 	}
 	
-	public Boolean contains(Note n) {
-		return this.getNotes().contains(n);
-	}
+
 	
 	/**
 	 * Checks if any of the notes within the collection are contained in this idea
@@ -272,13 +278,19 @@ public class Idea {
 				
 				if( ((Element) nodes.item(i)).getElementsByTagName("Text").getLength() > 0) {
 					Element elem = (Element) ((Element) nodes.item(i)).getElementsByTagName("Text").item(0);
-					createdIdea.addNote(Text.fromXML(elem),type );
+					Text text = Text.fromXML(elem);
+					if(text!=null)
+						createdIdea.addNote(text,type );
 				}else if( ((Element) nodes.item(i)).getElementsByTagName("Image").getLength() > 0 ) {
 					Element elem = (Element) ((Element) nodes.item(i)).getElementsByTagName("Image").item(0);
-					createdIdea.addNote(Image.fromXML(elem),type );
+					Image image = Image.fromXML(elem);
+					if(image!=null)
+						createdIdea.addNote(image,type );
 				}else if( ((Element) nodes.item(i)).getElementsByTagName("Book").getLength() > 0 ) {
 					Element elem = (Element) ((Element) nodes.item(i)).getElementsByTagName("Book").item(0);
-					createdIdea.addNote(Book.fromXML(elem),type );
+					Book book = Book.fromXML(elem);
+					if (book != null)
+						createdIdea.addNote(book,type );
 				}
 			}
 		}
@@ -407,7 +419,15 @@ public class Idea {
 	}
 
 	public boolean equals(Object object){
-		return (object instanceof  Idea) && ( equalsID(((Idea) object).getID()) );
+		return (object instanceof Idea) && ( (Idea) object).equalsID(this.uniqueID);
+	}
+	@Override
+	public String getDisplayName() {
+		return toString();
 	}
 
+	@Override
+	public boolean contains(Object object) {
+		return (object instanceof Note) && this.getNotes().contains((Note) object);
+	}
 }
