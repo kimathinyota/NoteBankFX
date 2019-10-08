@@ -1,0 +1,8 @@
+<html dir="ltr"><head></head><body contenteditable="true">
+
+<p>
+
+<font face="Lucida Grande"><b>This is a sample text</b></font></p>
+<p><font face="Lucida Grande" color="#f21f1f"><b>This is a sample text</b></font></p>
+<p><font face="Lucida Grande" color="#f21f1f"><b>This is a sample text</b></font></p>
+<p><b style="font-family: 'Lucida Grande';"><font color="#56f21f">This is a sample text</font></b></p></body></html>

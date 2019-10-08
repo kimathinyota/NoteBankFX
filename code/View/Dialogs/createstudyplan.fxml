@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="window" visible="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.Dialogs.Create.CreateStudyPlanController">
+   <center>
+      <BorderPane prefHeight="723.0" prefWidth="714.0" styleClass="window" stylesheets="@../css/create-note.css">
+         <center>
+            <BorderPane prefHeight="734.0" prefWidth="710.0">
+               <center>
+                  <VBox maxHeight="-Infinity" BorderPane.alignment="CENTER">
+                     <children>
+                        <BorderPane>
+                           <top>
+                              <Label prefHeight="38.0" prefWidth="113.0" text="Name" textFill="#ddd6d6" BorderPane.alignment="CENTER_LEFT">
+                                 <font>
+                                    <Font name="Inter Medium" size="22.0" />
+                                 </font>
+                              </Label>
+                           </top>
+                           <center>
+                              <TextField fx:id="name" minHeight="-Infinity" prefHeight="44.0" prefWidth="650.0" style="-fx-background-color: white; -fx-background-radius: 8px;" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Inter Semi Bold" size="23.0" />
+                                 </font></TextField>
+                           </center>
+                        </BorderPane>
+                        <Pane prefHeight="10.0" />
+                        <BorderPane layoutX="10.0" layoutY="10.0">
+                           <top>
+                              <Label prefHeight="38.0" text="Description" textFill="#ddd6d6" BorderPane.alignment="CENTER_LEFT">
+                                 <font>
+                                    <Font name="Inter Medium" size="22.0" />
+                                 </font>
+                              </Label>
+                           </top>
+                           <center>
+                              <TextArea fx:id="description" prefHeight="200.0" styleClass="text-area" stylesheets="@../css/StudyPlan.css" wrapText="true" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Inter Medium" size="23.0" />
+                                 </font></TextArea>
+                           </center>
+                        </BorderPane>
+                        <Pane layoutX="10.0" layoutY="93.0" prefHeight="20.0" />
+                        <BorderPane>
+                           <top>
+                              <Label prefHeight="38.0" prefWidth="113.0" text="Properties" textFill="#ddd6d6" BorderPane.alignment="CENTER_LEFT">
+                                 <font>
+                                    <Font name="Inter Medium" size="22.0" />
+                                 </font>
+                              </Label>
+                           </top>
+                           <center>
+                              <VBox BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Pane layoutX="10.0" layoutY="181.0" prefHeight="10.0" />
+                                    <BorderPane layoutX="10.0" layoutY="183.0" prefHeight="35.0" prefWidth="650.0">
+                                       <left>
+                                          <Label alignment="TOP_LEFT" prefHeight="53.0" prefWidth="204.0" text="Study length" textFill="WHITE" BorderPane.alignment="CENTER">
+                                             <font>
+                                                <Font name="Inter Light BETA" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </left>
+                                       <center>
+                                          <Slider fx:id="studyLength" prefHeight="32.0" prefWidth="459.0" showTickLabels="true" styleClass="custom-slider" stylesheets="@../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                       </center>
+                                    </BorderPane>
+                                    <Pane layoutX="10.0" layoutY="10.0" prefHeight="15.0" />
+                                    <BorderPane layoutX="10.0" layoutY="30.0" prefHeight="35.0" prefWidth="650.0">
+                                       <left>
+                                          <Label alignment="TOP_LEFT" prefHeight="53.0" prefWidth="204.0" text="Ideas Per Set" textFill="WHITE" BorderPane.alignment="CENTER">
+                                             <font>
+                                                <Font name="Inter Light BETA" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </left>
+                                       <center>
+                                          <Slider fx:id="ideasPerSet" prefHeight="32.0" prefWidth="459.0" showTickLabels="true" styleClass="custom-slider" stylesheets="@../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                       </center>
+                                    </BorderPane>
+                                    <Pane layoutX="10.0" layoutY="65.0" prefHeight="15.0" />
+                                    <BorderPane layoutX="10.0" layoutY="85.0" prefHeight="35.0" prefWidth="650.0">
+                                       <left>
+                                          <Label alignment="TOP_LEFT" prefHeight="53.0" prefWidth="204.0" text="Completion score" textFill="WHITE" BorderPane.alignment="CENTER">
+                                             <font>
+                                                <Font name="Inter Light BETA" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </left>
+                                       <center>
+                                          <Slider fx:id="completionScore" prefHeight="32.0" showTickLabels="true" styleClass="custom-slider" stylesheets="@../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                       </center>
+                                    </BorderPane>
+                                 </children>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                        <Pane layoutX="10.0" layoutY="189.0" prefHeight="10.0" />
+                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="650.0">
+                           <children>
+                              <Button fx:id="cancel" mnemonicParsing="false" onAction="#handleCancelAction" prefHeight="50.0" prefWidth="135.0" styleClass="cancel" stylesheets="@../css/create-note.css" text="CANCEL" textFill="WHITE">
+                                 <font>
+                                    <Font name="Inter Semi Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                              <Pane prefWidth="10.0" />
+                              <Button fx:id="create" mnemonicParsing="false" onAction="#handleCreateAction" prefHeight="50.0" prefWidth="135.0" styleClass="create" stylesheets="@../css/create-note.css" text="CREATE" textFill="WHITE">
+                                 <font>
+                                    <Font name="Inter Semi Bold" size="15.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Pane layoutX="10.0" layoutY="80.0" prefHeight="10.0" />
+                     </children>
+                  </VBox>
+               </center>
+               <left>
+                  <Pane prefWidth="30.0" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <Pane prefWidth="30.0" BorderPane.alignment="CENTER" />
+               </right>
+               <bottom>
+                  <Pane prefHeight="17.0" BorderPane.alignment="CENTER" />
+               </bottom>
+               <top>
+                  <Pane prefHeight="7.0" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+         </center>
+         <top>
+            <BorderPane prefHeight="46.0" BorderPane.alignment="CENTER">
+               <bottom>
+                  <Pane prefHeight="1.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
+               </bottom>
+               <center>
+                  <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" text="Study Plan" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Inter Semi Bold" size="22.0" />
+                     </font>
+                  </Label>
+               </center>
+            </BorderPane>
+         </top>
+      </BorderPane>
+   </center>
+   <left>
+      <Pane maxWidth="1.7976931348623157E308" minWidth="90.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane maxWidth="1.7976931348623157E308" minWidth="90.0" BorderPane.alignment="CENTER" />
+   </right>
+   <top>
+      <Pane prefHeight="50.0" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <Pane prefHeight="50.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

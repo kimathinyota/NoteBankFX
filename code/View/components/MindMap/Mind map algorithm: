@@ -1,0 +1,58 @@
+Mind map algorithm:
+
+
+
+
+x = r sin a
+
+y = r cos a
+
+
+
+
+
+
+
+
+100 (sin 20) , 100 (cos 20)
+
+
+
+
+y/sin(90-a) = r/sin(90)
+
+y = rsin(90-a)
+
+
+
+Takes r, n, startAngle, endAngle
+r = radius of circle
+n = number of outer nodes
+sA = small (startAngle, endAngle)
+fE = endAngle (startAngle, endAngle)
+
+k = |fE - sA|
+f = closest factor of k that is >= n
+a = k/f
+
+createLine ( centerX, centerY, radius, angle, pane) {
+	point1 = (centerX, centerY)
+	point2 = (centerX + radius (sin a), centerY + radius (cos a))
+	return line from point1 to point2
+}
+
+Create anchor pane of (R + factory.maxCellWidth)^2 * (R + factory.maxCellWidth)^2
+(cX,cY) = center point of anchor pane
+
+
+For i=sA; i<fE; i+=(a)
+	line = createLine(cX,cY,r,i)
+	(x,y) = line.get2ndPoint()
+	Add cell to (x,y) on anchor pane
+	Add line to (cX,cY) on anchor pane
+
+
+
+
+
+

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane style="-fx-background-color: rgb(43, 43, 43)rgb(43, 43, 43) rgb(43, 43, 43)rgb(43, 43, 43);" stylesheets="@../../Quiz/quiz.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.quiz.QuizPageController">
+   <center>
+      <BorderPane BorderPane.alignment="CENTER">
+         <top>
+            <BorderPane BorderPane.alignment="CENTER">
+               <left>
+                  <Button fx:id="quit" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="quit" text="QUIT" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Inter Semi Bold" size="17.0" />
+                     </font>
+                  </Button>
+               </left>
+               <right>
+                  <Button fx:id="next" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="next" text="NEXT" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Inter Semi Bold" size="17.0" />
+                     </font>
+                  </Button>
+               </right>
+            </BorderPane>
+         </top>
+         <center>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <top>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <top>
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="93.0" text="Prompt" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font name="Inter Medium" size="22.0" />
+                           </font>
+                        </Label>
+                     </top>
+                     <center>
+                        <BorderPane maxWidth="1.7976931348623157E308" prefHeight="70.0" style="-fx-background-color: white;" styleClass="prompt-pane">
+                           <right>
+                              <Button fx:id="promptNotes" maxHeight="1.7976931348623157E308" mnemonicParsing="false" styleClass="prompt-note" BorderPane.alignment="CENTER">
+                                 <graphic>
+                                    <BorderPane maxWidth="-Infinity" prefWidth="108.0" styleClass="prompt-pane">
+                                       <left>
+                                          <BorderPane prefHeight="62.0" prefWidth="86.0" styleClass="prompt-left-pane" BorderPane.alignment="CENTER_LEFT">
+                                             <center>
+                                                <Label prefHeight="48.0" prefWidth="70.0" text="Prompt Notes" textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER_RIGHT">
+                                                   <font>
+                                                      <Font name="Inter Semi Bold" size="17.0" />
+                                                   </font>
+                                                </Label>
+                                             </center>
+                                          </BorderPane>
+                                       </left>
+                                    </BorderPane>
+                                 </graphic>
+                              </Button>
+                           </right>
+                           <center>
+                              <Label fx:id="prompt" text="QUESTION: Describe a Monkey's Feeding Process" BorderPane.alignment="CENTER_LEFT">
+                                 <font>
+                                    <Font name="Inter Extra Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                           </center>
+                           <left>
+                              <Pane prefWidth="22.0" BorderPane.alignment="CENTER" />
+                           </left>
+                        </BorderPane>
+                     </center>
+                  </BorderPane>
+               </top>
+               <center>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <top>
+                        <BorderPane>
+                           <left>
+                              <Label fx:id="responseTitle" alignment="CENTER" prefHeight="57.0" text="  Evaluate Response" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Inter Medium" size="22.0" />
+                                 </font>
+                              </Label>
+                           </left>
+                           <right>
+                              <BorderPane fx:id="confidencePane" BorderPane.alignment="CENTER">
+                                 <center>
+                                    <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="170.0" BorderPane.alignment="CENTER_LEFT">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <ToggleButton fx:id="star1" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="star" />
+                                          <ToggleButton fx:id="star2" layoutX="10.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="star" GridPane.columnIndex="1" />
+                                          <ToggleButton fx:id="star3" layoutX="40.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="star" GridPane.columnIndex="2" />
+                                          <ToggleButton fx:id="star4" layoutX="70.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="star" GridPane.columnIndex="3" />
+                                          <ToggleButton fx:id="star5" layoutX="100.0" layoutY="10.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="star" GridPane.columnIndex="4" />
+                                       </children>
+                                    </GridPane>
+                                 </center>
+                                 <left>
+                                    <Label prefHeight="20.0" prefWidth="103.0" text="Confidence" textFill="WHITE" BorderPane.alignment="CENTER">
+                                       <font>
+                                          <Font name="Inter Semi Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </left>
+                              </BorderPane>
+                           </right>
+                        </BorderPane>
+                     </top>
+                     <center>
+                        <StackPane>
+                           <children>
+                              <BorderPane fx:id="responsePane">
+                                 <center>
+                                    <BorderPane prefHeight="419.0" prefWidth="737.0">
+                                       <center>
+                                          <HTMLEditor fx:id="responseEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-padding: 0px; -fx-background-color: grey;" stylesheets="@../../css/htmleditor.css" />
+                                       </center>
+                                    </BorderPane>
+                                 </center>
+                                 <bottom>
+                                    <StackPane fx:id="setToAnswerPane" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <BorderPane fx:id="evaluatePane">
+                                             <center>
+                                                <WebView fx:id="missingKeyWord" minHeight="-1.0" minWidth="-1.0" prefHeight="120.0" prefWidth="-1.0" />
+                                             </center>
+                                             <bottom>
+                                                <Pane prefHeight="25.0" prefWidth="875.0" BorderPane.alignment="CENTER" />
+                                             </bottom>
+                                          </BorderPane>
+                                          <Button fx:id="setToAnswer" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="43.0" prefWidth="875.0" styleClass="next" text="SET TO ANSWER" StackPane.alignment="BOTTOM_CENTER">
+                                             <font>
+                                                <Font name="Inter Semi Bold" size="17.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </StackPane>
+                                 </bottom>
+                              </BorderPane>
+                           </children>
+                        </StackPane>
+                     </center>
+                  </BorderPane>
+               </center>
+            </BorderPane>
+         </center>
+      </BorderPane>
+   </center>
+   <top>
+      <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <Pane prefWidth="15.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane prefWidth="10.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

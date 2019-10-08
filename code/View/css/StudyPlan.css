@@ -1,0 +1,77 @@
+.play .circle{
+	-fx-fill: white;
+	-fx-stroke: white;
+
+}
+
+.play:hover .circle{
+	-fx-fill: #14cc30;
+	-fx-stroke: #14cc30;
+
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+
+.text-area{
+	-fx-background-color: white;
+    -fx-background-radius: 9px;
+    -fx-border-color: transparent;
+}
+
+
+.pick-study-plan{
+	-fx-background-color: white;
+	-fx-background-radius: 8px;
+	-fx-border-radius: 8px;
+	-fx-mark-color: black;
+	-fx-alignment: center;
+
+}
+
+.pick-study-plan > .label{ 
+	-fx-text-fill: black; 
+	-fx-font-size: 23px;
+	-fx-font-family: Inter-Semi-Bold;
+}
+
+.name{
+	-fx-text-fill: black; 
+	-fx-font-size: 23px;
+	-fx-font-family: Inter-Semi-Bold;
+}
+
+
+.pick-study-plan .context-menu .label {
+    -fx-text-fill: black; 
+    -fx-font-size: 23px;
+    -fx-font-family: Inter-Semi-Bold;
+
+
+
+
+}
+
+.pick-study-plan .context-menu{
+	-fx-background-color: #4d4f4d;
+}
+
+.pick-study-plan .menu-item:focused{
+	-fx-background-color: #858585;
+}
+
+.pick-study-plan .menu-item:odd{
+	-fx-background-color: #858585;
+}
+
+.pick-study-plan .menu-item:even{
+	-fx-background-color: #858585;
+}

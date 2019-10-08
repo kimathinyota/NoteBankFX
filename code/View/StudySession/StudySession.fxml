@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListCell?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+
+<fx:root style="-fx-padding: 0px; -fx-background-color: transparent;" type="javafx.scene.control.ListCell" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <StackPane>
+         <children>
+            <BorderPane StackPane.alignment="CENTER">
+               <center>
+                  <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="325.0" style="-fx-background-color: #404040#404040; -fx-background-radius: 10px; -fx-border-radius: 10px;">
+                     <top>
+                        <BorderPane BorderPane.alignment="CENTER">
+                           <center>
+                              <Label fx:id="sessionName" alignment="TOP_CENTER" text="Culinary Exam" textFill="WHITE">
+                                 <font>
+                                    <Font name="Inter Semi Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                           </center>
+                           <top>
+                              <BorderPane prefHeight="19.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+                                 <right>
+                                    <HBox alignment="CENTER" BorderPane.alignment="BOTTOM_CENTER">
+                                       <children>
+                                          <Label fx:id="setNumber" alignment="BOTTOM_RIGHT" maxHeight="1.7976931348623157E308" text="BONUS" textFill="WHITE">
+                                             <font>
+                                                <Font name="Inter Medium" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Pane prefWidth="10.0" />
+                                       </children>
+                                    </HBox>
+                                 </right>
+                              </BorderPane>
+                           </top>
+                        </BorderPane>
+                     </top>
+                     <center>
+                        <BorderPane prefHeight="94.0" prefWidth="305.0" BorderPane.alignment="CENTER">
+                           <center>
+                              <VBox alignment="CENTER" prefHeight="95.0" prefWidth="305.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="305.0">
+                                       <children>
+                                          <Button fx:id="play" mnemonicParsing="false" prefHeight="45.0" prefWidth="40.0" style="-fx-padding: 0px; -fx-background-color: transparent;" styleClass="play" stylesheets="@../css/StudyPlan.css">
+                                             <graphic>
+                                                <AnchorPane prefWidth="40.0">
+                                                   <children>
+                                                      <Circle fx:id="circle" fill="WHITE" layoutX="20.0" layoutY="20.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" styleClass="circle" />
+                                                      <Polygon fx:id="triangle" fill="#404040" layoutX="15.0" layoutY="31.0" points="0.0, -1.0, 15.111465454101562, -10.9521484375, 0.0, -21.0" stroke="#404040" strokeType="INSIDE" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </graphic>
+                                          </Button>
+                                          <Pane prefWidth="15.0" />
+                                          <BorderPane>
+                                             <center>
+                                                <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="31.0" style="-fx-background-color: #C0C0C0#C0C0C0; -fx-background-radius: 4px; -fx-border-radius: 4px;" BorderPane.alignment="TOP_CENTER">
+                                                   <center>
+                                                      <Label fx:id="days" text="24" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                         <font>
+                                                            <Font name="Inter Semi Bold" size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </center>
+                                                </BorderPane>
+                                             </center>
+                                             <top>
+                                                <Label alignment="TOP_CENTER" text="Days" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font name="Inter Medium" size="13.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets bottom="4.0" />
+                                                   </padding>
+                                                </Label>
+                                             </top>
+                                          </BorderPane>
+                                          <Pane prefWidth="10.0" />
+                                          <BorderPane>
+                                             <center>
+                                                <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="31.0" style="-fx-background-color: #C0C0C0#C0C0C0; -fx-background-radius: 4px; -fx-border-radius: 4px;" BorderPane.alignment="TOP_CENTER">
+                                                   <center>
+                                                      <Label fx:id="hours" text="24" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                         <font>
+                                                            <Font name="Inter Semi Bold" size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </center>
+                                                </BorderPane>
+                                             </center>
+                                             <top>
+                                                <Label alignment="TOP_CENTER" text="Hours" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font name="Inter Medium" size="13.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets bottom="4.0" />
+                                                   </padding>
+                                                </Label>
+                                             </top>
+                                          </BorderPane>
+                                          <Pane layoutX="41.0" layoutY="10.0" prefWidth="10.0" />
+                                          <BorderPane>
+                                             <center>
+                                                <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="31.0" style="-fx-background-color: #C0C0C0#C0C0C0; -fx-background-radius: 4px; -fx-border-radius: 4px;" BorderPane.alignment="TOP_CENTER">
+                                                   <center>
+                                                      <Label fx:id="mins" text="24" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                         <font>
+                                                            <Font name="Inter Semi Bold" size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </center>
+                                                </BorderPane>
+                                             </center>
+                                             <top>
+                                                <Label alignment="TOP_CENTER" text="Mins" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font name="Inter Medium" size="13.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets bottom="4.0" />
+                                                   </padding>
+                                                </Label>
+                                             </top>
+                                          </BorderPane>
+                                          <Pane layoutX="82.0" layoutY="10.0" prefWidth="10.0" />
+                                          <BorderPane>
+                                             <center>
+                                                <StackPane BorderPane.alignment="TOP_CENTER">
+                                                   <children>
+                                                      <Circle fill="#2197ff00" radius="21.0" strokeType="INSIDE" strokeWidth="5.0" StackPane.alignment="CENTER">
+                                                         <stroke>
+                                                            <LinearGradient endX="1.0" endY="1.0">
+                                                               <stops>
+                                                                  <Stop color="#42a82b" />
+                                                                  <Stop color="WHITE" offset="1.0" />
+                                                               </stops>
+                                                            </LinearGradient>
+                                                         </stroke>
+                                                         <StackPane.margin>
+                                                            <Insets top="-2.0" />
+                                                         </StackPane.margin>
+                                                      </Circle>
+                                                      <Label fx:id="seconds" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="59" textAlignment="CENTER" textFill="WHITE" StackPane.alignment="CENTER">
+                                                         <font>
+                                                            <Font name="Inter Semi Bold" size="18.0" />
+                                                         </font>
+                                                         <StackPane.margin>
+                                                            <Insets top="-2.0" />
+                                                         </StackPane.margin>
+                                                      </Label>
+                                                   </children>
+                                                </StackPane>
+                                             </center>
+                                             <top>
+                                                <Label alignment="TOP_CENTER" text="Seconds" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font name="Inter Medium" size="13.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets bottom="4.0" />
+                                                   </padding>
+                                                </Label>
+                                             </top>
+                                          </BorderPane>
+                                          <Pane layoutX="83.0" layoutY="10.0" prefHeight="0.0" prefWidth="50.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                     </center>
+                     <bottom>
+                        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label fx:id="progressText" alignment="BOTTOM_RIGHT" maxHeight="1.7976931348623157E308" text="You have completed 10 of 20 Ideas" textFill="WHITE">
+                                 <font>
+                                    <Font name="Inter Medium" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Pane prefHeight="3.0" prefWidth="200.0" />
+                              <ProgressBar fx:id="progress" prefHeight="14.0" prefWidth="286.0" progress="0.0" styleClass="quiz-progress" stylesheets="@../Quiz/quiz.css" />
+                              <Pane prefHeight="9.0" />
+                           </children>
+                        </VBox>
+                     </bottom>
+                  </BorderPane>
+               </center>
+               <right>
+                  <Pane prefWidth="10.0" BorderPane.alignment="CENTER" />
+               </right>
+               <top>
+                  <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+               </top>
+               <bottom>
+                  <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+         </children>
+      </StackPane>
+   </graphic>
+</fx:root>

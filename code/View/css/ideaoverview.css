@@ -1,0 +1,112 @@
+.overviewTree .tree-cell{
+	-fx-background-color:  rgb(43, 43, 43);
+	-fx-border-color: rgb(43, 43, 43);
+	-fx-text-fill: #ffffff ;
+	-fx-font-size: 22;
+
+}
+
+
+
+.overviewTree .tree-cell:selected{
+	-fx-background-color:  derive(rgb(43, 43, 43),70%);
+}
+
+
+.overviewTree{
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;
+}
+
+.overviewTree .tree-disclosure-node{
+	-fx-fill: white;
+}
+
+
+/* The main scrollbar CSS class of ListView */
+.overviewTree .scroll-bar:horizontal ,
+.overviewTree  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+
+
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.overviewTree .increment-button ,.scroll-pane .decrement-button {
+    -fx-background-color:transparent;
+    -fx-border-color:transparent;
+    -fx-border-width: 0px;
+}
+
+/* The main scrollbar **track** CSS class  */
+.overviewTree .scroll-bar:horizontal .track ,
+.overviewTree .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.overviewTree .scroll-bar:horizontal .thumb,
+.overviewTree .scroll-bar:vertical .thumb {
+    /*-fx-background-color:derive(grey,70%); */
+    -fx-background-color: derive(black,50%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.overviewTree StackPane {
+    -fx-background-color: transparent;
+}
+
+.overviewTree Button {
+    -fx-background-color: transparent;
+    -fx-text-fill: transparent;
+}
+
+
+/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
+
+.overviewTree .scroll-bar:horizontal:hover .track ,
+.overviewTree .scroll-bar:horizontal:pressed .track ,
+.overviewTree .scroll-bar:vertical:hover .track,
+.overviewTree .scroll-bar:vertical:pressed .track{
+    -fx-background-color: derive(black,40%);
+    -fx-opacity: 0.2;
+    -fx-background-radius: 0em;
+    -fx-background-color:transparent;
+
+}
+
+/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
+
+.overviewTree .scroll-bar .thumb:hover,
+.overviewTree .scroll-bar .thumb:pressed{
+    /*-fx-background-color: derive(black,50%);*/
+    -fx-background-color: derive(black,40%);
+}
+
+.overviewTree .increment-button:hover ,.scroll-pane .decrement-button:hover {
+    /*-fx-border-color:derive(gray,80%);*/
+    -fx-text-fill: derive(white,10%);
+    -fx-background-color: derive(rgb(43, 43, 43),50%);
+
+}
+
+.overviewTree .scroll-pane{
+    -fx-padding: 0px;
+    -fx-background: rgb(43, 43, 43);
+    -fx-background-color: rgb(43, 43, 43);
+}
+
+.overviewTree .tree-cell > .tree-disclosure-node > .arrow  {
+    -fx-background-color: white;
+}
+.overviewTree .tree-cell:expanded > .tree-disclosure-node > .arrow {
+    -fx-background-color: white;
+}
+

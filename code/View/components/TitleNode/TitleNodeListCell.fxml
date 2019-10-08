@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListCell?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="250.0" style="-fx-padding: 0px; -fx-background-color: transparent;" type="javafx.scene.control.ListCell" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <BorderPane style="-fx-background-color: transparent;">
+         <center>
+            <BorderPane style="-fx-background-color: #404040 #404040; -fx-background-radius: 8px; -fx-border-color: transparent;">
+               <center>
+                  <BorderPane style="-fx-background-color: #404040; -fx-background-radius: 8px; -fx-border-color: transparent;">
+                     <center>
+                        <BorderPane fx:id="itemPane" BorderPane.alignment="CENTER">
+                           <bottom>
+                              <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+                           </bottom>
+                           <top>
+                              <Pane prefHeight="5.0" BorderPane.alignment="CENTER" />
+                           </top>
+                        </BorderPane>
+                     </center>
+                     <top>
+                        <BorderPane fx:id="titlePane" BorderPane.alignment="CENTER">
+                           <center>
+                              <Label minHeight="-Infinity" minWidth="-Infinity" text="Ok man i know" textFill="WHITE" wrapText="true" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Inter Semi Bold" size="19.0" />
+                                 </font>
+                              </Label>
+                           </center>
+                        </BorderPane>
+                     </top>
+                  </BorderPane>
+               </center>
+               <left>
+                  <Pane prefWidth="5.0" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <Pane prefWidth="5.0" BorderPane.alignment="CENTER" />
+               </right>
+               <top>
+                  <Pane prefHeight="5.0" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+         </center>
+         <left>
+            <Pane prefWidth="5.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Pane prefWidth="5.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER" />
+         </right>
+         <top>
+            <Pane prefHeight="5.0" BorderPane.alignment="CENTER" />
+         </top>
+         <bottom>
+            <Pane prefHeight="5.0" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+   </graphic>
+</fx:root>

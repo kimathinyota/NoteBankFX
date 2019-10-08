@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<fx:root fx:id="cell" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-background-color: green;" type="BorderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <Button fx:id="name" mnemonicParsing="false" onAction="#handleClickAction" style="-fx-background-color: transparent;" text="An introduction to chicken" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Inter Medium" size="24.0" />
+         </font>
+      </Button>
+   </center>
+</fx:root>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root alignment="CENTER" style="-fx-background-color: transparent;" type="HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="leftLabel" alignment="CENTER" text="ACCESS IN LAST" textFill="#f8f8f8">
+         <font>
+            <Font name="Inter Semi Bold" size="18.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="rightChoice" styleClass="select-time" stylesheets="@../Quiz/quiz.css" />
+   </children>
+</fx:root>
