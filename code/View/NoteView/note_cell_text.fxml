@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListCell?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="108.0" prefWidth="196.0" style="-fx-padding: 0px;" styleClass="list-cell" stylesheets="@../css/note-cell.css" type="javafx.scene.control.ListCell" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <BorderPane>
+         <center>
+            <BorderPane prefHeight="99.0" prefWidth="196.0" style="-fx-background-radius: 8px; -fx-border-radius: 8px; -fx-border-color: white; -fx-background-color: #1d211c#1d211c;">
+               <top>
+                  <Label fx:id="type" alignment="CENTER" prefHeight="32.0" prefWidth="194.0" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Inter Medium" size="22.0" />
+                     </font>
+                  </Label>
+               </top>
+               <center>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <center>
+                        <Label fx:id="name" alignment="CENTER" contentDisplay="CENTER" prefHeight="77.0" prefWidth="184.0" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                           <font>
+                              <Font name="Inter Light BETA" size="15.0" />
+                           </font>
+                        </Label>
+                     </center>
+                     <top>
+                        <Pane prefHeight="1.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
+                     </top>
+                  </BorderPane>
+               </center>
+               <right>
+                  <Pane prefWidth="7.0" BorderPane.alignment="CENTER" />
+               </right>
+               <left>
+                  <Pane prefHeight="69.0" prefWidth="7.0" BorderPane.alignment="CENTER" />
+               </left>
+            </BorderPane>
+         </center>
+         <top>
+            <Pane prefHeight="5.0" BorderPane.alignment="CENTER" />
+         </top>
+         <bottom>
+            <Pane prefHeight="5.0" BorderPane.alignment="CENTER" />
+         </bottom>
+         <right>
+            <Pane prefWidth="5.0" BorderPane.alignment="CENTER" />
+         </right>
+         <left>
+            <Pane prefWidth="5.0" BorderPane.alignment="CENTER" />
+         </left>
+      </BorderPane>
+   </graphic>
+</fx:root>

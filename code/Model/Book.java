@@ -193,6 +193,16 @@ public class Book extends Note {
 
 	}
 
+	@Override
+	public String getMindMapName() {
+		return "Book: " + getName();
+	}
+
+	@Override
+	public String getTreeName() {
+		return "Book: " + getName();
+	}
+
 	/**
 	 * Convert a book into xml
 	 */
@@ -287,6 +297,9 @@ public class Book extends Note {
 		return ("Book: " + this.getName().replaceAll("-"," ") + " (" +  (ext) + ")");
 
 	}
+
+
+
 
 
 

@@ -13,14 +13,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Topic implements ObservableObject {
 	private List<Topic> subTopics;
 	private List<Idea> ideas;
+
+
 	private String name;
 
 	public void setName(String name){
@@ -44,22 +43,26 @@ public class Topic implements ObservableObject {
 
 	public Topic findParent(Topic node){
 		for(Topic n: this.subTopics){
-			if(n.getID().equals(node.getID())){
+			if(node.equals(n)){
 				return this;
 			}
-			return n.findParent(node);
+			Topic t = n.findParent(node);
+			if(t!=null)
+				return t;
 		}
 		return null;
 	}
 
 	public Topic findParent(Idea node){
 		for(Idea n: this.getIdeas()){
-			if(n.getID().equals(node.getID())){
+			if(n.equals(node)){
 				return this;
 			}
 		}
 		for(Topic n: this.subTopics){
-			return n.findParent(node);
+			Topic t = n.findParent(node);
+			if(t!=null)
+				return t;
 		}
 		return null;
 	}
@@ -101,6 +104,53 @@ public class Topic implements ObservableObject {
 		}
 		return allIdeas;
 	}
+
+	public Topic copy(){
+		Topic copy = new Topic(this.getName(),this.uniqueID);
+		for(Idea i: this.getIdeas()){
+			copy.add(i);
+		}
+
+		for(Topic t: this.getSubTopics()){
+			copy.add(t.copy());
+		}
+		return copy;
+	}
+
+
+	public void removeAllUnassociatedWithNotes(List<Note>notes){
+		List<Idea> ids = new ArrayList<>();
+		for(int i=0; i<ideas.size(); i++){
+			if(!(ideas.get(i).containsAny(notes))){
+				ids.add(ideas.get(i));
+			}
+		}
+		ideas.removeAll(ids);
+
+		List<Topic> topics = new ArrayList<>();
+		for(Topic t: this.subTopics){
+			t.removeAllUnassociatedWithNotes(notes);
+			if(t.getSubTopics().isEmpty() && t.getIdeas().isEmpty()){
+			    topics.add(t);
+            }
+
+		}
+		this.subTopics.removeAll(topics);
+	}
+
+
+	public boolean containsTopicOfName(String topic){
+	    for(Topic t: subTopics){
+	        if(t.getName().equals(topic)){
+	            return true;
+            }else if(t.containsTopicOfName(topic)){
+	            return true;
+            }
+        }
+	    return false;
+    }
+
+
 	
 	public void add(Topic topic) {
 		subTopics.add(topic);
@@ -290,7 +340,6 @@ public class Topic implements ObservableObject {
 
 		Idea returnIdea = (getIdeas().contains(a) ? a : null);
 
-
 		this.ideas.remove(a);
 		for(Topic top: subTopics){
 			top.delete(a);
@@ -301,9 +350,9 @@ public class Topic implements ObservableObject {
 	
 	public void delete(Object a) {
 		if( a instanceof Idea)
-			this.ideas.remove( (Idea) a);
+			delete((Idea) a);
 		if( a instanceof Topic)
-			this.subTopics.remove( (Topic) a );
+			delete((Topic) a);
 	}
 	
 	public void removeNote(Note note) {
@@ -368,6 +417,20 @@ public class Topic implements ObservableObject {
 	}
 
 
+	public Integer estimateSize(){
+		int j = 0;
+		j+=getDisplayName().length();
+		for(Idea i: ideas){
+			j+=(i.getDisplayName().length());
+		}
+		for (Topic t: subTopics){
+			j+=(t.estimateSize());
+		}
+		return j;
+	}
+
+
+
 
 
 
@@ -377,17 +440,33 @@ public class Topic implements ObservableObject {
 	}
 
 	public boolean equals(Object object){
-		return (object instanceof  Topic) && ( uniqueID.equals(((Idea) object).getID()) );
+		return (object instanceof  Topic) && ( uniqueID.equals(((Topic) object).getID()) );
+	}
+
+	public int hashCode(){
+		return uniqueID.hashCode();
 	}
 
 
 	@Override
 	public String getDisplayName() {
-		return toString();
+		return name;
+	}
+
+	@Override
+	public String getMindMapName() {
+		return name;
+	}
+
+	@Override
+	public String getTreeName() {
+		return name;
 	}
 
 	@Override
 	public boolean contains(Object object) {
-		return (object instanceof Note) && (contains((Note) object));
+		return ((object instanceof Note) && (contains((Note) object)))
+				|| ((object instanceof Idea) && getAllIdeas().contains((Idea) object))
+				|| ((object instanceof Topic) && getTopics().contains((Topic) object));
 	}
 }

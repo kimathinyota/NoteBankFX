@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
 
-<AnchorPane prefHeight="632.0" prefWidth="900.0" style="-fx-background-color: rgb(43, 43, 43)rgb(43, 43, 43) rgb(43, 43, 43)rgb(43, 43, 43);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" />
+<BorderPane fx:id="window" prefHeight="632.0" prefWidth="900.0" style="-fx-background-color: rgb(43, 43, 43) ;" stylesheets="@../../css/ideaoverview.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.ideas.IdeaOverviewController" />

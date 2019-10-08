@@ -8,5 +8,8 @@ public enum Page {
     IdeasIdea,
     StudyOverview,
     StudyFocus,
-    StudyIdeas
+    StudyIdeas,
+    StudyLastQuiz,
+    QuizPage
+
 }

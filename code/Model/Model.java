@@ -1,14 +1,11 @@
 package Code.Model;
 
-import Code.Controller.FilterSettings;
-import Code.Controller.RefreshIdeasController;
-import Code.Controller.RefreshNotesController;
-import Code.Controller.RefreshSubjectsController;
+import Code.Controller.RefreshInterfaces.*;
+import Code.Controller.home.notes.filters.FilterSettings;
 
-import com.sun.tools.corba.se.idl.constExpr.Not;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListCell;
+import javafx.util.Pair;
 import org.xml.sax.SAXException;
 
 import javax.imageio.ImageIO;
@@ -17,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -25,8 +23,16 @@ public class Model {
     private List<RefreshNotesController> refreshNotesControllers;
     private List<RefreshIdeasController> refreshIdeasControllers;
     private List<RefreshSubjectsController> refreshSubjectsControllers;
+    private List<RefreshDataController> refreshDataControllers;
+    private List<RefreshStudyController> refreshStudyControllers;
 
-    Subject currentSubject;
+    private Subject currentSubject;
+    private String quizDirectory;
+    private Study study;
+    private List<Subject> subjects;
+    private String notesDirectory,rootDirectory,subjectDirectory;
+
+
 
     public void addRefreshNotesController(RefreshNotesController controller){
         refreshNotesControllers.add(controller);
@@ -40,26 +46,60 @@ public class Model {
         refreshSubjectsControllers.add(controller);
     }
 
-    public void refreshNotes(){
-        for(RefreshNotesController c: refreshNotesControllers){
-            c.refreshNotes();
-        }
+    public void addRefreshDataController(RefreshDataController controller){
+        refreshDataControllers.add(controller);
     }
 
 
+    public void addRefreshStudyController(RefreshStudyController controller){
+        refreshStudyControllers.add(controller);
+    }
+
+
+    public void refreshNotes(){
+
+        for(RefreshNotesController c: refreshNotesControllers){
+            c.refreshNotes();
+        }
+
+    }
+
+    public void refreshData(){
+
+        for(RefreshDataController c: refreshDataControllers){
+            c.refreshData();
+        }
+
+    }
+
     public void refreshIdeas(){
+
         for(RefreshIdeasController c: refreshIdeasControllers){
             c.refreshIdeas();
         }
+
         saveIdea();
     }
 
     public void refreshSubjects(){
+
         for(RefreshSubjectsController c: refreshSubjectsControllers){
             c.refreshSubjects();
         }
+
         saveSubject();
     }
+
+
+    public void refreshStudy(){
+
+        for(RefreshStudyController c: refreshStudyControllers){
+            c.refreshStudy();
+        }
+
+        saveStudy();
+    }
+
 
 
 
@@ -112,7 +152,6 @@ public class Model {
         }
         return notes;
     }
-
 
     public List<Note> getAllNotes(){
         return getNotes("All");
@@ -219,7 +258,12 @@ public class Model {
             if(!currentSubject.getName().equals("All")){
                 currentSubject.add(b.getPath().toString());
             }
-            refreshNotes();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    refreshNotes();
+                }
+            });
         }catch (IOException e){
 
         }
@@ -237,7 +281,12 @@ public class Model {
             if(!currentSubject.getName().equals("All")){
                 currentSubject.add(i.getPath().toString());
             }
-            refreshNotes();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    refreshNotes();
+                }
+            });
         }catch (IOException e){
 
         }
@@ -248,35 +297,44 @@ public class Model {
      * @param name
      * @param textContent
      */
-    public void addText(String name, String textContent){
+    public Text addText(String name, String textContent){
         try{
             Text t = new Text(name,textContent,notesDirectory);
             this.getSubject("All").add(t.getPath().toString());
             if(!currentSubject.getName().equals("All")){
                 currentSubject.add(t.getPath().toString());
             }
-            refreshNotes();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    refreshNotes();
+                }
+            });
+            return t;
         }catch (IOException e){
-
+            e.printStackTrace();
         }
+        return null;
+    }
+
+    public Text setToFinalNote(String evaluatedContent, Idea idea){
+
+        String date = new SimpleDateFormat("HH_mm_ss dd_MM_yyyy").format(new Date());
+        Text text = addText("EVALUATED " + idea.getPrompt() + " " + date, evaluatedContent);
+        addToIdea(idea,text,true,false);
+
+        return text;
+
+
     }
 
     public boolean doesNoteNameExist(String name, String fileExtension){
         return getNotesPaths("All").contains(Note.getPath(name,notesDirectory,fileExtension));
     }
 
-
     public boolean doesNoteNameExist(String fileExtension){
         return getNotesPaths("All").contains(Note.getPath(fileExtension,notesDirectory));
     }
-
-
-
-
-
-
-
-
 
     /**
      * Gets Text note given path
@@ -331,6 +389,12 @@ public class Model {
         }
     }
 
+
+    public double minimumReadinessScore(List<Idea> ideas){
+        return quizzes.minimumReadinessScore(ideas);
+    }
+
+
     /**
      * Static method that saves xml string as a file
      * @param xml
@@ -367,7 +431,7 @@ public class Model {
      * @param finalNote
      * @return
      */
-    public Idea updateIdea(String ideaID,HashMap<Note,Integer>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
+    public Idea updateIdea(String ideaID,HashMap<Note,Boolean>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
 
         Idea idea = root.findIdea(ideaID);
 
@@ -380,11 +444,38 @@ public class Model {
             idea.initialise(notes,keyWords,prompt,promptType,finalNote); ;
         }
 
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
 
         return idea;
     }
 
+    public Idea updateIdea(String ideaID, String prompt, List<String>keyWords, PromptType promptType){
+        Idea idea = root.findIdea(ideaID);
+
+        if(idea==null){
+            idea = new Idea(ideaID,new HashMap<>(),keyWords,prompt,promptType,null);
+            this.root.add(idea);
+
+        }else{
+            idea.setKeyWords(keyWords);
+            idea.setPromptType(promptType);
+            idea.setPrompt(prompt);
+        }
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
+
+        return idea;
+    }
 
     public void addNoteToIdea(Idea i, Note note){
         Idea idea = root.findIdea(i.getID());
@@ -392,28 +483,33 @@ public class Model {
             return;
         }
         idea.addNote(note);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
     }
 
-
-
-
-
-    private Idea addIdea(String ideaID,HashMap<Note,Integer>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
+    private Idea addIdea(String ideaID,HashMap<Note,Boolean>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
         Idea idea = new Idea(ideaID,notes,keyWords,prompt,promptType,finalNote);
         this.root.add(idea);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return idea;
     }
 
-    public Idea addIdea(String prompt,HashMap<Note,Integer>notes, List<String>keyWords, PromptType promptType, Note finalNote) {
+    public Idea addIdea(String prompt,HashMap<Note,Boolean>notes, List<String>keyWords, PromptType promptType, Note finalNote) {
         return this.addIdea(null,notes,keyWords,prompt,promptType,finalNote);
     }
 
     public Idea addIdea(String prompt,List<String>keyWords,PromptType promptType){
         return addIdea(prompt,null,keyWords,promptType,null);
     }
-
 
     /**
      * Allows user to update a Topic (or create one)
@@ -426,7 +522,12 @@ public class Model {
         if(topic==null)
             return null;
         topic.setName(name);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return topic;
     }
 
@@ -435,7 +536,12 @@ public class Model {
         if(topic==null)
             return null;
         topic.initialise(name,ideas,topics);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return topic;
     }
 
@@ -444,7 +550,12 @@ public class Model {
         if(topic==null)
             return null;
         topic.initialise(name,ideas,null);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return topic;
     }
 
@@ -453,7 +564,12 @@ public class Model {
         if(topic==null)
             return null;
         topic.initialise(name,null,topics);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return topic;
     }
 
@@ -461,14 +577,24 @@ public class Model {
         Topic topic = new Topic(name);
         topic.initialise(name,ideas,topics);
         this.root.add(topic);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return topic;
     }
 
     public Topic addTopic(String name){
         Topic topic = new Topic(name);
         this.root.add(topic);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return topic;
     }
 
@@ -480,20 +606,31 @@ public class Model {
        return addTopic(name,null,topics);
     }
 
-
     public Object remove(String ID){
         Object o =  root.delete(ID);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return o;
     }
-
 
     public Subject remove(Subject subject){
         this.subjects.remove(subject);
         return subject;
     }
 
-
+    public void remove(Object object){
+        if(object instanceof Idea){
+            remove((Idea) object);
+        }else if(object instanceof Topic){
+            remove((Topic) object);
+        }else if(object instanceof Subject){
+            remove((Subject) object);
+        }
+    }
 
     /**
      * Removes idea from system
@@ -502,7 +639,12 @@ public class Model {
      */
     public Idea remove(Idea idea){
         Idea i = root.delete(idea);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return i;
     }
 
@@ -513,7 +655,12 @@ public class Model {
      */
     public Topic remove(Topic topic){
         Topic t = root.delete(topic);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
         return t;
     }
 
@@ -526,12 +673,43 @@ public class Model {
         Idea i = root.findIdea(node);
         Topic loc = root.findTopic(newLocation);
 
+        //System.out.println("Move " + i + " to " + newLocation);
+
         if(i==null || loc==null){
             return;
         }
         root.delete(i);
         loc.add(i);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
+    }
+
+    public List<Topic> findMovableTopics(List<Object> topicsIdeas){
+        List<Topic> topics = root.getTopics();
+
+        List<Topic> remove = new ArrayList<>();
+
+        for(int i=0; i<topics.size(); i+=1){
+            Topic t = topics.get(i);
+            for(Object o: topicsIdeas){
+                if(o instanceof Topic ){
+                    Topic p = root.findTopic((Topic) o);
+                    if(p.contains(t)){
+                        remove.add(t);
+                    }
+
+                }
+            }
+        }
+
+        topics.removeAll(remove);
+
+
+        return topics;
     }
 
     public void move(Topic node, Topic newLocation){
@@ -539,12 +717,75 @@ public class Model {
         Topic loc = root.findTopic(newLocation);
 
         if(node==null || loc==null){
+
             return;
         }
 
         root.delete(t);
         loc.add(t);
-        refreshIdeas();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
+    }
+
+    public void move(Object object, Topic newLocation){
+        if(object instanceof Idea){
+            move((Idea) object, newLocation);
+        }else if(object instanceof Topic){
+            move((Topic) object, newLocation);
+        }
+    }
+
+    public boolean containsTopicOfName(String topic){
+        return root.containsTopicOfName(topic);
+    }
+
+    public void move(List<Object>ideasOrTopics, Topic newLocation){
+
+        Topic loc = root.findTopic(newLocation);
+        if(loc==null)
+            return;
+
+        for(Object o: ideasOrTopics){
+            if(o instanceof Topic || o instanceof Idea){
+                root.delete(o);
+                loc.add(o);
+            }
+        }
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
+    }
+
+    public void disband(Topic topic){
+        Topic loc = root.findTopic(topic);
+        if(loc==null)
+            return;
+
+        List<Object> children = new ArrayList<>();
+        children.addAll(loc.getIdeas());
+        children.addAll(loc.getSubTopics());
+
+        Topic parent = root.findParent(loc);
+        root.delete(loc);
+
+        move(children,parent);
+
+    }
+
+    public Topic parent(Idea idea){
+        return root.findParent(idea);
+    }
+
+    public Topic parent(Topic topic){
+        return root.findParent(topic);
     }
 
     private Topic root;
@@ -569,7 +810,6 @@ public class Model {
         }
     }
 
-
     /**
      * Check if subject exists to avoid duplicates
      * @param name
@@ -592,7 +832,12 @@ public class Model {
     public boolean addSubject(String subject){
         if(subjectExists(subject)) return false;
         this.subjects.add(new Subject(subject));
-        refreshSubjects();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+            }
+        });
         return true;
     }
 
@@ -609,7 +854,12 @@ public class Model {
             sub.add(n.getPath().toString());
         }
         this.subjects.add(sub);
-        refreshSubjects();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+            }
+        });
         return true;
     }
 
@@ -621,24 +871,33 @@ public class Model {
                     s.setName(newName);
                 if(notes!=null)
                     s.setPaths(Model.getPaths(notes));
-                refreshSubjects();
 
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshSubjects();
+                    }
+                });
                 return s;
             }
         }
         return null;
     }
 
-
     public void addNoteToSubject(String subjectName, Note note){
         Subject subject = getSubject(subjectName);
         if(!subject.memberOf(note)){
             getSubject(subjectName).add(note.getPath().toString());
         }
-        refreshSubjects();
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+            }
+        });
+
     }
-
-
 
     public Subject getSubject(String name){
         for(Subject s: subjects){
@@ -648,7 +907,6 @@ public class Model {
         }
         return null;
     }
-
 
     /**
      * Adds subject to model. Returns false if subject can't be added
@@ -663,7 +921,12 @@ public class Model {
             sub.add(p);
         }
         this.subjects.add(sub);
-        refreshSubjects();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+            }
+        });
         return true;
     }
 
@@ -682,12 +945,9 @@ public class Model {
         return subjects;
     }
 
-
     public List<Idea> getIdeas(Note note){
         return root.getIdeas(note);
     }
-
-
 
     public void limitNoteToTheseSubjects(Note note, List<Subject>subjects){
         for(Subject s: this.getAllSubjects()){
@@ -700,32 +960,83 @@ public class Model {
                 }
             }
         }
-        refreshSubjects();
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+            }
+        });
     }
 
-    public HashMap<Idea,String> getIdeasMap(Note note){
-        HashMap<Idea,String> map = new HashMap<>();
-        for(Idea i: root.getIdeas(note)){
-            map.put(i,i.getNoteType(note));
+    public Topic filterTopicBySubject(Subject currentSubject){
+        if(currentSubject.getName().equals("All")){
+            return root;
         }
-        return map;
+        Topic rootCopy = root.copy();
+        rootCopy.setName(currentSubject.getName());
+        List<Note> notes = this.getNotes(currentSubject.getName());
+        notes.add(currentSubject.getNote());
+        rootCopy.removeAllUnassociatedWithNotes(notes);
+        return rootCopy;
     }
 
+    public Topic filterTopicByCurrentSubject(){
+        return filterTopicBySubject(currentSubject);
+    }
 
-    public void limitNoteToTheseIdeas(Note note, HashMap<Idea,String>map){
+    public void limitNoteToTheseIdeas(Note note, HashMap<Idea, Pair<String,Boolean>>map){
         for(Idea i: this.getAllIdeas()){
             if(map.containsKey(i)){
+                i.setFinalNote(null);
                 //note should be added to idea
-                System.out.println(i + " " + map.get(i));
-                root.findIdea(i).addNote(note,map.get(i).equals("Prompt"));
+                Idea idea = root.findIdea(i);
+                Pair<String,Boolean> p = map.get(i);
+                idea.addNote(note,p.equals("Prompt"));
+                if(p.getValue()){
+                    idea.setFinalNote(note);
+                }
             }else {
-                System.out.println(i + " need to remove");
                 root.findIdea(i).removeNote(note);
             }
         }
-        refreshIdeas();
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
     }
 
+    public void removeFromSubject(String subject, Note note){
+        Subject s = getSubject(subject);
+        if(s==null) return;
+        s.remove(note);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+                refreshNotes();
+            }
+        });
+
+
+    }
+
+    public void addToSubject(String subject, Note note){
+        Subject s = getSubject(subject);
+        if(s==null) return;
+        s.add(note);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+                refreshNotes();
+            }
+        });
+    }
 
     public List<String> getSubjectStrings(){
         List<String> subjects = new ArrayList<String>();
@@ -743,9 +1054,6 @@ public class Model {
         return paths;
     }
 
-
-
-
     /**
      * Sort By Number of connections comparator
      * @return
@@ -761,7 +1069,6 @@ public class Model {
 
     }
 
-
     public List<Note> getHighlyUsedNotes(FilterSettings filterSettings, List<Note> underutilisedNotes, List<Note>allNotes){
 
         List<Note> copy = allNotes.subList(0,allNotes.size());
@@ -770,17 +1077,18 @@ public class Model {
 
     }
 
-
     public List<Idea> getAllIdeas(){
+        //if(root==null) return new ArrayList<>();
         return this.root.getAllIdeas();
     }
 
+    public List<Topic> getAllTopics(){
+        return this.root.getTopics();
+    }
 
-
-
-
-
-
+    public int getReadinessType(Idea idea){
+        return quizzes.getReadinessType(idea,System.currentTimeMillis());
+    }
 
     public List<Note> getUnderutilisedNotes(FilterSettings filterSettings, List<Note>allNotes){
         allNotes.sort(sortByNumberOfConnectionsComparator());
@@ -823,13 +1131,29 @@ public class Model {
 
     }
 
+    public void saveQuiz(){
+        try {
+            saveXML(quizzes.toXML(),quizDirectory ,"Quizzes");
+        }catch (Exception e){
+
+        }
+    }
+
+
+    public void saveStudy(){
+        try {
+            System.out.println("Saving study");
+            saveXML(study.toXML(),quizDirectory ,"Study");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 
-
-
-
-    private List<Subject> subjects;
+    public List<IdeaQuiz> getAllIdeaQuizzes(List<Idea> ideas){
+        return quizzes.getAllIdeaQuizzes(ideas);
+    }
 
     /**
      * Used to setup the Model key environmental paths
@@ -841,11 +1165,12 @@ public class Model {
      * @throws SAXException
      * @throws IOException
      */
-    public void initialise(String notesDirectory, String rootDirectory, String subjectDirectory) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException{
+    public void initialise(String notesDirectory, String rootDirectory, String subjectDirectory, String quizDirectory) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException{
 
         this.notesDirectory = notesDirectory;
         this.rootDirectory = rootDirectory;
         this.subjectDirectory = subjectDirectory;
+        this.quizDirectory = quizDirectory;
 
         Subject allSubject = new Subject("All");
         try{
@@ -867,16 +1192,167 @@ public class Model {
 
         this.root = getRoot(rootDirectory);
 
-    }
 
+        try {
+            this.quizzes = new Quizzes(quizDirectory + File.separator + "Quizzes.xml");
+        }catch (Exception e){
+            this.quizzes = new Quizzes();
+            saveQuiz();
+        }
+
+
+        try {
+
+            this.study = Study.fromXML(quizDirectory + File.separator + "Study.xml");
+
+            StudyPlan low = study.findStudyPlan("lower");
+            if(low==null){
+                String name = "Learning";
+                String description = "A simple plan with plenty of time for deep learning of notes. Best started weeks before an exam.";
+                low = new StudyPlan("lower",name,description,0.2,0.2,1);
+                this.add(low);
+                System.out.println("Adding learning" );
+
+            }
+
+            StudyPlan med = study.findStudyPlan("medium");
+            if(med==null){
+                String name = "Exam Cure";
+                String description = "A kinda intense study plan. Best completed plenty of time before an exam for reviewing (not learning) your notes. ";
+                med = new StudyPlan("medium",name,description,0.4,0.4,1);
+                this.add(med);
+                System.out.println("Adding Exam Cure" );
+            }
+
+            StudyPlan high = study.findStudyPlan("higher");
+            if(high==null){
+                String name = "Kid to Einstein ASAP";
+                String description = "An incredibly intense study plan.  Best suited for a level 100 procrastinator who barely has a week of study before the exam.";
+                high = new StudyPlan("higher",name,description,0.6,0.6,1);
+                this.add(high);
+                System.out.println("Adding Higher" );
+            }
+
+
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+            this.study = new Study();
+            saveStudy();
+
+        }
+
+
+
+
+/*
+        for(int i=0; i<this.root.getAllIdeas().size(); i++){
+            if(i<4){
+                Topic topic = this.addTopic("The first topic i've created");
+                this.move(this.getAllIdeas().get(i),topic);
+            }else if(i<8){
+                Topic topic = this.addTopic("The second topic i've created");
+                this.move(this.getAllIdeas().get(i),topic);
+            }else if(i<12){
+                Topic topic = this.addTopic("The third topic i've created");
+                this.move(this.getAllIdeas().get(i),topic);
+            }
+        }
+        */
+
+    }
 
     public Subject getCurrentSubject(){
         return this.currentSubject;
     }
 
+    public void removeFromIdea(Idea idea, Note note){
+        //System.out.println("Remove " + note + " from " + idea);
+        Idea i = root.findIdea(idea.getID());
+
+        if(i==null){
+            return;
+        }
+
+        i.removeNote(note);
+
+        refreshIdeas();
+        //refreshNotes();
 
 
+    }
 
+    public void addToIdea(Idea idea, Note note, boolean isFinalNote, boolean isPrompt){
+        ////System.out.println("Add " + note + " to " + idea);
+        if(idea==null || note==null)
+            return;
+        Idea i = root.findIdea(idea.getID());
+
+        if(i==null){
+            return;
+        }
+
+
+        i.addNote(note,isPrompt);
+
+        //System.out.println("Added " + note + " to " + idea + " of (isFinalNote,isPrompt) = (" + isFinalNote + "," + isPrompt + ")" );
+
+
+        if(isFinalNote)
+            i.setFinalNote(note);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
+    }
+
+    public Topic addToTopic(Object object, Topic topic){
+        Topic t = root.findTopic(topic);
+        if(t==null || !(object instanceof Idea || object instanceof Topic )){
+            return null;
+        }
+
+        Object o = (object instanceof Idea ? root.findIdea((Idea) object) : root.findTopic((Topic) object));
+        t.add(o);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
+        return t;
+    }
+
+    Quizzes quizzes;
+
+    public double calculateReadiness(Idea idea, int confidence){
+        return quizzes.getReadiness(idea,System.currentTimeMillis(),confidence);
+    }
+
+    public double calculateReadiness(Idea idea){
+        return quizzes.getReadiness(idea,System.currentTimeMillis(),null);
+    }
+
+    public int getReadinessType(double readinessScore){
+        return quizzes.getReadinessType(readinessScore);
+    }
+
+    public HashMap<String,List<IdeaQuiz>> getIdeaQuizzesByDate(Idea idea){
+        return quizzes.getFrequencyPerTime(idea,System.currentTimeMillis());
+    }
+
+    public void addQuiz(Quiz quiz){
+        quizzes.add(quiz);
+    }
+
+    public Idea getIdea(String uniqueID){
+        return root.findIdea(uniqueID);
+    }
 
     public void setCurrentSubject(String subject){
         Subject sub = this.getSubject(subject);
@@ -885,16 +1361,117 @@ public class Model {
         this.currentSubject = sub;
     }
 
-    String notesDirectory;
-    String rootDirectory;
-    String subjectDirectory;
+    public long getStudyDuration(long start, long end){
+        return quizzes.getTimeStudiedInMS(start,end);
+    }
+
+    public long getStudyDuration(long start, long end, List<Idea> ideas){
+        return quizzes.getTimeStudiedInMS(start,end,ideas);
+    }
+
+    public void add(StudyPlan studyPlan){
+        this.study.add(studyPlan);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshStudy();
+            }
+        });
+    }
+
+    public void update(StudyPlan plan, String name, String description, double ips, double msl, double score){
+        plan.reset(name,description,ips,msl,score);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshStudy();
+            }
+        });
+    }
 
 
+    public boolean isRootSubject(){
+        return currentSubject.equals("All");
+    }
+
+
+    public void remove(StudySession session){
+        study.remove(session);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshStudy();
+            }
+        });
+    }
+
+    public List<StudySession> getSessions(){
+        return study.getStudySessions();
+    }
+
+    public void add(StudySession session){
+        this.study.add(session);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshStudy();
+            }
+        });
+    }
+
+    public void remove(StudyPlan plan){
+        this.study.remove(plan);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshStudy();
+            }
+        });
+    }
+
+    public StudyPlan findPlan(String id){
+        return study.findPlan(id);
+    }
+
+
+    public List<StudyPlan> getStudyPlans(){
+        return this.study.getStudyPlans();
+    }
+
+
+    public double getScoreIncrement(){
+        return quizzes.getScoreIncrement();
+    }
+
+    public double getReadinessScore(){
+        return quizzes.getReadinessScore();
+    }
 
     public Model(){
         refreshNotesControllers = new ArrayList<>();
         refreshIdeasControllers = new ArrayList<>();
         refreshSubjectsControllers = new ArrayList<>();
+        refreshDataControllers = new ArrayList<>();
+        refreshStudyControllers = new ArrayList<>();
+
+
     }
+
+    public boolean studySessionNameExists(String name){
+
+        for(StudySession p: study.getStudySessions()){
+            if(p.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+
+    public ActivationInformation getActivation(StudySession session, Date finalDate){
+        return study.getActivation(quizzes.getRegionToFrequency(),session,finalDate);
+    }
+
 
 }

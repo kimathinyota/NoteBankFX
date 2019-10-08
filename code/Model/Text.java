@@ -65,6 +65,8 @@ public class Text extends Note {
 			        "</Note>" ;
 		
 		return xml;
+
+
 	}
 
 

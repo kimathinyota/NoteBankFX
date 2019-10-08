@@ -4,6 +4,7 @@ import Code.View.ObservableObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import javax.security.auth.Subject;
 import java.io.IOException;
 import java.util.*;
 import java.lang.Integer;
@@ -19,15 +20,40 @@ import java.lang.Integer;
  */
 
 public class Idea implements ObservableObject {
-	private HashMap<Note,Integer> notes;
+	public void setNotes(HashMap<Note, Boolean> notes) {
+		this.notes = notes;
+	}
+
+	public void setKeyWords(List<String> keyWords) {
+		this.keyWords.clear();
+		this.keyWords.addAll(keyWords);
+	}
+
+	public String getUniqueID() {
+		return uniqueID;
+	}
+
+	public void setUniqueID(String uniqueID) {
+		this.uniqueID = uniqueID;
+	}
+
+	public void setPrompt(String prompt) {
+		this.prompt = prompt;
+	}
+
+	public void setPromptType(PromptType promptType) {
+		this.promptType = promptType;
+	}
+
+	private HashMap<Note,Boolean> notes;
 	private Set<String>keyWords;
 	private String uniqueID;
 	private String prompt;
 	private PromptType promptType;
 	private Note finalNote;
 
-	public final static int PROMPT_NOTE = 0;
-	public final static int NON_PROMPT_NOTE =1;
+	List<SubjectNote> subjectNotes;
+
 
 	/**
 	 * Complete reset of Model.Idea without reinstantiating the object
@@ -37,9 +63,9 @@ public class Idea implements ObservableObject {
 	 * @param promptType
 	 * @param finalNote
 	 */
-	public void initialise(HashMap<Note,Integer>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
+	public void initialise(HashMap<Note,Boolean>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
 		if(notes!=null)
-			this.notes = new HashMap<Note,Integer>(notes);
+			this.notes = new HashMap<Note,Boolean>(notes);
 
 
 		if(keyWords!=null){
@@ -58,8 +84,9 @@ public class Idea implements ObservableObject {
 	}
 
 
-	public Idea(HashMap<Note,Integer>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote){
-		this.notes = new HashMap<Note,Integer>();
+	public Idea(HashMap<Note,Boolean>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote){
+		this.subjectNotes = new ArrayList<>();
+		this.notes = new HashMap<Note,Boolean>();
 		this.keyWords = new HashSet<>();
 		this.prompt = "";
 		this.finalNote = null;
@@ -69,8 +96,9 @@ public class Idea implements ObservableObject {
 	}
 
 
-	public Idea(String uniqueID, HashMap<Note,Integer>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote){
-		this.notes = new HashMap<Note,Integer>();
+	public Idea(String uniqueID, HashMap<Note,Boolean>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote){
+		this.subjectNotes = new ArrayList<>();
+		this.notes = new HashMap<Note,Boolean>();
 		this.keyWords = new HashSet<>();
 		this.prompt = "";
 		this.finalNote = null;
@@ -83,12 +111,12 @@ public class Idea implements ObservableObject {
 	}
 
 
-
+/*
 	public String getNoteType(Note note){
 		return (notes.get(note).equals(Idea.PROMPT_NOTE) ? "Prompt" : "Non-Prompt");
 	}
 
-
+*/
 	
 	/**
 	 * 
@@ -109,26 +137,27 @@ public class Idea implements ObservableObject {
 		return notes;
 	}
 	
-	public HashMap<Note,Integer> getNotesMap(){
+	public HashMap<Note,Boolean> getNotesMap(){
 		return this.notes;
 	}
 	
-	public List<Note> getNotes(int type){
+	public List<Note> getNotes(boolean isPrompt){
 		ArrayList<Note> notes = new ArrayList<Note>();
 		for(Note n: this.notes.keySet()) {
-			if(this.notes.get(n).intValue()==type)
+			if(this.notes.get(n).booleanValue()==isPrompt)
 				notes.add(n);
 		}
-		notes.remove(null);
+		//notes.remove(null);
+
 		return notes;
 	}
 
 	public List<Note> getPromptNotes(){
-		return getNotes(Idea.PROMPT_NOTE);
+		return getNotes(true);
 	}
 
 	public List<Note> getNonPromptNotes(){
-		return getNotes(Idea.NON_PROMPT_NOTE);
+		return getNotes(false);
 	}
 	
 	/**
@@ -166,8 +195,12 @@ public class Idea implements ObservableObject {
 	public void setFinalNote(Note note) {
 		if(notes==null)
 			return;
-		notes.put(note, Idea.NON_PROMPT_NOTE);
-		
+
+		if(notes.get(note)==null){
+			notes.put(note,false);
+
+		}
+
 		this.finalNote = note;
 	}
 
@@ -175,13 +208,21 @@ public class Idea implements ObservableObject {
 	 * Add and remove methods for key word(s) and note(s)
 	 */
 	public void addNote(Note note) {
-		if(note!=null) this.notes.put(note,Idea.NON_PROMPT_NOTE);
+		if(note==null) return;
+		if(note instanceof SubjectNote){
+			this.subjectNotes.add( (SubjectNote) note);
+			return;
+		}
+		this.notes.put(note,false);
 	}
 	
 	public void addNote(Note note, boolean isPromptNote) {
 		if(note==null) return;
-		int type = (isPromptNote ? Idea.PROMPT_NOTE : Idea.NON_PROMPT_NOTE);
-		this.notes.put(note, type);
+		if(note instanceof SubjectNote){
+			this.subjectNotes.add( (SubjectNote) note);
+			return;
+		}
+		this.notes.put(note, isPromptNote);
 	}
 
 	public Note getNote(String path){
@@ -206,7 +247,7 @@ public class Idea implements ObservableObject {
 		}
 	}
 
-	public void addNotes(HashMap<Note, Integer> notes) {
+	public void addNotes(HashMap<Note, Boolean> notes) {
 		for(Note n: notes.keySet()) {
 			this.notes.put(n, notes.get(n));
 		}
@@ -291,6 +332,12 @@ public class Idea implements ObservableObject {
 					Book book = Book.fromXML(elem);
 					if (book != null)
 						createdIdea.addNote(book,type );
+				}else if(((Element) nodes.item(i)).getElementsByTagName("Subject").getLength() > 0 ){
+					Element elem = (Element) ((Element) nodes.item(i)).getElementsByTagName("Subject").item(0);
+					SubjectNote subject = SubjectNote.fromXML(elem);
+					if(subject!=null){
+						createdIdea.addNote(subject);
+					}
 				}
 			}
 		}
@@ -310,7 +357,9 @@ public class Idea implements ObservableObject {
 	 */
 	private void addKeyWordsFromCSV(String commaSeperatedKeyWords) {
 		for(String kW: commaSeperatedKeyWords.trim().split(",")) {
-			this.addKeyWord(kW);
+			if(kW.length()>0){
+				this.addKeyWord(kW);
+			}
 		}
 	}
 
@@ -323,7 +372,7 @@ public class Idea implements ObservableObject {
 		String nonPromptNotesXML = "";
 		  
 		for(Note n: notes.keySet()) {
-			if(n!=null && notes.get(n).intValue()==Idea.PROMPT_NOTE)
+			if(n!=null && notes.get(n).booleanValue()==true)
 				promptNotesXML += n.toXML() + System.lineSeparator();
 			else if(n!=null)
 				nonPromptNotesXML += n.toXML() + System.lineSeparator();
@@ -373,7 +422,8 @@ public class Idea implements ObservableObject {
 	 * @param uniqueID
 	 */
 	public Idea(String prompt, PromptType promptType, String uniqueID) {
-		notes = new HashMap<Note,Integer>();
+		this.subjectNotes = new ArrayList<>();
+		notes = new HashMap<Note,Boolean>();
 		this.promptType = promptType;
 		this.finalNote = null;
 		this.keyWords = new HashSet<String>();
@@ -423,11 +473,21 @@ public class Idea implements ObservableObject {
 	}
 	@Override
 	public String getDisplayName() {
-		return toString();
+		return getPrompt();
+	}
+
+	@Override
+	public String getMindMapName() {
+		return getPrompt();
+	}
+
+	@Override
+	public String getTreeName() {
+		return getPrompt();
 	}
 
 	@Override
 	public boolean contains(Object object) {
-		return (object instanceof Note) && this.getNotes().contains((Note) object);
+		return (object instanceof Note) && (this.getNotes().contains((Note) object) || this.subjectNotes.contains(object) );
 	}
 }

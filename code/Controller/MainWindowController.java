@@ -1,7 +1,8 @@
 package Code.Controller;
 
+import Code.Controller.RefreshInterfaces.RefreshSubjectsController;
+import Code.Controller.search.AdvancedSearchSettings;
 import Code.Model.Model;
-import javafx.beans.binding.When;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 
@@ -52,9 +53,11 @@ public class MainWindowController implements RefreshSubjectsController {
     @FXML protected Pane studyOverviewPane;
     @FXML protected Pane studyFocusPane;
     @FXML protected Pane studyIdeasPane;
+    @FXML protected Pane studyLastQuizPane;
     @FXML protected Button studyOverview;
     @FXML protected Button studyFocus;
     @FXML protected Button studyIdeas;
+    @FXML protected Button studyLastQuiz;
 
     @FXML protected BorderPane mainWindow;
     @FXML protected Text mainWindowHeader;
@@ -69,8 +72,10 @@ public class MainWindowController implements RefreshSubjectsController {
     @FXML protected Pane searchlistpane;
     @FXML protected Pane createNote;
     @FXML protected Pane createIdea;
+    @FXML protected Pane customQuiz, createstudysession, createstudyplan;
     @FXML protected Button newNote;
     @FXML protected Button newSubject;
+
 
     @FXML protected ToggleButton inPageToggle;
     @FXML protected ToggleButton includeImagesToggle;
@@ -80,16 +85,43 @@ public class MainWindowController implements RefreshSubjectsController {
     @FXML protected ToggleButton includeStudyPlansToggle;
     @FXML protected ListView<String> subjectList;
 
+    @FXML protected BorderPane quizProgress;
+    @FXML protected ProgressBar quizProgressBar;
+    @FXML protected Label quizIdeaLabel;
+    @FXML protected Label quizFraction;
+
+
     @FXML protected Pane viewNote;
 
+    @FXML protected Pane lastQuizMenu;
+
+    @FXML protected Pane leftNavigation;
 
     Pane homeFeaturedPanel, homeNotesPanel;
     Pane ideasIdeaPanel, ideasMindMapPanel, ideasOverviewPanel;
-    Pane studyOverviewPanel, studyFocusPanel, studyIdeasPanel;
+    Pane studyOverviewPanel, studyFocusPanel, studyIdeasPanel, studyLastQuizPanel;
+    Pane quizPanel;
 
     Model model;
 
+
+
     AdvancedSearchSettings advancedSearchSettings;
+
+
+    public ProgressBar getQuizProgressBar(){
+        return quizProgressBar;
+    }
+
+    public Label getQuizIdeaLabel(){
+        return quizIdeaLabel;
+    }
+
+
+    public Label getQuizFraction(){
+        return quizFraction;
+    }
+
 
     /**
      * Set default advance search settings
@@ -171,7 +203,7 @@ public class MainWindowController implements RefreshSubjectsController {
 
             /* Assumes Subject.xml, Topics.xml and Notes are all stored in the same directory */
             // @TODO: Need to create a workspace dialog - that let's user change/input their workspace
-            model.initialise(notesDirectory, notesDirectory, notesDirectory);
+            model.initialise(notesDirectory, notesDirectory, notesDirectory, notesDirectory);
         } catch (Exception e) {
             // Can't be bothered to list the 3+ exceptions
         }
@@ -216,7 +248,7 @@ public class MainWindowController implements RefreshSubjectsController {
                         String newName = subjectList.getItems().get(lastEditingIndex);
                         String oldName = currentlyEditingSubject;
 
-                        System.out.println("\n\n  Just finished editing " + oldName + " " + newName  + "\n\n ");
+                        //System.out.println("\n\n  Just finished editing " + oldName + " " + newName  + "\n\n ");
                         if(!model.subjectExists(oldName)){
                             model.addSubject(newName, new ArrayList<>());
                         }else{
@@ -231,7 +263,7 @@ public class MainWindowController implements RefreshSubjectsController {
                         currentlyEditingSubject = subjectList.getItems().get(subjectList.getEditingIndex());
                         lastEditingIndex = subjectList.getEditingIndex();
                         newSubject.setDisable(true);
-                        System.out.println("\n\n  Just started editing " + currentlyEditingSubject + " " + lastEditingIndex  + "\n\n ");
+                        //System.out.println("\n\n  Just started editing " + currentlyEditingSubject + " " + lastEditingIndex  + "\n\n ");
 
                     }
                 });
@@ -284,12 +316,12 @@ public class MainWindowController implements RefreshSubjectsController {
         enableAndShowMainWindowOnClosingNode(viewNote);
 
 
-
-        Node node;
+        lastQuizMenu.setVisible(false);
 
 
         this.numberOfSubjects = this.subjectList.getItems().size();
 
+        setPage(Page.HomeFeatured);
 
 
     }
@@ -326,14 +358,16 @@ public class MainWindowController implements RefreshSubjectsController {
      */
     public void loadPanes(){
         try{
-            homeFeaturedPanel = new FXMLLoader().load(getClass().getResource("../View/menus/home/featured.fxml"));
-            homeNotesPanel = new FXMLLoader().load(getClass().getResource("../View/menus/home/notes.fxml"));
-            ideasIdeaPanel = new FXMLLoader().load(getClass().getResource("../View/menus/ideas/idea.fxml"));
-            ideasMindMapPanel = new FXMLLoader().load(getClass().getResource("../View/menus/ideas/mindmap.fxml"));
-            ideasOverviewPanel = new FXMLLoader().load(getClass().getResource("../View/menus/ideas/overview.fxml"));
-            studyOverviewPanel = new FXMLLoader().load(getClass().getResource("../View/menus/study/overview.fxml"));
-            studyFocusPanel = new FXMLLoader().load(getClass().getResource("../View/menus/study/focus.fxml"));
-            studyIdeasPanel = new FXMLLoader().load(getClass().getResource("../View/menus/study/ideas.fxml"));
+            homeFeaturedPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/home/featured.fxml"));
+            homeNotesPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/home/notes.fxml"));
+            ideasIdeaPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/ideas/idea.fxml"));
+            ideasMindMapPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/ideas/mindmap.fxml"));
+            ideasOverviewPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/ideas/overview.fxml"));
+            studyOverviewPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/study/overview.fxml"));
+            studyFocusPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/study/focus.fxml"));
+            studyIdeasPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/study/ideas.fxml"));
+            studyLastQuizPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/study/lastQuiz.fxml"));
+            quizPanel = new FXMLLoader().load(getClass().getResource("/Code/View/menus/study/quiz.fxml"));
 
         }catch (IOException e){
             e.printStackTrace();
@@ -360,13 +394,17 @@ public class MainWindowController implements RefreshSubjectsController {
         ideasMindMap.setDisable(mindmap);
         ideasOverview.setDisable(overview);
     }
-    private void setVisibleStudyMenu(boolean focus, boolean ideas, boolean overview){
+    private void setVisibleStudyMenu(boolean focus, boolean ideas, boolean overview, boolean lastQuiz){
         studyIdeasPane.setVisible(ideas);
         studyFocusPane.setVisible(focus);
         studyOverviewPane.setVisible(overview);
+        studyLastQuizPane.setVisible(lastQuiz);
+
         studyIdeas.setDisable(ideas);
         studyFocus.setDisable(focus);
         studyOverview.setDisable(overview);
+        studyLastQuiz.setDisable(lastQuiz);
+
     }
     private void setMenuSelection(boolean home, boolean ideas, boolean study){
         homePane.setVisible(home);
@@ -385,48 +423,67 @@ public class MainWindowController implements RefreshSubjectsController {
         if(ideas) mainWindowHeader.setText("Ideas");
         if(home) mainWindowHeader.setText("Home");
 
+
     }
 
+    private void disableAllMenus(boolean disable){
+        leftNavigation.setDisable(disable);
+    }
+
+
     /**
-     * Called on Home menu button click
+     * Called on home menu button click
      * @param e
      */
     @FXML protected void handleHomeClick(ActionEvent e){
         setPage(Page.HomeFeatured);
+        ideasIdea.setDisable(true);
     }
     @FXML void handleIdeasClick(ActionEvent e){
         setPage(Page.IdeasOverview);
+        ideasIdea.setDisable(true);
 
     }
     @FXML void handleStudyClick(ActionEvent e){
         setPage(Page.StudyFocus);
-
+        ideasIdea.setDisable(true);
     }
     @FXML protected void handleHomeFeaturedClick(ActionEvent e){
         setPage(Page.HomeFeatured);
+        ideasIdea.setDisable(true);
     }
     @FXML protected void handleHomeNotesClick(ActionEvent e){
         setPage(Page.HomeNotes);
+        ideasIdea.setDisable(true);
     }
     @FXML protected void handleIdeasOverviewClick(ActionEvent e){
         setPage(Page.IdeasOverview);
+        ideasIdea.setDisable(true);
     }
     @FXML protected void handleIdeasMindMapClick(ActionEvent e){
         setPage(Page.IdeasMindMap);
+        ideasIdea.setDisable(true);
     }
     @FXML protected void handleIdeasIdeaClick(ActionEvent e){
         setPage(Page.IdeasIdea);
+        ideasIdea.setDisable(true);
     }
     @FXML protected void handleStudyOverviewClick(ActionEvent e){
         setPage(Page.StudyOverview);
+        ideasIdea.setDisable(true);
     }
     @FXML protected void handleStudyFocusClick(ActionEvent e){
         setPage(Page.StudyFocus);
+        ideasIdea.setDisable(true);
     }
     @FXML protected void handleStudyIdeasClick(ActionEvent e){
         setPage(Page.StudyIdeas);
+        ideasIdea.setDisable(true);
     }
-
+    @FXML protected void handleStudyLastQuizClick(ActionEvent e){
+        setPage(Page.StudyLastQuiz);
+        ideasIdea.setDisable(true);
+    }
 
     /********** Finish Navigation Panels *********/
 
@@ -438,49 +495,85 @@ public class MainWindowController implements RefreshSubjectsController {
         switch (page){
             case HomeNotes:
                 mainWindow.setCenter(homeNotesPanel);
+                quizProgress.setVisible(false);
+                disableAllMenus(false);
                 setVisibleHomeMenu(false,true);
                 setMenuSelection(true,false,false);
                 break;
             case HomeFeatured:
+                homeFeaturedPanel.setVisible(true);
                 mainWindow.setCenter(homeFeaturedPanel);
+                quizProgress.setVisible(false);
+                disableAllMenus(false);
                 setVisibleHomeMenu(true,false);
                 setMenuSelection(true,false,false);
                 break;
             case IdeasIdea:
                 mainWindow.setCenter(ideasIdeaPanel);
+                quizProgress.setVisible(false);
+                disableAllMenus(false);
                 setVisibleIdeasMenu(true,false,false);
                 setMenuSelection(false,true,false);
                 break;
             case IdeasMindMap:
                 mainWindow.setCenter(ideasMindMapPanel);
+                quizProgress.setVisible(false);
+                disableAllMenus(false);
                 setVisibleIdeasMenu(false,true,false);
                 setMenuSelection(false,true,false);
                 break;
             case IdeasOverview:
                 mainWindow.setCenter(ideasOverviewPanel);
+                quizProgress.setVisible(false);
+                disableAllMenus(false);
                 setVisibleIdeasMenu(false,false,true);
                 setMenuSelection(false,true,false);
                 break;
             case StudyFocus:
                 mainWindow.setCenter(studyFocusPanel);
-                setVisibleStudyMenu(true,false,false);
+                quizProgress.setVisible(false);
+                disableAllMenus(false);
+                setVisibleStudyMenu(true,false,false,false);
                 setMenuSelection(false,false,true);
                 break;
             case StudyIdeas:
                 mainWindow.setCenter(studyIdeasPanel);
-                setVisibleStudyMenu(false,true,false);
+                quizProgress.setVisible(false);
+                disableAllMenus(false);
+                setVisibleStudyMenu(false,true,false,false);
                 setMenuSelection(false,false,true);
                 break;
             case StudyOverview:
                 mainWindow.setCenter(studyOverviewPanel);
-                setVisibleStudyMenu(false,false,true);
+                //mainWindow.setCenter(quizPanel);
+                quizProgress.setVisible(false);
+                disableAllMenus(false);
+                setVisibleStudyMenu(false,false,true,false);
                 setMenuSelection(false,false,true);
+                break;
+            case StudyLastQuiz:
+                lastQuizMenu.setVisible(true);
+                mainWindow.setCenter(studyLastQuizPanel);
+                quizProgress.setVisible(false);
+                disableAllMenus(false);
+                setVisibleStudyMenu(false,false,false,true);
+                setMenuSelection(false,false,true);
+                break;
+            case QuizPage:
+                mainWindow.setCenter(quizPanel);
+                this.mainWindowHeader.setText("Quiz");
+                homeMenu.setVisible(false);
+                ideasMenu.setVisible(false);
+                studyMenu.setVisible(false);
+                disableAllMenus(true);
+                quizProgress.setVisible(true);
+                setVisibleStudyMenu(false,false,false,false);
+                setMenuSelection(false,false,false);
                 break;
         }
     }
 
     private int numberOfSubjects;
-
 
     /**
      * Called on New Subject button click
@@ -534,6 +627,10 @@ public class MainWindowController implements RefreshSubjectsController {
         advancedSearch.setVisible(false);
         searchlistpane.setVisible(false);
         viewNote.setVisible(false);
+        customQuiz.setVisible(false);
+        createstudysession.setVisible(false);
+        createstudyplan.setVisible(false);
+
     }
 
     /**
@@ -581,15 +678,19 @@ public class MainWindowController implements RefreshSubjectsController {
      */
     @FXML protected void handleNewIdeaAction(ActionEvent e){
         closeOuterWindows();
-        createIdea.setVisible(true);
+        controller.createIdea();
     }
 
 
-    public void viewNotes(){
-
+    @FXML protected void handleCustomQuizAction(ActionEvent e){
+        closeOuterWindows();
+        controller.setupQuiz();
     }
 
-
+    @FXML protected void handleStudySession(ActionEvent e){
+        closeOuterWindows();
+        controller.createStudySession();
+    }
 
     public void disableSubjectList(boolean disable){
         this.subjectList.setDisable(disable);
@@ -601,8 +702,10 @@ public class MainWindowController implements RefreshSubjectsController {
     @Override
     public void refreshSubjects() {
         subjectList.setItems(FXCollections.observableArrayList(model.getSubjectStrings()));
-
         this.subjectList.getSelectionModel().select(model.getCurrentSubject().getName());
-
     }
+
+
+
+
 }

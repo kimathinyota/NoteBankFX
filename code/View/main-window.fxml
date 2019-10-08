@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
@@ -26,9 +27,9 @@
          <center>
             <BorderPane fx:id="app" minHeight="-Infinity" prefHeight="800.0" prefWidth="700.0">
                <center>
-                  <BorderPane fx:id="mainWindow" prefHeight="800.0" prefWidth="717.0" BorderPane.alignment="CENTER">
+                  <BorderPane fx:id="mainWindow" prefHeight="800.0" prefWidth="698.0" BorderPane.alignment="CENTER">
                      <top>
-                        <GridPane prefHeight="186.0" prefWidth="905.0" style="-fx-background-color: linear-gradient(from 0% -22% to 0% 58%,#dcdcdc,#000000)linear-gradient(from 0% -22% to 0% 58%,#dcdcdc,#000000);" BorderPane.alignment="CENTER">
+                        <GridPane prefHeight="210.0" prefWidth="706.0" style="-fx-background-color: linear-gradient(from 0% -22% to 0% 58%,#dcdcdc,#000000)linear-gradient(from 0% -22% to 0% 58%,#dcdcdc,#000000);" BorderPane.alignment="CENTER">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -147,23 +148,34 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="64.0" layoutY="-8.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@Style.css" text="&gt;" textFill="WHITE">
+                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="64.0" layoutY="-8.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@css/Style.css" text="&gt;" textFill="WHITE">
                                        <font>
                                           <Font name="Inter Semi Bold" size="40.0" />
                                        </font>
                                     </Button>
-                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="29.0" layoutY="-8.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@Style.css" text="&lt;" textFill="WHITE">
+                                    <Button alignment="TOP_LEFT" ellipsisString="" layoutX="29.0" layoutY="-8.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px; -fx-label-padding: 0px;" styleClass="arrow" stylesheets="@css/Style.css" text="&lt;" textFill="WHITE">
                                        <font>
                                           <Font name="Inter Semi Bold" size="40.0" />
                                        </font>
                                     </Button>
                                  </children>
                               </AnchorPane>
-                              <Text fx:id="mainWindowHeader" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" wrappingWidth="256.32386016845703" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="10">
-                                 <font>
-                                    <Font name="Inter Semi Bold" size="45.0" />
-                                 </font>
-                              </Text>
+                              <BorderPane GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="10">
+                                 <center>
+                                    <Text fx:id="mainWindowHeader" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" wrappingWidth="143.32386016845703">
+                                       <font>
+                                          <Font name="Inter Semi Bold" size="45.0" />
+                                       </font>
+                                    </Text>
+                                 </center>
+                                 <right>
+                                    <Label fx:id="quizIdeaLabel" text="IDEA: Dont you love eating chicken" textFill="#8d8d8d" visible="false" BorderPane.alignment="CENTER_LEFT">
+                                       <font>
+                                          <Font name="Inter Semi Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </right>
+                              </BorderPane>
                               <GridPane fx:id="homeMenu" GridPane.columnSpan="48" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="19" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="277.0" minWidth="10.0" prefWidth="223.0" />
@@ -186,7 +198,7 @@
                                           <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="homeFeatured" alignment="BASELINE_CENTER" contentDisplay="CENTER" disable="true" ellipsisString="" mnemonicParsing="false" onAction="#handleHomeFeaturedClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text=" FEATURED" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                                          <Button fx:id="homeFeatured" alignment="BASELINE_CENTER" contentDisplay="CENTER" disable="true" ellipsisString="" mnemonicParsing="false" onAction="#handleHomeFeaturedClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@css/Style.css" text=" FEATURED" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                                              <font>
                                                 <Font name="Inter Semi Bold" size="21.0" />
                                              </font>
@@ -207,7 +219,7 @@
                                           <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="homeNotes" alignment="BASELINE_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleHomeNotesClick" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text="NOTES" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                                          <Button fx:id="homeNotes" alignment="BASELINE_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleHomeNotesClick" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@css/Style.css" text="NOTES" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                                              <font>
                                                 <Font name="Inter Semi Bold" size="21.0" />
                                              </font>
@@ -217,11 +229,12 @@
                                     </GridPane>
                                  </children>
                               </GridPane>
-                              <GridPane fx:id="studyMenu" layoutX="10.0" layoutY="200.0" visible="false" GridPane.columnSpan="60" GridPane.rowIndex="19">
+                              <GridPane fx:id="studyMenu" layoutX="10.0" layoutY="200.0" visible="false" GridPane.columnSpan="66" GridPane.rowIndex="19">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.0" minWidth="10.0" prefWidth="223.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="10.0" prefWidth="190.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="270.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="208.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="327.0" minWidth="10.0" prefWidth="181.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -240,7 +253,7 @@
                                           <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="studyOverview" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleStudyOverviewClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text="OVERVIEW" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                                          <Button fx:id="studyOverview" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleStudyOverviewClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@css/Style.css" text="OVERVIEW" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                                              <font>
                                                 <Font name="Inter Semi Bold" size="21.0" />
                                              </font>
@@ -250,18 +263,18 @@
                                     </GridPane>
                                     <GridPane layoutX="10.0" layoutY="-2.0" prefHeight="35.0" prefWidth="184.0" GridPane.columnIndex="1">
                                        <columnConstraints>
-                                          <ColumnConstraints hgrow="NEVER" maxWidth="91.0" minWidth="10.0" prefWidth="75.0" />
-                                          <ColumnConstraints hgrow="NEVER" maxWidth="81.0" minWidth="10.0" prefWidth="40.0" />
-                                          <ColumnConstraints hgrow="NEVER" maxWidth="112.0" minWidth="10.0" prefWidth="76.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="60.0" minWidth="10.0" prefWidth="59.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="40.0" minWidth="10.0" prefWidth="40.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="62.0" minWidth="10.0" prefWidth="62.0" />
                                        </columnConstraints>
                                        <rowConstraints>
-                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="11.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="11.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="13.0" minHeight="9.0" prefHeight="13.0" vgrow="SOMETIMES" />
                                           <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="studyFocus" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleStudyFocusClick" prefHeight="40.0" prefWidth="191.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text="FOCUS" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                                          <Button fx:id="studyFocus" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleStudyFocusClick" prefHeight="40.0" prefWidth="191.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@css/Style.css" text="FOCUS" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                                              <font>
                                                 <Font name="Inter Semi Bold" size="21.0" />
                                              </font>
@@ -271,9 +284,9 @@
                                     </GridPane>
                                     <GridPane layoutX="190.0" layoutY="-2.0" prefHeight="34.0" prefWidth="220.0" GridPane.columnIndex="2">
                                        <columnConstraints>
-                                          <ColumnConstraints hgrow="NEVER" maxWidth="95.0" minWidth="10.0" prefWidth="93.0" />
-                                          <ColumnConstraints hgrow="NEVER" maxWidth="81.0" minWidth="10.0" prefWidth="35.0" />
-                                          <ColumnConstraints hgrow="NEVER" maxWidth="97.0" minWidth="10.0" prefWidth="95.0" />
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="72.0" minWidth="10.0" prefWidth="72.0" />
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="30.0" minWidth="10.0" prefWidth="29.0" />
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="75.0" minWidth="10.0" prefWidth="75.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -282,12 +295,33 @@
                                           <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="studyIdeas" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleStudyIdeasClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text="IDEAS" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                                          <Button fx:id="studyIdeas" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleStudyIdeasClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@css/Style.css" text="IDEAS" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                                              <font>
                                                 <Font name="Inter Semi Bold" size="21.0" />
                                              </font>
                                           </Button>
                                           <Pane fx:id="studyIdeasPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00FF00;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                    <GridPane fx:id="lastQuizMenu" layoutX="347.0" layoutY="-2.0" prefHeight="34.0" prefWidth="220.0" GridPane.columnIndex="3">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="37.0" minWidth="10.0" prefWidth="37.0" />
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="66.0" minWidth="10.0" prefWidth="66.0" />
+                                          <ColumnConstraints hgrow="NEVER" maxWidth="40.0" minWidth="10.0" prefWidth="40.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="11.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="13.0" minHeight="9.0" prefHeight="13.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Button fx:id="studyLastQuiz" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleStudyLastQuizClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@css/Style.css" text="LAST QUIZ" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                                             <font>
+                                                <Font name="Inter Semi Bold" size="21.0" />
+                                             </font>
+                                          </Button>
+                                          <Pane fx:id="studyLastQuizPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00FF00;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -315,7 +349,7 @@
                                           <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="ideasOverview" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleIdeasOverviewClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text="OVERVIEW" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                                          <Button fx:id="ideasOverview" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleIdeasOverviewClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@css/Style.css" text="OVERVIEW" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                                              <font>
                                                 <Font name="Inter Semi Bold" size="21.0" />
                                              </font>
@@ -336,7 +370,7 @@
                                           <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="ideasMindMap" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleIdeasMindMapClick" prefHeight="40.0" prefWidth="191.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text="MIND-MAP" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                                          <Button fx:id="ideasMindMap" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleIdeasMindMapClick" prefHeight="40.0" prefWidth="191.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@css/Style.css" text="MIND-MAP" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                                              <font>
                                                 <Font name="Inter Semi Bold" size="21.0" />
                                              </font>
@@ -357,7 +391,7 @@
                                           <RowConstraints maxHeight="6.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <Button fx:id="ideasIdea" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleIdeasIdeaClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@Style.css" text="IDEA" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
+                                          <Button fx:id="ideasIdea" alignment="BOTTOM_CENTER" contentDisplay="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleIdeasIdeaClick" prefHeight="40.0" prefWidth="224.0" style="-fx-background-color: transparent;" styleClass="menuTop" stylesheets="@css/Style.css" text="IDEA" textFill="WHITE" textOverrun="CLIP" GridPane.columnSpan="3" GridPane.rowSpan="2">
                                              <font>
                                                 <Font name="Inter Semi Bold" size="21.0" />
                                              </font>
@@ -367,18 +401,37 @@
                                     </GridPane>
                                  </children>
                               </GridPane>
+                              <BorderPane fx:id="quizProgress" prefHeight="50.0" stylesheets="@Quiz/quiz.css" visible="false" GridPane.columnIndex="3" GridPane.columnSpan="61" GridPane.rowIndex="16" GridPane.rowSpan="5">
+                                 <center>
+                                    <ProgressBar fx:id="quizProgressBar" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="568.0" progress="0.39" styleClass="quiz-progress" stylesheets="@Quiz/quiz.css" />
+                                 </center>
+                                 <right>
+                                    <BorderPane BorderPane.alignment="CENTER">
+                                       <center>
+                                          <Label fx:id="quizFraction" text="50/200" textFill="#70bc84">
+                                             <font>
+                                                <Font name="Inter Medium" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </center>
+                                       <left>
+                                          <Pane prefWidth="10.0" BorderPane.alignment="CENTER" />
+                                       </left>
+                                       <right>
+                                          <Pane maxWidth="50.0" prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                       </right>
+                                    </BorderPane>
+                                 </right>
+                              </BorderPane>
                            </children>
                         </GridPane>
                      </top>
-                     <center>
-                        <fx:include source="menus/home/featured.fxml" />
-                     </center>
                   </BorderPane>
                </center>
                <left>
-                  <BorderPane minWidth="-Infinity" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+                  <BorderPane fx:id="leftNavigation" minWidth="-Infinity" prefHeight="800.0" prefWidth="256.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
                      <top>
-                        <GridPane prefHeight="210.0" prefWidth="255.0" BorderPane.alignment="CENTER">
+                        <GridPane minWidth="-Infinity" prefHeight="210.0" prefWidth="255.0" BorderPane.alignment="CENTER">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="7.0" minWidth="5.0" prefWidth="5.0" />
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="17.0" minWidth="10.0" prefWidth="17.0" />
@@ -418,7 +471,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="home" alignment="CENTER" disable="true" ellipsisString="" graphicTextGap="13.0" mnemonicParsing="false" onAction="#handleHomeClick" prefHeight="57.0" prefWidth="289.0" style="-fx-background-color: transparent;" styleClass="menu" stylesheets="@Style.css" text="Home" textFill="#fffcfc" GridPane.columnIndex="2" GridPane.columnSpan="18" GridPane.rowIndex="1">
+                              <Button fx:id="home" alignment="CENTER" disable="true" ellipsisString="" graphicTextGap="13.0" mnemonicParsing="false" onAction="#handleHomeClick" prefHeight="57.0" prefWidth="289.0" style="-fx-background-color: transparent;" styleClass="menu" stylesheets="@css/Style.css" text="Home" textFill="#fffcfc" GridPane.columnIndex="2" GridPane.columnSpan="18" GridPane.rowIndex="1">
                                  <graphic>
                                     <ImageView fitHeight="39.0" fitWidth="39.0">
                                        <image>
@@ -430,7 +483,7 @@
                                     <Font name="Inter Semi Bold" size="26.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="ideas" alignment="CENTER" ellipsisString="" graphicTextGap="13.0" mnemonicParsing="false" onAction="#handleIdeasClick" prefHeight="60.0" prefWidth="243.0" style="-fx-background-color: transparent;" styleClass="menu" stylesheets="@Style.css" text="Ideas" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="18" GridPane.rowIndex="3">
+                              <Button fx:id="ideas" alignment="CENTER" ellipsisString="" graphicTextGap="13.0" mnemonicParsing="false" onAction="#handleIdeasClick" prefHeight="60.0" prefWidth="243.0" style="-fx-background-color: transparent;" styleClass="menu" stylesheets="@css/Style.css" text="Ideas" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="18" GridPane.rowIndex="3">
                                  <graphic>
                                     <ImageView fitHeight="42.0" fitWidth="41.0">
                                        <image>
@@ -442,7 +495,7 @@
                                     <Font name="Inter Semi Bold" size="26.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="study" alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleStudyClick" prefHeight="68.0" prefWidth="327.0" style="-fx-background-color: transparent;" styleClass="menu" stylesheets="@Style.css" text="Study" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="18" GridPane.rowIndex="5">
+                              <Button fx:id="study" alignment="CENTER" ellipsisString="" mnemonicParsing="false" onAction="#handleStudyClick" prefHeight="68.0" prefWidth="327.0" style="-fx-background-color: transparent;" styleClass="menu" stylesheets="@css/Style.css" text="Study" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="18" GridPane.rowIndex="5">
                                  <graphic>
                                     <ImageView fitHeight="50.0" fitWidth="50.0">
                                        <image>
@@ -496,7 +549,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="newNote" alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onNewNoteAction" prefHeight="39.0" prefWidth="172.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@Style.css" text="New Note" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.columnSpan="10" GridPane.rowIndex="2">
+                              <Button fx:id="newNote" alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" mnemonicParsing="false" onAction="#onNewNoteAction" prefHeight="39.0" prefWidth="172.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@css/Style.css" text="New Note" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.columnSpan="10" GridPane.rowIndex="2">
                                  <font>
                                     <Font name="Inter Semi Bold" size="20.0" />
                                  </font>
@@ -508,7 +561,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleNewIdeaAction" prefHeight="39.0" prefWidth="166.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@Style.css" text="New Idea" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.columnSpan="10" GridPane.rowIndex="4">
+                              <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleNewIdeaAction" prefHeight="39.0" prefWidth="166.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@css/Style.css" text="New Idea" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.columnSpan="10" GridPane.rowIndex="4">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0">
                                        <image>
@@ -520,7 +573,7 @@
                                     <Font name="Inter Semi Bold" size="20.0" />
                                  </font>
                               </Button>
-                              <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="197.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@Style.css" text="Custom Quiz" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="12" GridPane.rowIndex="6">
+                              <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleCustomQuizAction" prefHeight="39.0" prefWidth="197.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@css/Style.css" text="Custom Quiz" textFill="WHITE" GridPane.columnIndex="2" GridPane.columnSpan="12" GridPane.rowIndex="6">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0">
                                        <image>
@@ -532,7 +585,7 @@
                                     <Font name="Inter Semi Bold" size="20.0" />
                                  </font>
                               </Button>
-                              <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="171.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@Style.css" text="Study Plan" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.columnSpan="12" GridPane.rowIndex="8">
+                              <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleStudySession" prefHeight="39.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@css/Style.css" text="Study Session" textFill="WHITE" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.columnSpan="14" GridPane.rowIndex="8">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0">
                                        <image>
@@ -562,12 +615,12 @@
                               </AnchorPane>
                            </top>
                            <center>
-                              <ListView fx:id="subjectList" prefHeight="221.0" prefWidth="171.0" styleClass="subjectList" stylesheets="@Style.css" />
+                              <ListView fx:id="subjectList" prefHeight="221.0" prefWidth="171.0" styleClass="subjectList" stylesheets="@css/Style.css" />
                            </center>
                            <bottom>
                               <AnchorPane BorderPane.alignment="CENTER_LEFT">
                                  <children>
-                                    <Button fx:id="newSubject" alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" layoutX="35.0" mnemonicParsing="false" onAction="#handleNewSubjectAction" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@Style.css" text="New Subject" textFill="WHITE" textOverrun="CLIP">
+                                    <Button fx:id="newSubject" alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="10.0" layoutX="35.0" mnemonicParsing="false" onAction="#handleNewSubjectAction" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: transparent;" styleClass="new" stylesheets="@css/Style.css" text="New Subject" textFill="WHITE" textOverrun="CLIP">
                                        <font>
                                           <Font name="Inter Semi Bold" size="17.0" />
                                        </font>
@@ -607,7 +660,7 @@
             <Insets left="355.0" top="60.0" />
          </StackPane.margin>
       </AnchorPane>
-      <AnchorPane fx:id="advancedSearch" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="250.0" prefHeight="800.0" prefWidth="285.0" style="-fx-background-color: #67686b#67686b;" StackPane.alignment="CENTER_RIGHT">
+      <AnchorPane fx:id="advancedSearch" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="250.0" prefHeight="800.0" prefWidth="285.0" style="-fx-background-color: #67686b#67686b;" visible="false" StackPane.alignment="CENTER_RIGHT">
          <children>
             <BorderPane layoutX="2.0" minWidth="250.0" prefHeight="800.0" prefWidth="285.0">
                <top>
@@ -625,7 +678,7 @@
                      <right>
                         <BorderPane BorderPane.alignment="CENTER">
                            <center>
-                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAdvancedSearchCloseAction" prefHeight="27.0" prefWidth="28.0" styleClass="exit" stylesheets="@Style.css" text="×" textAlignment="CENTER" textFill="WHITE">
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAdvancedSearchCloseAction" prefHeight="27.0" prefWidth="28.0" styleClass="exit" stylesheets="@css/Style.css" text="×" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="21.0" />
                                  </font>
@@ -644,7 +697,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ToggleButton fx:id="includeImagesToggle" layoutX="201.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleIncludeImagesAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@toggle.css" />
+                        <ToggleButton fx:id="includeImagesToggle" layoutX="201.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleIncludeImagesAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@css/toggle.css" />
                         <Label layoutX="18.0" layoutY="27.0" prefHeight="27.0" prefWidth="143.0" text="Search in Page">
                            <font>
                               <Font name="Inter Semi Bold" size="17.0" />
@@ -675,19 +728,22 @@
                               <Font name="Inter Semi Bold" size="17.0" />
                            </font>
                         </Label>
-                        <ToggleButton fx:id="includeTextsToggle" layoutX="201.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleIncludeTextsAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@toggle.css" />
-                        <ToggleButton fx:id="includeBooksToggle" layoutX="201.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleIncludeBooksAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@toggle.css" />
-                        <ToggleButton fx:id="includeIdeasToggle" layoutX="201.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleIncludeIdeasAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@toggle.css" />
-                        <ToggleButton fx:id="includeStudyPlansToggle" layoutX="201.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleIncludeStudyPlansAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@toggle.css" />
-                        <ToggleButton fx:id="inPageToggle" layoutX="201.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleSearchInPageAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@toggle.css" />
+                        <ToggleButton fx:id="includeTextsToggle" layoutX="201.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleIncludeTextsAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@css/toggle.css" />
+                        <ToggleButton fx:id="includeBooksToggle" layoutX="201.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleIncludeBooksAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@css/toggle.css" />
+                        <ToggleButton fx:id="includeIdeasToggle" layoutX="201.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleIncludeIdeasAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@css/toggle.css" />
+                        <ToggleButton fx:id="includeStudyPlansToggle" layoutX="201.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleIncludeStudyPlansAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@css/toggle.css" />
+                        <ToggleButton fx:id="inPageToggle" layoutX="201.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleSearchInPageAction" prefHeight="40.0" prefWidth="70.0" style="-fx-background-color: transparent;" stylesheets="@css/toggle.css" />
                      </children>
                   </AnchorPane>
                </center>
             </BorderPane>
          </children>
       </AnchorPane>
-      <fx:include fx:id="createNote" source="createnote.fxml" />
-      <fx:include fx:id="createIdea" source="createidea.fxml" />
-      <fx:include fx:id="viewNote" source="viewnote.fxml" />
+      <fx:include fx:id="createNote" source="Dialogs/createnote.fxml" />
+      <fx:include fx:id="createIdea" source="Dialogs/createidea.fxml" />
+      <fx:include fx:id="viewNote" source="NoteView/viewnote.fxml" />
+      <fx:include fx:id="customQuiz" source="Dialogs/customquiz.fxml" />
+      <fx:include fx:id="createstudysession" source="Dialogs/createstudysession.fxml" StackPane.alignment="CENTER" />
+      <fx:include fx:id="createstudyplan" source="Dialogs/createstudyplan.fxml" StackPane.alignment="CENTER" />
    </children>
 </StackPane>

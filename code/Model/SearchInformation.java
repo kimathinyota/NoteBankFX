@@ -102,7 +102,7 @@ public class SearchInformation implements Comparable<SearchInformation>{
         this.reference = reference;
 
 
-        System.out.println("Score for " + searchObject + " is " + score);
+        //System.out.println("Score for " + searchObject + " is " + score);
 
 
 

@@ -6,17 +6,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 public abstract class Note implements ObservableObject {
 
 	protected StringBuilder path;
 	protected NoteType type;
 
-
 	public boolean contains(Object o){
 		return false;
 	}
-
 
 	/**
 	 * Getter for name
@@ -31,17 +30,28 @@ public abstract class Note implements ObservableObject {
 		return this.toString();
 	}
 
+	@Override
+	public String getMindMapName() {
+		return toString();
+	}
+
+	@Override
+	public String getTreeName() {
+		return toString();
+	}
+
 	public static String getName(String path) {
 
 		String name =  new File(path.toString()).getName();
 
 		name = name.substring(0,name.lastIndexOf('.'));
 
-		return name.replaceAll("-"," ");
+		name = name.replaceAll("-"," ");
+
+
+		return name.replaceAll("_","-");
 
 	}
-
-
 
 	private String getFileExtension(String path) {
 
@@ -62,7 +72,6 @@ public abstract class Note implements ObservableObject {
 		this.path = new StringBuilder(newLocation);
 		new File(path.toString()).renameTo(new File(newLocation + File.separator + name));
 	}
-
 
 	public static String getPath(String name, String pathToNotesDirectory, String fileExtension){
 		return pathToNotesDirectory + File.separator + name.trim().replaceAll(" ","-") + "." + fileExtension;
@@ -102,11 +111,9 @@ public abstract class Note implements ObservableObject {
 		this.type = type;
 	}
 
-
 	public NoteType getNoteType(){
 		return this.type;
 	}
-
 
 	public Note(NoteType type){
 		this.path = null;
@@ -131,9 +138,6 @@ public abstract class Note implements ObservableObject {
 		return path.toString().hashCode();
 	}
 
-
-
-
 	/**
 	 * Deletes note: Existing file will be removed
 	 */
@@ -147,14 +151,9 @@ public abstract class Note implements ObservableObject {
 	 */
 	public abstract String toXML();
 
-
-
 	public StringBuilder getPath(){
 		return this.path;
 	}
-
-
-
 
 	public abstract SearchInformation search(String searchInput);
 	public abstract SearchInformation search(String searchInput, int percentageSegment);

@@ -1,0 +1,308 @@
+
+
+.mind-map-center{
+    -fx-background-color: #045180;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 14px;
+}
+
+.mind-map-center:hover{
+    -fx-background-color: #017280;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+
+
+.mind-map-keyword-center{
+    -fx-background-color: #802066;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 14px;
+}
+
+.mind-map-keyword-center:hover{
+    -fx-background-color: #461432;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+
+
+.mind-map-keyword{
+   -fx-background-color: #9b2879;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 14px;
+}
+
+.mind-map-keyword-line{
+    -fx-stroke: #9b2879;
+    -fx-stroke-width: 7;
+}
+
+.mind-map-keyword-line:hover{
+    -fx-stroke: #4e153a;
+    -fx-stroke-width: 13;
+}
+
+.mind-map-keyword:hover{
+    -fx-background-color: #971267;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+
+
+.mind-map-notes-center{
+    -fx-background-color: #7c8000;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 14px;
+}
+
+.mind-map-notes-line{
+    -fx-stroke: #7c8000;
+    -fx-stroke-width: 7;
+}
+
+.mind-map-notes-line:hover{
+    -fx-stroke: #3d4100;
+    -fx-stroke-width: 13;
+}
+
+.mind-map-notes-center:hover{
+    -fx-background-color: #484c00;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+
+
+
+
+
+.mind-map-note{
+    -fx-background-color: #807a00;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 14px;
+}
+
+
+.mind-map-note:hover{
+    -fx-background-color: #595300;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+
+.mind-map-prompt-note{
+    -fx-background-color: #805d11;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 14px;
+}
+
+
+.mind-map-prompt-note:hover{
+    -fx-background-color: #4f390b;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+
+
+
+
+.heyyy{
+    -fx-stroke: black;
+    -fx-stroke-width: 7;
+}
+
+
+.mind-map-line{
+    -fx-stroke: #017280;
+    -fx-stroke-width: 7;
+}
+
+.mind-map-line:hover{
+    -fx-stroke: #800c71;
+    -fx-stroke-width: 13;
+}
+
+
+
+.mind-map-idea-line{
+    -fx-stroke: #004b80;
+    -fx-stroke-width: 7;
+}
+
+.mind-map-idea-line:hover{
+    -fx-stroke: #002641;
+    -fx-stroke-width: 13;
+}
+
+
+.mind-map-topic-line{
+    -fx-stroke: #800c71;
+    -fx-stroke-width: 7;
+}
+
+.mind-map-topic-line:hover{
+    -fx-stroke: #4b0840;
+    -fx-stroke-width: 13;
+}
+
+
+
+
+
+.mind-map-line-parent:hover{
+    -fx-stroke: #3e0835;
+    -fx-stroke-width: 13;
+}
+
+
+.mind-map-line-parent{
+    -fx-stroke: #800c71;
+    -fx-stroke-width: 5;
+    -fx-stroke-dash-array:  6 6 6 6 6 6 6;
+}
+
+.mind-map-view{
+    //-fx-border-color: #07030d;
+    -fx-background-color: transparent;
+    -fx-background-radius: 30px;
+    -fx-border-width: 10px;
+
+
+}
+
+/*
+.mind-map-center{
+    -fx-background-color: rgb(43, 43, 43);
+}
+*/
+
+.mind-map-idea{
+    -fx-background-color: #805900;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 14px;
+}
+
+.mind-map-idea:hover{
+    -fx-background-color: #613a00;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+.mind-map-topic{
+    -fx-background-color: #4e3180;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 14px;
+}
+
+.mind-map-topic:hover{
+    -fx-background-color: #1c1834;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+
+.mind-map-parent{
+    -fx-background-color: #271563;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 14px;
+}
+
+.mind-map-parent:hover{
+    -fx-background-color: #0f0a2f;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+
+/* The main scrollbar CSS class of ListView */
+.scroll-pane .scroll-bar:horizontal ,
+.scroll-pane  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+
+
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.scroll-pane .increment-button ,.scroll-pane .decrement-button {
+    -fx-background-color:transparent;
+    -fx-border-color:transparent;
+    -fx-border-width: 0px;
+}
+
+/* The main scrollbar **track** CSS class  */
+.scroll-pane .scroll-bar:horizontal .track ,
+.scroll-pane .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.scroll-pane .scroll-bar:horizontal .thumb,
+.scroll-pane .scroll-bar:vertical .thumb {
+    /*-fx-background-color:derive(grey,70%); */
+    -fx-background-color: derive(black,50%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.scroll-pane StackPane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane Button {
+    -fx-background-color: transparent;
+    -fx-text-fill: transparent;
+}
+
+
+/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
+
+.scroll-pane .scroll-bar:horizontal:hover .track ,
+.scroll-pane .scroll-bar:horizontal:pressed .track ,
+.scroll-pane .scroll-bar:vertical:hover .track,
+.scroll-pane .scroll-bar:vertical:pressed .track{
+    -fx-background-color: derive(black,40%);
+    -fx-opacity: 0.2;
+    -fx-background-radius: 0em;
+    -fx-background-color:transparent;
+
+}
+
+/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
+
+.scroll-pane .scroll-bar .thumb:hover,
+.scroll-pane .scroll-bar .thumb:pressed{
+    /*-fx-background-color: derive(black,50%);*/
+    -fx-background-color: derive(black,40%);
+}
+
+.scroll-pane .increment-button:hover ,.scroll-pane .decrement-button:hover {
+    /*-fx-border-color:derive(gray,80%);*/
+    -fx-text-fill: derive(white,10%);
+    -fx-background-color: derive(rgb(43, 43, 43),50%);
+
+}
+
+.scroll-pane{
+    -fx-padding: 0px;
+    -fx-background: rgb(43, 43, 43);
+    -fx-background-color: rgb(43, 43, 43);
+}

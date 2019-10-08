@@ -1,6 +1,6 @@
 package Code.View.menus;
 
-import Code.View.TagCell;
+import Code.View.components.Tags.TagCell;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;

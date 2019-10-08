@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -10,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="632.0" prefWidth="900.0" style="-fx-background-color: rgb(43, 43, 43);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.IdeasPageController">
+<BorderPane prefHeight="632.0" prefWidth="900.0" style="-fx-background-color: rgb(43, 43, 43);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.ideas.IdeasPageController">
    <top>
       <Pane prefHeight="25.0" BorderPane.alignment="CENTER" />
    </top>
@@ -22,28 +24,28 @@
                   <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
                </bottom>
                <center>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-padding: 0px;" BorderPane.alignment="CENTER_LEFT">
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="148.0" prefWidth="860.0" style="-fx-background-color: transparent; -fx-padding: 0px;" stylesheets="@../../css/idea.css" BorderPane.alignment="CENTER_LEFT">
                      <graphic>
-                        <GridPane maxHeight="-Infinity" prefHeight="115.0" style="-fx-background-color: #333333#333333; -fx-background-radius: 10px; -fx-border-radius: 10px;">
+                        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="115.0" style="-fx-background-color: transparent; -fx-background-radius: 10px; -fx-border-radius: 10px;" styleClass="titlePane">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <BorderPane prefHeight="200.0" prefWidth="200.0">
                                  <center>
                                     <Label fx:id="ideaTitle" text="Monkey" textFill="WHITE" BorderPane.alignment="CENTER_LEFT">
                                        <font>
-                                          <Font name="Inter Medium" size="33.0" />
+                                          <Font name="Inter Medium" size="27.0" />
                                        </font>
                                     </Label>
                                  </center>
                                  <left>
-                                    <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="title" stylesheets="@../../idea.css" text="  IDEA:  " textFill="WHITE" BorderPane.alignment="CENTER">
+                                    <Button mnemonicParsing="false" onAction="#handleEditAction" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="title" stylesheets="@../../css/idea.css" text="  IDEA:  " textFill="WHITE" BorderPane.alignment="CENTER">
                                        <font>
                                           <Font name="Inter Light BETA" size="19.0" />
                                        </font>
@@ -59,19 +61,19 @@
                                     </Label>
                                  </center>
                                  <left>
-                                    <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="title" stylesheets="@../../idea.css" text="  TYPE:  " textFill="WHITE" BorderPane.alignment="CENTER">
+                                    <Button mnemonicParsing="false" onAction="#handleEditAction" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="title" stylesheets="@../../css/idea.css" text="  TYPE:  " textFill="WHITE" BorderPane.alignment="CENTER">
                                        <font>
                                           <Font name="Inter Light BETA" size="19.0" />
                                        </font>
                                     </Button>
                                  </left>
                               </BorderPane>
-                              <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                              <BorderPane prefHeight="48.0" prefWidth="860.0" GridPane.rowIndex="2">
                                  <center>
-                                    <ListView fx:id="keywords" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-background: transparent;" styleClass="mylistview" stylesheets="@../../idea.css" BorderPane.alignment="CENTER" />
+                                    <ListView fx:id="keywords" prefHeight="56.0" prefWidth="723.0" style="-fx-background-color: transparent; -fx-background: transparent;" styleClass="mylistview" stylesheets="@../../css/idea.css" BorderPane.alignment="CENTER" />
                                  </center>
                                  <left>
-                                    <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="title" stylesheets="@../../idea.css" text="  KEYWORDS:   " textFill="WHITE" BorderPane.alignment="CENTER">
+                                    <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleEditAction" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="title" stylesheets="@../../css/idea.css" text="  KEYWORDS:   " textFill="WHITE" BorderPane.alignment="CENTER">
                                        <font>
                                           <Font name="Inter Light BETA" size="19.0" />
                                        </font>
@@ -85,6 +87,13 @@
                </center>
             </BorderPane>
          </top>
+         <center>
+            <ImageView fx:id="loadingGIF" fitHeight="200.0" fitWidth="200.0">
+               <image>
+                  <Image url="@../../icons/loading.gif" />
+               </image>
+            </ImageView>
+         </center>
       </BorderPane>
    </center>
    <left>

@@ -1,0 +1,18 @@
+
+
+.amenu .label, .amenu .context-menu .label{
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-family: Inter-Semi-Bold;
+
+}
+
+.amenu, .amenu .context-menu{
+   -fx-background-color: #4d4f4d;
+}
+
+.amenu .menu-item:focused, .amenu .context-menu .menu-item:focused {
+    -fx-background-color: #858585;
+}
+
+

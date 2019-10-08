@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane fx:id="viewNotes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" visible="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.Dialogs.ViewNotes.ViewNotesController">
+   <center>
+      <BorderPane styleClass="window" stylesheets="@../css/create-note.css">
+         <center>
+            <BorderPane>
+               <center>
+                  <BorderPane>
+                     <center>
+                        <BorderPane>
+                           <center>
+                              <TabPane fx:id="tabPane" prefHeight="558.0" prefWidth="757.0" stylesheets="@../css/tab.css" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                  <Tab fx:id="detailsTab" text="Details">
+                                       <content>
+                                          <BorderPane prefHeight="495.0" prefWidth="746.0">
+                                             <left>
+                                                <Pane prefHeight="345.0" prefWidth="21.0" BorderPane.alignment="CENTER" />
+                                             </left>
+                                             <top>
+                                                <Pane prefHeight="11.0" prefWidth="648.0" BorderPane.alignment="CENTER" />
+                                             </top>
+                                             <center>
+                                                <GridPane BorderPane.alignment="CENTER">
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <BorderPane layoutX="10.0" layoutY="158.0" prefHeight="495.0" prefWidth="746.0">
+                                                         <right>
+                                                            <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                                         </right>
+                                                         <top>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                         <bottom>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </bottom>
+                                                         <center>
+                                                            <GridPane style="-fx-background-color: grey; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-background-color: #324036#324036;" BorderPane.alignment="CENTER">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="90.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label prefHeight="30.0" prefWidth="95.0" text="  Name" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="25.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="noteName" alignment="CENTER" text="An advancement in technology" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="20.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </GridPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                      <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="495.0" prefWidth="746.0" GridPane.rowIndex="1">
+                                                         <right>
+                                                            <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                                         </right>
+                                                         <top>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                         <bottom>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </bottom>
+                                                         <center>
+                                                            <GridPane style="-fx-background-color: grey; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-background-color: #324036#324036;" BorderPane.alignment="CENTER">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="80.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="377.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label prefHeight="30.0" prefWidth="95.0" text="  Size" textFill="WHITE" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="25.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="noteSize" alignment="CENTER" text="100kbs" textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="26.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </GridPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                      <BorderPane layoutX="10.0" layoutY="84.0" prefHeight="495.0" prefWidth="746.0" visible="false" GridPane.rowIndex="2">
+                                                         <right>
+                                                            <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                                         </right>
+                                                         <top>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                         <bottom>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </bottom>
+                                                         <center>
+                                                            <GridPane style="-fx-background-color: grey; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-background-color: #324036#324036;" BorderPane.alignment="CENTER">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label prefHeight="30.0" prefWidth="137.0" text="  Type" textFill="WHITE" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="25.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <Label fx:id="noteLocation" alignment="CENTER" text="Book " textAlignment="CENTER" textFill="WHITE" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="15.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </GridPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                      <BorderPane layoutX="10.0" layoutY="232.0" prefHeight="495.0" prefWidth="746.0" GridPane.rowIndex="4">
+                                                         <right>
+                                                            <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                                         </right>
+                                                         <top>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                         <bottom>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </bottom>
+                                                         <center>
+                                                            <GridPane style="-fx-background-color: grey; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-background-color: #324036#324036;" BorderPane.alignment="CENTER">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" prefWidth="190.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label text="  Last Modified" textFill="WHITE" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="25.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <BorderPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <left>
+                                                                        <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </left>
+                                                                     <right>
+                                                                        <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </right>
+                                                                     <center>
+                                                                        <GridPane BorderPane.alignment="CENTER">
+                                                                           <columnConstraints>
+                                                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                           </columnConstraints>
+                                                                           <rowConstraints>
+                                                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                           </rowConstraints>
+                                                                           <children>
+                                                                              <BorderPane GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                                                                 <center>
+                                                                                    <Label fx:id="modifiedOverview" text="Today" textFill="#fffefe" BorderPane.alignment="CENTER_RIGHT">
+                                                                                       <font>
+                                                                                          <Font name="Inter Light BETA" size="27.0" />
+                                                                                       </font>
+                                                                                    </Label>
+                                                                                 </center>
+                                                                                 <right>
+                                                                                    <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                                 </right>
+                                                                              </BorderPane>
+                                                                              <Label fx:id="modifiedFull" layoutX="50.0" layoutY="18.0" text="Monday 02/03/2020 3:30pm" textFill="#fffefe" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                                                                 <font>
+                                                                                    <Font name="Inter Light BETA" size="19.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                           </children>
+                                                                        </GridPane>
+                                                                     </center>
+                                                                  </BorderPane>
+                                                               </children>
+                                                            </GridPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                      <BorderPane layoutX="10.0" layoutY="305.0" prefHeight="495.0" prefWidth="746.0" GridPane.rowIndex="3">
+                                                         <right>
+                                                            <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                                         </right>
+                                                         <top>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                         <bottom>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </bottom>
+                                                         <center>
+                                                            <GridPane style="-fx-background-color: grey; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-background-color: #324036#324036;" BorderPane.alignment="CENTER">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label prefHeight="30.0" prefWidth="176.5" text="  Created      " textFill="WHITE" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="25.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <BorderPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <left>
+                                                                        <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </left>
+                                                                     <right>
+                                                                        <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </right>
+                                                                     <center>
+                                                                        <GridPane BorderPane.alignment="CENTER">
+                                                                           <columnConstraints>
+                                                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                           </columnConstraints>
+                                                                           <rowConstraints>
+                                                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                           </rowConstraints>
+                                                                           <children>
+                                                                              <BorderPane GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                                                                 <center>
+                                                                                    <Label fx:id="createdOverview" text="3 weeks ago" textFill="#fffefe" BorderPane.alignment="CENTER_RIGHT">
+                                                                                       <font>
+                                                                                          <Font name="Inter Light BETA" size="27.0" />
+                                                                                       </font>
+                                                                                    </Label>
+                                                                                 </center>
+                                                                                 <right>
+                                                                                    <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                                 </right>
+                                                                              </BorderPane>
+                                                                              <Label fx:id="createdFull" layoutX="50.0" layoutY="18.0" text="Monday 02/03/2020 3:30pm" textFill="#fffefe" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                                                                 <font>
+                                                                                    <Font name="Inter Light BETA" size="19.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                           </children>
+                                                                        </GridPane>
+                                                                     </center>
+                                                                  </BorderPane>
+                                                               </children>
+                                                            </GridPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                      <BorderPane layoutX="10.0" layoutY="305.0" prefHeight="495.0" prefWidth="746.0" GridPane.rowIndex="5">
+                                                         <right>
+                                                            <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                                         </right>
+                                                         <top>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                         <bottom>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </bottom>
+                                                         <center>
+                                                            <GridPane style="-fx-background-color: grey; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-background-color: #324036#324036;" BorderPane.alignment="CENTER">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="230.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label prefWidth="251.0" text="  Idea Inclusion" textFill="WHITE" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="25.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <BorderPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <left>
+                                                                        <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </left>
+                                                                     <right>
+                                                                        <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </right>
+                                                                     <center>
+                                                                        <GridPane BorderPane.alignment="CENTER">
+                                                                           <columnConstraints>
+                                                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                           </columnConstraints>
+                                                                           <rowConstraints>
+                                                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                           </rowConstraints>
+                                                                           <children>
+                                                                              <BorderPane GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                                                                 <center>
+                                                                                    <Label fx:id="ideaNumber" text="5" textFill="#fffefe" BorderPane.alignment="CENTER_RIGHT">
+                                                                                       <font>
+                                                                                          <Font name="Inter Light BETA" size="33.0" />
+                                                                                       </font>
+                                                                                    </Label>
+                                                                                 </center>
+                                                                                 <right>
+                                                                                    <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                                 </right>
+                                                                              </BorderPane>
+                                                                              <Label fx:id="ideaTotal" layoutX="50.0" layoutY="18.0" text="of 100" textFill="#fffefe" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                                                                 <font>
+                                                                                    <Font name="Inter Light BETA" size="23.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                           </children>
+                                                                        </GridPane>
+                                                                     </center>
+                                                                  </BorderPane>
+                                                               </children>
+                                                            </GridPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                      <BorderPane layoutX="10.0" layoutY="378.0" prefHeight="495.0" prefWidth="746.0" GridPane.rowIndex="6">
+                                                         <right>
+                                                            <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                                         </right>
+                                                         <top>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                         <bottom>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </bottom>
+                                                         <center>
+                                                            <GridPane style="-fx-background-color: grey; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-background-color: #324036#324036;" BorderPane.alignment="CENTER">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="230.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label text="  Subject Inclusion" textFill="WHITE" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="25.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                                  <BorderPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <left>
+                                                                        <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </left>
+                                                                     <right>
+                                                                        <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </right>
+                                                                     <center>
+                                                                        <GridPane BorderPane.alignment="CENTER">
+                                                                           <columnConstraints>
+                                                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                           </columnConstraints>
+                                                                           <rowConstraints>
+                                                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                           </rowConstraints>
+                                                                           <children>
+                                                                              <BorderPane GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                                                                 <center>
+                                                                                    <Label fx:id="subjectNumber" text="5" textFill="#fffefe" BorderPane.alignment="CENTER_RIGHT">
+                                                                                       <font>
+                                                                                          <Font name="Inter Light BETA" size="33.0" />
+                                                                                       </font>
+                                                                                    </Label>
+                                                                                 </center>
+                                                                                 <right>
+                                                                                    <Pane prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                                 </right>
+                                                                              </BorderPane>
+                                                                              <Label fx:id="subjectTotal" layoutX="50.0" layoutY="18.0" text="of 100" textFill="#fffefe" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                                                                                 <font>
+                                                                                    <Font name="Inter Light BETA" size="23.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                           </children>
+                                                                        </GridPane>
+                                                                     </center>
+                                                                  </BorderPane>
+                                                               </children>
+                                                            </GridPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                      <BorderPane layoutX="10.0" layoutY="223.0" prefHeight="495.0" prefWidth="746.0" GridPane.rowIndex="2">
+                                                         <right>
+                                                            <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                                         </right>
+                                                         <top>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                         <bottom>
+                                                            <Pane prefHeight="11.0" BorderPane.alignment="CENTER" />
+                                                         </bottom>
+                                                         <center>
+                                                            <BorderPane style="-fx-background-color: #324036#324036 #324036#324036; -fx-background-radius: 15px; -fx-border-radius: 15px;">
+                                                               <center>
+                                                                  <BorderPane BorderPane.alignment="CENTER">
+                                                                     <left>
+                                                                        <Pane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </left>
+                                                                     <right>
+                                                                        <Pane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" BorderPane.alignment="CENTER" />
+                                                                     </right>
+                                                                     <center>
+                                                                        <BorderPane BorderPane.alignment="CENTER">
+                                                                           <center>
+                                                                              <Label fx:id="noteTypeInfo" graphicTextGap="0.0" text="Pages: 1-4, Total Pages: 4 I love chicken and it is amazing that i love people" textAlignment="CENTER" textFill="#fffefe" textOverrun="CENTER_ELLIPSIS" wrapText="true" BorderPane.alignment="CENTER">
+                                                                                 <font>
+                                                                                    <Font name="Inter Light BETA" size="19.0" />
+                                                                                 </font>
+                                                                              </Label>
+                                                                           </center>
+                                                                        </BorderPane>
+                                                                     </center>
+                                                                  </BorderPane>
+                                                               </center>
+                                                               <left>
+                                                                  <Label text="  Type      " textFill="WHITE" BorderPane.alignment="CENTER">
+                                                                     <font>
+                                                                        <Font name="Inter Medium" size="25.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </left>
+                                                            </BorderPane>
+                                                         </center>
+                                                      </BorderPane>
+                                                   </children>
+                                                </GridPane>
+                                             </center>
+                                             <bottom>
+                                                <Pane prefHeight="20.0" BorderPane.alignment="CENTER" />
+                                             </bottom>
+                                          </BorderPane>
+                                       </content>
+                                    </Tab>
+                                    <Tab fx:id="subjectTab" text="Subjects">
+                                       <content>
+                                          <BorderPane fx:id="subjectPane" prefHeight="495.0" prefWidth="746.0">
+                                             <left>
+                                                <Pane prefHeight="345.0" prefWidth="21.0" BorderPane.alignment="CENTER" />
+                                             </left>
+                                             <right>
+                                                <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                             </right>
+                                             <top>
+                                                <Pane prefHeight="11.0" prefWidth="648.0" BorderPane.alignment="CENTER" />
+                                             </top>
+                                          </BorderPane>
+                                       </content>
+                                    </Tab>
+                                    <Tab fx:id="ideasTab" text="Ideas">
+                                       <content>
+                                          <BorderPane fx:id="ideaPane" prefHeight="495.0" prefWidth="746.0">
+                                             <left>
+                                                <Pane prefHeight="345.0" prefWidth="21.0" BorderPane.alignment="CENTER" />
+                                             </left>
+                                             <right>
+                                                <Pane prefHeight="408.0" prefWidth="13.0" BorderPane.alignment="CENTER" />
+                                             </right>
+                                             <top>
+                                                <Pane prefHeight="11.0" prefWidth="648.0" BorderPane.alignment="CENTER" />
+                                             </top>
+                                          </BorderPane>
+                                       </content>
+                                    </Tab>
+                                  <Tab fx:id="viewTab" text="View">
+                                       <content>
+                                          <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                             <center>
+                                                <BorderPane style="-fx-background-color: transparent; -fx-background: transparent;" BorderPane.alignment="CENTER">
+                                                   <center>
+                                                      <GridPane style="-fx-background-color: transparent; -fx-background: transparent;">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <ScrollPane fx:id="imageScroll" style="-fx-background-color: transparent; -fx-background-color: transparent;" styleClass="imageScroll" stylesheets="@../css/viewnote.css">
+                                                               <content>
+                                                                  <StackPane fx:id="imageHolder" style="-fx-background-color: transparent; -fx-background: transparent;">
+                                                                     <children>
+                                                                        <ImageView fx:id="imageView" fitHeight="435.0" fitWidth="303.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                                                                           <image>
+                                                                              <Image url="@../../../../Pictures/hitler%20inquest.png" />
+                                                                           </image>
+                                                                           <viewport>
+                                                                              <Rectangle2D width="1.0" />
+                                                                           </viewport>
+                                                                        </ImageView>
+                                                                     </children>
+                                                                  </StackPane>
+                                                               </content>
+                                                            </ScrollPane>
+                                                            <BorderPane fx:id="TextPane">
+                                                               <center>
+                                                                  <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />
+                                                               </center>
+                                                               <left>
+                                                                  <Pane maxWidth="-Infinity" prefWidth="40.0" BorderPane.alignment="CENTER" />
+                                                               </left>
+                                                               <right>
+                                                                  <Pane maxWidth="-Infinity" prefWidth="40.0" BorderPane.alignment="CENTER" />
+                                                               </right>
+                                                            </BorderPane>
+                                                         </children>
+                                                      </GridPane>
+                                                   </center>
+                                                   <bottom>
+                                                      <Pane maxHeight="-Infinity" prefHeight="20.0" BorderPane.alignment="CENTER" />
+                                                   </bottom>
+                                                   <top>
+                                                      <Pane maxHeight="-Infinity" prefHeight="20.0" BorderPane.alignment="CENTER" />
+                                                   </top>
+                                                </BorderPane>
+                                             </center>
+                                             <bottom>
+                                                <BorderPane BorderPane.alignment="CENTER">
+                                                   <center>
+                                                      <GridPane>
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <GridPane GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Button fx:id="zoomIn" mnemonicParsing="false" onAction="#handleZoomInAction" style="-fx-padding: 0px; -fx-background-color: transparent;" styleClass="pageButton" stylesheets="@../css/viewnote.css" GridPane.columnIndex="8" GridPane.halignment="CENTER">
+                                                                     <graphic>
+                                                                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
+                                                                           <children>
+                                                                              <Circle fill="#ffffff00" layoutX="17.0" layoutY="17.0" radius="17.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+                                                                              <Line endX="11.0" endY="15.0" layoutY="2.0" startX="23.0" startY="15.0" stroke="WHITE" strokeWidth="3.0" />
+                                                                              <Line endX="6.0" endY="15.0" layoutX="11.0" layoutY="8.0" startX="6.0" startY="3.5" stroke="WHITE" strokeWidth="3.0" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </graphic>
+                                                                  </Button>
+                                                                  <AnchorPane maxWidth="-Infinity" prefHeight="40.0" prefWidth="90.0" GridPane.columnIndex="13">
+                                                                     <children>
+                                                                        <TextField fx:id="currentPage" layoutY="6.0" prefHeight="27.0" prefWidth="46.0" style="-fx-background-color: #707173#707173;" />
+                                                                        <Pane layoutX="52.5" layoutY="2.1213207244873047" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.5" prefWidth="16.5">
+                                                                           <children>
+                                                                              <Line endX="22.25" endY="-18.0" layoutX="-11.0" layoutY="18.0" startX="14.0" startY="17.5" stroke="WHITE" strokeWidth="3.0" />
+                                                                           </children>
+                                                                        </Pane>
+                                                                        <TextField fx:id="totalPages" layoutX="73.0" layoutY="6.121320724487305" prefHeight="27.0" prefWidth="46.0" style="-fx-background-color: #707173#707173;" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                                  <Button fx:id="zoomOut" mnemonicParsing="false" onAction="#handleZoomOutAction" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="pageButton" stylesheets="@../css/viewnote.css" GridPane.columnIndex="9" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <graphic>
+                                                                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
+                                                                           <children>
+                                                                              <Circle fill="#ffffff00" layoutX="17.0" layoutY="17.0" radius="17.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+                                                                              <Line endX="10.0" endY="15.0" layoutY="2.0" startX="24.0" startY="15.0" stroke="WHITE" strokeWidth="3.0" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </graphic>
+                                                                  </Button>
+                                                                  <Button fx:id="previousPage" layoutX="305.0" layoutY="22.0" mnemonicParsing="false" onAction="#handlePreviousPageAction" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="pageButton" stylesheets="@../css/viewnote.css" GridPane.columnIndex="10" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <graphic>
+                                                                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
+                                                                           <children>
+                                                                              <Circle fill="#ffffff00" layoutX="17.0" layoutY="17.0" radius="17.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+                                                                              <Polygon fill="WHITE" layoutX="12.0" layoutY="27.0" points="10.0, -2.0, -2.0, -9.0, 10.0, -18.0" stroke="WHITE" strokeType="INSIDE" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </graphic>
+                                                                  </Button>
+                                                                  <Button fx:id="nextPage" layoutX="365.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleNextPageAction" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="pageButton" stylesheets="@../css/viewnote.css" GridPane.columnIndex="11" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                                     <graphic>
+                                                                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
+                                                                           <children>
+                                                                              <Circle fill="#ffffff00" layoutX="17.0" layoutY="17.0" radius="17.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+                                                                              <Polygon fill="WHITE" layoutX="12.0" layoutY="27.0" points="0.0, -2.0, 13.0, -9.0, 0.0, -18.0" stroke="WHITE" strokeType="INSIDE" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </graphic>
+                                                                  </Button>
+                                                                  <BorderPane GridPane.columnIndex="14" GridPane.halignment="CENTER">
+                                                                     <center>
+                                                                        <BorderPane prefHeight="24.0">
+                                                                           <left>
+                                                                              <ToggleButton fx:id="selectedToggle" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSelectedToggleAction" prefHeight="24.0" prefWidth="25.0" style="-fx-padding: 0px;" styleClass="toggle" stylesheets="@../css/viewnote.css" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                                                                                 <font>
+                                                                                    <Font name="Inter Medium" size="15.0" />
+                                                                                 </font>
+                                                                                 <graphic>
+                                                                                    <BorderPane>
+                                                                                       <left>
+                                                                                          <GridPane prefHeight="30.0" prefWidth="25.0" styleClass="inner" BorderPane.alignment="CENTER">
+                                                                                             <columnConstraints>
+                                                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                             </columnConstraints>
+                                                                                             <rowConstraints>
+                                                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                             </rowConstraints>
+                                                                                             <children>
+                                                                                                <Label id="tick" prefHeight="28.0" prefWidth="26.0" styleClass="tick" text=" ✔">
+                                                                                                   <font>
+                                                                                                      <Font size="17.0" />
+                                                                                                   </font>
+                                                                                                </Label>
+                                                                                                <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="28.0" prefWidth="26.0" styleClass="cross" stylesheets="@../css/viewnote.css" text="✖" textAlignment="CENTER">
+                                                                                                   <font>
+                                                                                                      <Font size="17.0" />
+                                                                                                   </font>
+                                                                                                </Label>
+                                                                                             </children>
+                                                                                          </GridPane>
+                                                                                       </left>
+                                                                                       <center>
+                                                                                          <GridPane prefHeight="24.0" prefWidth="39.0" BorderPane.alignment="CENTER">
+                                                                                             <columnConstraints>
+                                                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
+                                                                                             </columnConstraints>
+                                                                                             <rowConstraints>
+                                                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                                             </rowConstraints>
+                                                                                             <children>
+                                                                                                <Label styleClass="excluded" text="  EXCLUDED" textAlignment="CENTER" textFill="WHITE" GridPane.halignment="LEFT">
+                                                                                                   <font>
+                                                                                                      <Font name="Inter Medium" size="15.0" />
+                                                                                                   </font>
+                                                                                                </Label>
+                                                                                                <Label layoutX="10.0" layoutY="21.0" styleClass="included" text="  INCLUDED" textAlignment="CENTER" textFill="WHITE">
+                                                                                                   <font>
+                                                                                                      <Font name="Inter Medium" size="15.0" />
+                                                                                                   </font>
+                                                                                                </Label>
+                                                                                             </children>
+                                                                                          </GridPane>
+                                                                                       </center>
+                                                                                    </BorderPane>
+                                                                                 </graphic>
+                                                                              </ToggleButton>
+                                                                           </left>
+                                                                        </BorderPane>
+                                                                     </center>
+                                                                     <left>
+                                                                        <Pane prefWidth="10.0" BorderPane.alignment="CENTER" />
+                                                                     </left>
+                                                                  </BorderPane>
+                                                               </children>
+                                                            </GridPane>
+                                                         </children>
+                                                      </GridPane>
+                                                   </center>
+                                                   <bottom>
+                                                      <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+                                                   </bottom>
+                                                </BorderPane>
+                                             </bottom>
+                                          </BorderPane>
+                                       </content>
+                                    </Tab>
+                                    <Tab fx:id="selectPagesTab" disable="true">
+                                       <graphic>
+                                          <BorderPane fx:id="selectPagesTabPane">
+                                             <left>
+                                                <Label alignment="CENTER" prefHeight="24.0" prefWidth="111.0" text="Page Ranges:" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font name="Inter Medium" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </left>
+                                             <center>
+                                                <GridPane BorderPane.alignment="CENTER">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                   </rowConstraints>
+                                                   <children>
+                                                      <BorderPane>
+                                                         <center>
+                                                            <TextField fx:id="selectedPages" alignment="CENTER" maxWidth="220.0" style="-fx-background-color: white; -fx-background: white; -fx-text-fill: white;" text="1">
+                                                               <font>
+                                                                  <Font name="Inter Medium" size="19.0" />
+                                                               </font>
+                                                            </TextField>
+                                                         </center>
+                                                      </BorderPane>
+                                                   </children>
+                                                </GridPane>
+                                             </center>
+                                          </BorderPane>
+                                       </graphic>
+                                    </Tab>
+                                    <Tab fx:id="clearSelectTab" disable="true">
+                                       <graphic>
+                                          <BorderPane fx:id="clearSelectTabPane">
+                                             <left>
+                                                <Button fx:id="clear" mnemonicParsing="false" onAction="#handleClearAllAction" style="-fx-background-color: red;" text="CLEAR" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font name="Inter Medium" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                             </left>
+                                             <right>
+                                                <Button fx:id="selectAll" mnemonicParsing="false" onAction="#handleSelectAllAction" style="-fx-background-color: green;" text="SELECT ALL" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <font>
+                                                      <Font name="Inter Medium" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                             </right>
+                                             <center>
+                                                <Pane prefWidth="4.0" BorderPane.alignment="CENTER" />
+                                             </center>
+                                          </BorderPane>
+                                       </graphic>
+                                    </Tab>
+                                </tabs>
+                              </TabPane>
+                           </center>
+                           <top>
+                              <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+                           </top>
+                        </BorderPane>
+                     </center>
+                     <top>
+                        <BorderPane BorderPane.alignment="CENTER">
+                           <center>
+                              <Label fx:id="noteTitle" text="An advancement in technology" textFill="#ebeaea" textOverrun="CENTER_ELLIPSIS">
+                                 <font>
+                                    <Font name="Inter Medium" size="22.0" />
+                                 </font>
+                              </Label>
+                           </center>
+                           <left>
+                              <BorderPane BorderPane.alignment="CENTER">
+                                 <center>
+                                    <Button fx:id="previousNote" mnemonicParsing="false" onAction="#handlePreviousNoteAction" prefHeight="40.0" prefWidth="31.0" style="-fx-padding: 0px; -fx-background-color: transparent;" styleClass="pageButton" stylesheets="@../css/viewnote.css" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter Light BETA" size="32.0" />
+                                       </font>
+                                       <graphic>
+                                          <AnchorPane prefHeight="54.0" prefWidth="34.0">
+                                             <children>
+                                                <Circle fill="#ffffff00" layoutX="16.0" layoutY="18.0" radius="16.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" styleClass="comp2" />
+                                                <Polygon fill="WHITE" layoutX="10.0" layoutY="27.0" points="10.0, -3.0, -1.0, -9.0, 10.0, -16.0" stroke="WHITE" strokeType="INSIDE" styleClass="comp" />
+                                             </children>
+                                          </AnchorPane>
+                                       </graphic>
+                                    </Button>
+                                 </center>
+                                 <left>
+                                    <Pane prefWidth="7.0" BorderPane.alignment="CENTER" />
+                                 </left>
+                                 <right>
+                                    <Pane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="10.0" BorderPane.alignment="CENTER" />
+                                 </right>
+                                 <top>
+                                    <Pane prefHeight="2.0" BorderPane.alignment="CENTER" />
+                                 </top>
+                              </BorderPane>
+                           </left>
+                           <right>
+                              <BorderPane BorderPane.alignment="CENTER">
+                                 <center>
+                                    <Button fx:id="nextNote" mnemonicParsing="false" onAction="#handleNextNoteAction" prefHeight="40.0" prefWidth="31.0" style="-fx-padding: 0px; -fx-background-color: transparent;" styleClass="pageButton" stylesheets="@../css/viewnote.css" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter Light BETA" size="32.0" />
+                                       </font>
+                                       <graphic>
+                                          <AnchorPane prefHeight="54.0" prefWidth="34.0">
+                                             <children>
+                                                <Circle fill="#ffffff00" layoutX="16.0" layoutY="18.0" radius="16.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" styleClass="comp2" />
+                                                <Polygon fill="WHITE" layoutX="13.0" layoutY="26.0" points="-1.0, -2.4185562133789062, 9.833740234375, -7.8175811767578125, -1.0, -14.0" stroke="WHITE" strokeType="INSIDE" styleClass="comp" />
+                                             </children>
+                                          </AnchorPane>
+                                       </graphic>
+                                    </Button>
+                                 </center>
+                                 <top>
+                                    <Pane prefHeight="2.0" BorderPane.alignment="CENTER" />
+                                 </top>
+                                 <right>
+                                    <Pane prefWidth="7.0" BorderPane.alignment="CENTER" />
+                                 </right>
+                                 <left>
+                                    <Pane maxWidth="-Infinity" minHeight="-Infinity" prefWidth="10.0" BorderPane.alignment="CENTER" />
+                                 </left>
+                              </BorderPane>
+                           </right>
+                           <top>
+                              <Pane prefHeight="10.0" prefWidth="757.0" BorderPane.alignment="CENTER" />
+                           </top>
+                        </BorderPane>
+                     </top>
+                     <bottom>
+                        <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+               </center>
+               <top>
+                  <GridPane prefHeight="50.0" prefWidth="757.0" BorderPane.alignment="CENTER">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <BorderPane maxHeight="-Infinity" prefHeight="70.0" prefWidth="757.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <center>
+                              <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="474.0" text="                  View Notes" textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font name="Inter Semi Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </center>
+                           <right>
+                              <AnchorPane prefHeight="41.0" prefWidth="104.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="done" alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleDoneAction" prefHeight="31.0" prefWidth="68.0" styleClass="done" stylesheets="@../css/viewnote.css" text="DONE" textAlignment="CENTER" textFill="WHITE">
+                                       <font>
+                                          <Font name="Inter Black" size="19.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                           </right>
+                        </BorderPane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </top>
+            </BorderPane>
+         </center>
+      </BorderPane>
+   </center>
+   <top>
+      <Pane prefHeight="14.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <Pane prefWidth="30.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane prefWidth="30.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <Pane prefHeight="14.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

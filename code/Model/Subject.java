@@ -56,6 +56,12 @@ public class Subject implements ObservableObject {
         return name;
     }
 
+
+    public SubjectNote getNote(){
+        return new SubjectNote(name);
+    }
+
+
     public Subject(String name){
         this.paths = new ArrayList<>();
         this.name = name;
@@ -112,6 +118,17 @@ public class Subject implements ObservableObject {
         return Subject.fromXML(rootElement);
     }
 
+    public String toXML(){
+        String xml = "";
+        xml += "<Subject>" + System.lineSeparator();
+        xml += "<Name>" + name + "</Name>" + System.lineSeparator();
+        for(String path: paths){
+            xml += "<Note><Path>" + path + "</Path></Note>" + System.lineSeparator();
+        }
+        xml += "</Subject>" + System.lineSeparator();
+        return xml;
+    }
+
 
     public static String toXML(List<Subject> subjects){
         String xml = "<Subjects>" + System.lineSeparator();
@@ -142,21 +159,22 @@ public class Subject implements ObservableObject {
     }
 
 
-    public String toXML(){
-        String xml = "";
-        xml += "<Subject>" + System.lineSeparator();
-        xml += "<Name>" + name + "</Name>" + System.lineSeparator();
-        for(String path: paths){
-            xml += "<Note><Path>" + path + "</Path></Note>" + System.lineSeparator();
-        }
-        xml += "</Subject>" + System.lineSeparator();
-        return xml;
-    }
+
 
 
     @Override
     public String getDisplayName() {
-        return "Subject: " + getName();
+        return getName();
+    }
+
+    @Override
+    public String getMindMapName() {
+        return getDisplayName();
+    }
+
+    @Override
+    public String getTreeName() {
+        return getDisplayName();
     }
 
     @Override

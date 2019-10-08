@@ -1,0 +1,26 @@
+
+.toggle-button:selected{
+	-fx-background-image: url('../icons/toggleOn.png');
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-size: 70 32;
+}
+
+
+
+.toggle-button{
+	-fx-background-image: url('../icons/toggleOff.png');
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-size: 70 32;
+}
+
+
+
+
+
+
+
+
+
+

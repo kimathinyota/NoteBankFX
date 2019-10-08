@@ -1,8 +1,7 @@
 package Code.View.menus;
 
 import Code.Model.Note;
-import Code.View.NoteIconCell;
-import Code.View.NoteTextCell;
+import Code.View.NoteView.NoteTextCell;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
