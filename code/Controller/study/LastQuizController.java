@@ -2,6 +2,7 @@ package Code.Controller.study;
 
 import Code.Controller.Controller;
 import Code.Controller.Dialogs.ViewNotes.ViewNotesController;
+import Code.Controller.IntegerValue;
 import Code.Model.*;
 import Code.View.components.MindMap.MindMapCell;
 import Code.View.components.TitleNode.TitleChoiceBox;
@@ -76,22 +77,29 @@ public class LastQuizController {
 
         confidenceEmojis = FXCollections.observableArrayList(confidenceImage(1),confidenceImage(2),confidenceImage(3),confidenceImage(4),confidenceImage(5));
 
+        View.setUpListForArrowManipulation(quizFacts,quizIndex);
+        View.setUpListForArrowManipulation(ideaFacts,ideaIndex);
+
+
     }
 
+    IntegerValue quizIndex = new IntegerValue(-1);
+    IntegerValue ideaIndex = new IntegerValue(-1);
+
     @FXML protected void handleRightClick(ActionEvent e){
-        //handleRightClick(underusedNotes,underusedIndex);
+        View.handleRightClick(quizFacts,quizIndex);
     }
 
     @FXML protected void handleLeftClick(ActionEvent e){
-       // handleLeftClick(underusedNotes,underusedIndex);
+       View.handleLeftClick(quizFacts,quizIndex);
     }
 
     @FXML protected void handleRight2Click(ActionEvent e){
-        //handleRightClick(utilisedNotes,utilisedIndex);
+        View.handleRightClick(ideaFacts,ideaIndex);
     }
 
     @FXML protected void handleLeft2Click(ActionEvent e){
-        //handleLeftClick(utilisedNotes,utilisedIndex);
+        View.handleLeftClick(ideaFacts,ideaIndex);
     }
 
     private String getTimes(int number){
@@ -163,7 +171,7 @@ public class LastQuizController {
                 )
         );
 
-        Pair<String,String> nameColor = this.namesToColor.get(model.getReadinessType(ideaQuiz.getReadiness())-1);
+        Pair<String,String> nameColor = this.namesToColor.get(model.getReadinessType(idea)-1);
         //Average Readiness:
         this.ideaFacts.getItems().add(
                 new AbstractMap.SimpleEntry<Node, Node>(
@@ -172,7 +180,7 @@ public class LastQuizController {
         );
 
         String completionTime = ViewNotesController.getOverview(ideaQuiz.getTime()," years"," months", " weeks",
-                " days", " hours", " mins", " secs","","","");
+                " days", " hours", " mins", " secs","0","","");
 
         this.ideaFacts.getItems().add(
                 new AbstractMap.SimpleEntry<Node, Node>(
@@ -283,7 +291,7 @@ public class LastQuizController {
 
 
         String averageTime = ViewNotesController.getOverview(quiz.getAverageCompletionTime()," years"," months", " weeks",
-                " days", " hours", " mins", " secs","","","");
+                " days", " hours", " mins", " secs","0","","");
 
 
         this.quizFacts.getItems().add(

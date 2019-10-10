@@ -79,14 +79,12 @@ public class SelectFromToDates extends HBox {
         public void handleDateSelection(ActionEvent e) {
             super.handleDateSelection(e);
             handleHigherDateSelection();
-            System.out.println("Higher Date Select 1");
         }
 
         @Override
         protected void handleTimerChange(ActionEvent e) {
             super.handleTimerChange(e);
             handleHigherDateTimerChange();
-            System.out.println("Higher Date Time 1");
         }
 
 

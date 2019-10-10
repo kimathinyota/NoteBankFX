@@ -57,9 +57,12 @@ public class IdeasPageController implements RefreshNotesController, RefreshIdeas
 
     public void displayIdea(Idea idea){
 
+        if(idea==null){
+            return;
+        }
+
 
         displayDetails(idea);
-        System.out.println("Idea: " + idea);
 
         Task<SelectNoteForIdeaLists> listsTask = new Task<SelectNoteForIdeaLists>() {
             @Override
@@ -149,7 +152,6 @@ public class IdeasPageController implements RefreshNotesController, RefreshIdeas
         //new Task<Integer>()
         if(lastIdea!=null){
             this.lastIdea = model.getIdea(lastIdea.getID());
-            System.out.println("New Idea: " + lastIdea );
             displayDetails(lastIdea);
         }
 

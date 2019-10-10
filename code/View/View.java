@@ -1,10 +1,14 @@
 package Code.View;
 
+import Code.Controller.IntegerValue;
+import Code.Model.Note;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -15,6 +19,63 @@ import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
 
 public class View {
+
+
+    public static void setUpListForArrowManipulation(ListView list, IntegerValue index){
+        index.setInteger(-1);
+        addSelectedItemListener(list,index);
+        setLeftRightKeyPressed(list,index);
+    }
+
+
+    public static void addSelectedItemListener(ListView notes, IntegerValue index){
+        notes.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> index.setInteger(newValue.intValue()));
+    }
+
+    public static void handleLeftClick(ListView allNotes, IntegerValue index){
+
+        if(allNotes.getItems().isEmpty()){
+            return;
+        }
+
+        if(index.intValue()==-1){
+            index.setInteger(1);
+        }
+
+        index.setInteger((index.intValue()-1)%allNotes.getItems().size());
+        index.setInteger( (index.intValue()<0 ? index.intValue() + allNotes.getItems().size() : index.intValue())  );
+        index.setInteger (index.intValue()<0 ? index.intValue() + allNotes.getItems().size() : index.intValue());
+
+        allNotes.scrollTo( index.intValue() );
+        allNotes.getSelectionModel().select(index.intValue());
+
+
+    }
+    public static void handleRightClick(ListView allNotes, IntegerValue index){
+
+        if(allNotes.getItems().isEmpty()){
+            return;
+        }
+
+        index.setInteger((index.intValue()+1)%allNotes.getItems().size());
+        allNotes.scrollTo( index.intValue() );
+        allNotes.getSelectionModel().select(index.intValue());
+
+    }
+
+
+
+
+    public static void setLeftRightKeyPressed(ListView<Note>list, IntegerValue index){
+        list.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.LEFT){
+               handleLeftClick(list,index);
+            }else if(event.getCode() == KeyCode.RIGHT){
+               handleRightClick(list,index);
+            }
+        });
+    }
+
 
     public static PopOver getInformationPane(String titleString, String informationString, double width){
         BorderPane pane = new BorderPane();

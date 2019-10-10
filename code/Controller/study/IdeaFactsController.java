@@ -80,7 +80,7 @@ class TimeCell extends TableCell<String,String>{
             String time = "0";
             if(Long.valueOf(item)>0){
                 time = ViewNotesController.getOverview(Long.valueOf(item)," years"," months", " weeks",
-                        " days", " hours", " mins", " secs","","","");
+                        " days", " hours", " mins", " secs","0","","");
             }
 
             setText(time);
@@ -339,7 +339,12 @@ public class IdeaFactsController implements RefreshIdeasController, RefreshSubje
         hourTimer.play();
 
 
+        View.setUpListForArrowManipulation(quizFacts,factsIndex);
+
+
     }
+
+    IntegerValue factsIndex = new IntegerValue(-1);
 
     public void refreshIdeas(){
         ideaTable.getItems().clear();
@@ -372,7 +377,6 @@ public class IdeaFactsController implements RefreshIdeasController, RefreshSubje
 
         }
 
-
         updateQuizDetails(ideas);
 
     }
@@ -404,7 +408,7 @@ public class IdeaFactsController implements RefreshIdeasController, RefreshSubje
         );
 
 
-        Pair<String,String> nameColor = this.namesToColor.get(model.getReadinessType(Quizzes.averageReadiness(ideaQuizzes))-1);
+        Pair<String,String> nameColor = this.namesToColor.get(model.getReadinessType(model.averageReadiness(ideas))-1);
         //Average Readiness:
         this.quizFacts.getItems().add(
                 new AbstractMap.SimpleEntry<Node, Node>(
@@ -418,7 +422,7 @@ public class IdeaFactsController implements RefreshIdeasController, RefreshSubje
         String completionTime = "0";
         if(cTime>0){
             completionTime = ViewNotesController.getOverview(cTime," years"," months", " weeks",
-                    " days", " hours", " mins", " secs","","","");
+                    " days", " hours", " mins", " secs","0","","");
         }
 
         this.quizFacts.getItems().add(
@@ -482,7 +486,7 @@ public class IdeaFactsController implements RefreshIdeasController, RefreshSubje
         String averageTime = "0";
         if(!ideaQuizzes.isEmpty()){
             averageTime = ViewNotesController.getOverview(Quizzes.totalTime(ideaQuizzes)/ideaQuizzes.size()," years"," months", " weeks",
-                    " days", " hours", " mins", " secs","","","");
+                    " days", " hours", " mins", " secs","0","","");
 
         }
 
@@ -494,14 +498,15 @@ public class IdeaFactsController implements RefreshIdeasController, RefreshSubje
         );
 
 
-        if(!ideaQuizzes.isEmpty()){
-            ideaQuizzes.sort(Quiz.getSortByReadinessComparator());
+        if(!ideas.isEmpty()){
+
+            Study.sortByReadiness(ideas);
 
             //Best Idea
             this.quizFacts.getItems().add(
                     new AbstractMap.SimpleEntry<Node, Node>(
                             View.getLabel("BEST IDEA",18),
-                            controller.getIdeaLabel(model.getIdea(ideaQuizzes.get(ideaQuizzes.size()-1).getId()),20)
+                            controller.getIdeaLabel(ideas.get(ideas.size()-1),20)
                     )
             );
 
@@ -510,7 +515,7 @@ public class IdeaFactsController implements RefreshIdeasController, RefreshSubje
             this.quizFacts.getItems().add(
                     new AbstractMap.SimpleEntry<Node, Node>(
                             View.getLabel("WORST IDEA",18),
-                            controller.getIdeaLabel( model.getIdea(ideaQuizzes.get(0).getId()),20)
+                            controller.getIdeaLabel( ideas.get(0),20)
                     )
             );
 
@@ -520,11 +525,13 @@ public class IdeaFactsController implements RefreshIdeasController, RefreshSubje
     }
 
     @FXML protected void handleRightClick(ActionEvent e){
-        //handleRightClick(underusedNotes,underusedIndex);
+
+        View.handleRightClick(quizFacts,factsIndex);
     }
 
     @FXML protected void handleLeftClick(ActionEvent e){
-        // handleLeftClick(underusedNotes,underusedIndex);
+
+        View.handleLeftClick(quizFacts,factsIndex);
     }
 
     @Override

@@ -1,9 +1,6 @@
 package Code.Controller.study_session;
 
-import Code.Model.Idea;
-import Code.Model.Model;
-import Code.Model.Study;
-import Code.Model.StudySession;
+import Code.Model.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -17,7 +14,7 @@ public class StudySet {
     }
 
     public int getNumberOfIdeasStudied(){
-        return session.getActivation().getStartingIdeasNumber() - session.getActivation().getRemainingIdeasList().size();
+        return getTotalNumberOfIdeas() - session.getActivation().getRemainingIdeasList().size();
     }
 
     public int getTotalNumberOfIdeas(){
@@ -35,6 +32,7 @@ public class StudySet {
 
 
     public long getTimeToKill() {
+
         long ttk =  session.getActivation().getTimePerSession();
         //System.out.println("TTK: " + ViewNotesController.getOverview(ttk,"years","months","weeks","days", " hours"," mins"," secs", "0","",""));
 
@@ -86,8 +84,42 @@ public class StudySet {
     StudySession session;
 
 
+    public static List<Idea> getIdeas(StudySession session){
+
+        List<Idea> ideas = Study.toIdeas(session.getIdeas());
+        Model model = Model.getInstance();
+
+
+        for(String subject: session.getSubjects()){
+
+
+            Subject sub = model.getSubject(subject);
+
+            //System.out.println( sub);
+
+            if(sub!=null ){
+                Topic topic = model.filterTopicBySubject(sub);
+                if(topic!=null){
+                    ideas.addAll(topic.getAllIdeas());
+                }
+            }
+        }
+
+        for(String topic: session.getTopics()){
+            Topic top = model.getTopic(topic);
+            if(top!=null){
+                ideas.addAll(top.getAllIdeas());
+            }
+
+        }
+
+
+        return ideas;
+    }
+
+
     public List<Idea> getIdeas(){
-        return Study.toIdeas(getRemainingIdeas());
+        return Study.toIdeas(session.getActivation().getRemainingIdeasList());
     }
 
 

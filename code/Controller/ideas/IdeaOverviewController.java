@@ -4,16 +4,16 @@ package Code.Controller.ideas;
 import Code.Controller.Controller;
 import Code.Controller.RefreshInterfaces.RefreshIdeasController;
 import Code.Controller.RefreshInterfaces.RefreshSubjectsController;
-import Code.Model.Idea;
-import Code.Model.Model;
-import Code.Model.Topic;
+import Code.Model.*;
 import Code.View.ObservableObject;
+import Code.View.View;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import java.util.ArrayList;
 import java.util.List;
@@ -190,6 +190,8 @@ class TreeRightClickMenu extends ContextMenu{
 
     public TreeRightClickMenu(List<TreeItem<ObservableObject>> items, TreeItem<ObservableObject> root){
 
+        Model model = Model.getInstance();
+
         this.getStyleClass().add("amenu");
         Menu newItem = new Menu("New");
         newItem.getStyleClass().add("amenu");
@@ -210,17 +212,33 @@ class TreeRightClickMenu extends ContextMenu{
 
         BorderPane pane = new BorderPane();
         TextField topicName = new TextField();
+        topicName.setStyle("-fx-background-color: grey; -fx-background-radius: 5px; -fx-border-color: transparent; -fx-text-fill: black");
         Button addTopic = new Button("+");
         addTopic.setPrefWidth(25);
-        addTopic.setStyle("-fx-background-color: #8a0608; -fx-font-family: Inter-Medium; -fx-font-size: 20; -fx-padding: 0px; -fx-text-fill: white");
+        addTopic.getStylesheets().add("/Code/View/css/viewnote.css");
+        addTopic.getStyleClass().add("add");
+        addTopic.setStyle("-fx-background-color: transparent; -fx-background-radius: 20px; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 0px; -fx-text-fill: white");
+        addTopic.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                addTopic.setStyle("-fx-background-color: #95b67c; -fx-background-radius: 20px; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 0px; -fx-text-fill: white");
+            }
+        });
+
+        addTopic.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                addTopic.setStyle("-fx-background-color: transparent; -fx-background-radius: 20px; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 0px; -fx-text-fill: white");
+            }
+        });
         addTopic.setDisable(true);
         topicName.textProperty().addListener((observable, oldValue, newValue) -> {
             boolean containsName = Model.getInstance().containsTopicOfName(newValue);
             addTopic.setDisable(newValue.isEmpty() || containsName);
             if(newValue.isEmpty() || containsName){
-                addTopic.setStyle("-fx-background-color: #8a0608; -fx-font-family: Inter-Medium; -fx-font-size: 20; -fx-padding: 0px; -fx-text-fill: white");
+                topicName.setStyle("-fx-background-color: #af7070; -fx-background-radius: 5px; -fx-border-color: transparent; -fx-text-fill: black");
             }else{
-                addTopic.setStyle("-fx-background-color: #2e5d00; -fx-font-family: Inter-Medium; -fx-font-size: 20; -fx-padding: 0px; -fx-text-fill: white");
+                topicName.setStyle("-fx-background-color: #82af68; -fx-background-radius: 5px; -fx-border-color: transparent; -fx-text-fill: black");
             }
 
         });
@@ -270,7 +288,14 @@ class TreeRightClickMenu extends ContextMenu{
         });
 
 
-        pane.setCenter(topicName);
+        Pane block = new Pane();
+        block.setPrefWidth(5);
+
+        BorderPane bp = new BorderPane();
+        bp.setCenter(topicName);
+        bp.setRight(block);
+
+        pane.setCenter(bp);
         pane.setRight(addTopic);
         CustomMenuItem text = new CustomMenuItem(pane);
         topic.getItems().add(text);
@@ -302,6 +327,78 @@ class TreeRightClickMenu extends ContextMenu{
         });
 
 
+        Menu subjects = new Menu("Subjects");
+
+        if(items.size()==1 && items.get(0).getValue() instanceof Idea){
+
+        }else{
+            subjects.setDisable(true);
+        }
+
+
+
+
+
+        for(Subject s: model.getAllSubjects()){
+
+            if(!s.getName().equals("All")){
+                CheckMenuItem subject = new CheckMenuItem(s.getName());
+                subject.setSelected(s.contains(items.get(0).getValue()));
+                subject.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        Idea idea = (Idea) items.get(0).getValue();
+
+                        if(subject.isSelected()){
+                            //need to add note to subject
+                            if(!s.contains(idea)){
+                                model.addIdeaToSubject(idea,s);
+                            }
+                        }else{
+                            //remove note from subject
+
+                            List<Note> notes = model.listOfNotesPresentInBothIdeaAndSubject(idea,s);
+
+                            boolean canFullyRemove = notes.isEmpty();
+
+                            if(!canFullyRemove){
+                                Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                                        "To remove the idea " +
+                                                idea.getPrompt() +
+                                                " from subject " +  s.getName()
+                                                + System.lineSeparator() +
+                                                 notes + " will have to be removed from idea: " + System.lineSeparator() +
+                                            "Do you still wish to continue ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+
+                                alert.showAndWait();
+
+                                if (alert.getResult() == ButtonType.YES) {
+                                    model.removeIdeaFromSubject(idea,s);
+                                }
+
+                                return;
+                            }
+
+                            model.removeIdeaFromSubject(idea,s);
+
+                        }
+
+                    }
+                });
+
+                subjects.getItems().add(subject);
+
+            }
+
+
+        }
+
+        this.getItems().add(subjects);
+
+
+
+
         MenuItem removeItem = new MenuItem("Remove");
         removeItem.setDisable( !(items.size()==1 && !items.contains(root)) );
         this.getItems().add(removeItem);
@@ -313,6 +410,10 @@ class TreeRightClickMenu extends ContextMenu{
                 }
             }
         });
+
+
+
+
 
     }
 

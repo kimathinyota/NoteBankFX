@@ -83,7 +83,7 @@ public class CustomQuizController{
                 return null;
             }
         });
-        rangeSlider.getStylesheets().add("/Code/View/Quiz/quiz.css");
+        rangeSlider.getStylesheets().add("/Code/View/css/quiz.css");
         clear();
 
     }

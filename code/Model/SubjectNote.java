@@ -8,6 +8,10 @@ public class SubjectNote extends Note {
 
     String subject;
 
+    public String getSubject(){
+        return subject;
+    }
+
     @Override
     public String toXML() {
         String xml = "<Note>"
@@ -46,14 +50,16 @@ public class SubjectNote extends Note {
         return this.subject.equals(subject);
     }
 
-    public boolean equals(Object note){
-        return (note instanceof SubjectNote) && ((SubjectNote) note).getName().equals(subject);
-    }
 
 
     public SubjectNote(String subject){
         super(NoteType.Subject);
         this.subject = subject;
+    }
+
+    public SubjectNote(Subject subject){
+        super(NoteType.Subject);
+        this.subject = subject.getName();
     }
 
 

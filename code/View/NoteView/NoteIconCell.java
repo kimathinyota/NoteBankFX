@@ -2,7 +2,7 @@ package Code.View.NoteView;
 
 import Code.Controller.home.notes.filters.View;
 import Code.Model.NoteType;
-import Code.View.menus.NoteIconCellFactory;
+import Code.Controller.home.notes.NoteIconCellFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -33,6 +33,7 @@ public class NoteIconCell extends ListCell<Note> {
         this.text.setVisible(text);
     }
 
+
     public void setImage(NoteType type){
         switch (type){
             case Book:
@@ -49,15 +50,17 @@ public class NoteIconCell extends ListCell<Note> {
     }
 
 
+
     public NoteIconCell(NoteIconCellFactory t) {
         super();
         loadFXML();
         this.view = view;
     }
 
+
     private void loadFXML() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Code/View/NoteView/note_cell_icon.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Code/View/NoteView/note_cell_icon.fxml"));
             loader.setController(this);
             loader.setRoot(this);
             loader.load();
@@ -66,9 +69,6 @@ public class NoteIconCell extends ListCell<Note> {
             throw new RuntimeException(e);
         }
     }
-
-
-
 
 
     @Override
@@ -85,4 +85,6 @@ public class NoteIconCell extends ListCell<Note> {
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         }
     }
+
+
 }

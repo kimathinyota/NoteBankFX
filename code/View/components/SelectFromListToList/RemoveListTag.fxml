@@ -9,11 +9,11 @@
 
 <fx:root prefHeight="50.0" type="javafx.scene.control.ListCell" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
-      <BorderPane minWidth="-Infinity" prefHeight="29.0">
+      <BorderPane minWidth="-Infinity" prefHeight="29.0" stylesheets="@../../css/viewnote.css">
          <left>
-            <BorderPane BorderPane.alignment="CENTER">
+            <BorderPane stylesheets="@../../css/viewnote.css" BorderPane.alignment="CENTER">
                <center>
-                  <Button fx:id="remove" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRemoveAction" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 20px; -fx-border-radius: 20px;" styleClass="add" stylesheets="@../css/viewnote.css" text="-" BorderPane.alignment="CENTER">
+                  <Button fx:id="remove" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRemoveAction" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 20px; -fx-border-radius: 20px;" styleClass="add" text="-" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="Inter Medium" size="28.0" />
                      </font>
@@ -25,7 +25,7 @@
             </BorderPane>
          </left>
          <center>
-            <Button fx:id="labelButton" mnemonicParsing="false" onAction="#handleLabelButtonClick" styleClass="cell-button" stylesheets="@../css/viewnote.css" BorderPane.alignment="CENTER_LEFT">
+            <Button fx:id="labelButton" mnemonicParsing="false" onAction="#handleLabelButtonClick" styleClass="cell-button" BorderPane.alignment="CENTER_LEFT">
                <graphic>
                   <Label fx:id="label" text="I love chicken" textAlignment="CENTER" wrapText="true">
                      <font>

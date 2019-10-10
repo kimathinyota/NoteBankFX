@@ -1,5 +1,9 @@
 package Code.Controller.Dialogs.Create;
+import Code.Controller.Controller;
 import Code.Model.Model;
+import Code.Model.Note;
+import Code.Model.Text;
+import Code.View.View;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,9 +23,11 @@ public class CreateNoteController{
     @FXML Button upload;
     @FXML HTMLEditor Editor;
     @FXML TextField Name;
-    @FXML Label fileName;
+    @FXML Label fileName, title;
     @FXML Pane window;
     @FXML TabPane tabPane;
+
+    @FXML Tab textTab, otherTab;
 
     Model model;
 
@@ -60,55 +66,99 @@ public class CreateNoteController{
         window.setVisible(false);
     }
 
+
+    boolean isEditing;
+
+    public void create(){
+        isEditing = false;
+        this.Name.setDisable(false);
+        window.setVisible(true);
+        this.title.setText("Create Note");
+        this.create.setText("CREATE");
+        this.tabPane.getTabs().clear();
+        this.tabPane.getTabs().add(textTab);
+        this.tabPane.getTabs().add(otherTab);
+        this.tabPane.getSelectionModel().select(0   );
+
+
+    }
+
+    Note note;
+
+    public void edit(Note note){
+        if(!(note instanceof Text)){
+            return;
+        }
+
+        window.setVisible(true);
+
+        isEditing = true;
+        Name.setText(note.getName());
+        Editor.setHtmlText(  ((Text) note).loadContent()    );
+
+
+        this.Name.setDisable(true);
+        this.title.setText("Edit Note");
+        this.create.setText("UPDATE");
+        this.note = note;
+        this.tabPane.getTabs().clear();
+        this.tabPane.getTabs().add(textTab);
+        this.tabPane.getSelectionModel().select(0   );
+
+
+    }
+
+
     /**
      * Called on Create button click
      * Will use input information and model to create and add note
      * @param e
      */
     @FXML void handleCreateAction(ActionEvent e){
-        if(!isValidName()){
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Invalid Name");
-            errorAlert.setContentText("No symbols are allowed and name length must be greater than 2");
-            errorAlert.showAndWait();
-            return;
+
+        if(!isEditing){
+            if(!isValidName()){
+                View.displayPopUpForTime("Invalid Name","No symbols are allowed and name length must be greater than 2",3,fileName,250);
+                return;
+            }
+
+            if(model.doesNoteNameExist(Name.getText(),"txt")){
+                View.displayPopUpForTime("Invalid Name","This note already exists and can't be overwritten. Hint: You can edit notes",3,fileName,250);
+                return;
+            }
         }
 
-        Alert existsAlert = new Alert(Alert.AlertType.ERROR);
-        existsAlert.setHeaderText("Invalid Name");
-        existsAlert.setContentText("This note already exists and can't be overwritten. Hint: You can edit notes");
+
+        String htmlContent = Editor.getHtmlText();
 
 
-
-        if(model.doesNoteNameExist(Name.getText(),"txt")){
-            existsAlert.showAndWait();
+        if(isEditing){
+            window.setVisible(false);
+            model.modify(note,htmlContent);
+            clear();
             return;
         }
 
 
 
         if(textTabSelected()){
-            String htmlContent = Editor.getHtmlText();
+            window.setVisible(false);
             model.addText(Name.getText(),htmlContent);
             clear();
-            window.setVisible(false);
             return;
         }
 
         if(this.loadedFile==null){
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Invalid Input");
-            errorAlert.setContentText("No file has been uploaded");
-            errorAlert.showAndWait();
+            View.displayPopUpForTime("Invalid File","No file has been uploaded",3,fileName,250);
             return;
         }
 
         if(model.doesNoteNameExist(loadedFile.getName())){
-            existsAlert.showAndWait();
+            View.displayPopUpForTime("Invalid Name","This note already exists and can't be overwritten. Hint: You can edit notes",3,fileName,250);
             return;
         }
 
-
+        window.setVisible(false);
 
         if(loadedFile.getPath().contains("pdf") ){
             model.addBook(Name.getText(),loadedFile.getPath());
@@ -116,7 +166,7 @@ public class CreateNoteController{
             model.addImage(Name.getText(),loadedFile.getPath());
         }
         clear();
-        window.setVisible(false);
+
     }
 
     private boolean isValidName(){
@@ -130,9 +180,12 @@ public class CreateNoteController{
     public static FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
     public static FileChooser.ExtensionFilter bookFilter = new FileChooser.ExtensionFilter("PDF Files", "*.pdf");
 
+    Controller controller;
+
     public void initialize() {
         model = Model.getInstance();
-        window.visibleProperty().addListener((observable, oldValue, newValue) -> clear());
+        controller = Controller.getInstance();
+        controller.setCreateNoteController(this);
         loadedFile = null;
     }
 

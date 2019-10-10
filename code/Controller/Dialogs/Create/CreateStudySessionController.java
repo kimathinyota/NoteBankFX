@@ -9,19 +9,13 @@ import Code.View.View;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
+import java.util.*;
 
 
 class SelectDates extends SelectFromToDates{
@@ -70,6 +64,10 @@ public class CreateStudySessionController {
 
     @FXML protected ChoiceBox<StudyPlan> studyPlan;
 
+    @FXML protected Button create;
+
+    @FXML protected Label title;
+
     protected SpecialSelectLists<ObservableObject> ideasLists;
 
     protected SelectFromToDates selectFromToDates;
@@ -88,21 +86,11 @@ public class CreateStudySessionController {
         this.ideasLists = new SpecialSelectLists<ObservableObject>();
         pickIdeaPane.setCenter(ideasLists);
 
-        finalTime.setSnapToTicks(true);
-
         finalTime.setMin(0);
 
         finalTime.setMax(23*Quizzes.h);
         finalTime.setMajorTickUnit(Quizzes.h);
-        finalTime.setMinorTickCount(0);
         finalTime.setShowTickMarks(true);
-
-
-        finalTime.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if(!oldValue.equals(newValue)){
-                System.out.println(new SimpleDateFormat("HH:mm").format(new Date(newValue.longValue())));
-            }
-        });
 
 
         finalTime.setLabelFormatter(new StringConverter<Double>() {
@@ -129,22 +117,29 @@ public class CreateStudySessionController {
     protected void handleCreateAction(ActionEvent e){
 
 
-        if(!(this.name.getText().length()>2)){
+        if(!isEditing){
+            if(!(this.name.getText().length()>2)){
 
-            View.displayPopUpForTime("Invalid Name","Length must be greater than 2",2,this.name,175);
-            return;
-        }
+                View.displayPopUpForTime("Invalid Name","Length must be greater than 2",2,this.name,175);
+                return;
+            }
 
-        if(!(StringUtils.isAlphanumericSpace(this.name.getText()))){
+            if(!(StringUtils.isAlphanumericSpace(this.name.getText()))){
 
-            View.displayPopUpForTime("Invalid Name","Special characters aren't allowed",2,this.name,175);
-            return;
-        }
+                View.displayPopUpForTime("Invalid Name","Special characters aren't allowed",2,this.name,175);
+                return;
+            }
 
-        if((model.studySessionNameExists(this.name.getText()))){
+            if((model.studySessionNameExists(this.name.getText()))){
 
-            View.displayPopUpForTime("Invalid Name","Name already exists",2,this.name,175);
-            return;
+                View.displayPopUpForTime("Invalid Name","Name already exists",2,this.name,175);
+                return;
+            }
+
+            if(ideasLists.getSecondList().isEmpty()){
+                View.displayPopUpForTime("Empty Lists","You haven't chosen any ideas",2,this.ideasLists,175);
+                return;
+            }
         }
 
 
@@ -163,17 +158,36 @@ public class CreateStudySessionController {
 
 
         List<Idea> ideas = new ArrayList<>();
-        ideasLists.getSecondList().forEach( object -> { if(object instanceof Idea) ideas.add((Idea) object); else if(object instanceof Topic) ideas.addAll( ((Topic) object).getAllIdeas()); });
+        List<String> topics = new ArrayList<>();
+        List<String> subjects = new ArrayList<>();
+
+
+
+        ideasLists.getSecondList().forEach( object -> { if(object instanceof Idea) ideas.add((Idea) object);
+                                                        else if(object instanceof Topic) topics.add( ((Topic) object).getID());
+                                                        else if(object instanceof Subject){
+                                                            subjects.add(((Subject) object).getName());
+                                                        }
+        });
+
+        this.window.setVisible(false);
+
+
+        if(isEditing){
+            model.modify(session,topics,subjects,Study.fromIdeas(ideas),selectFromToDates.getFirstDate(),selectFromToDates.getSecondDate(),plan,map.get(Quizzes.h),map.get(Quizzes.m));
+            controller.getSessionsScheduler().removeTemporarilySession(session);
+            model.refreshIdeas();
+
+            return;
+        }
 
 
 
         StudySession session = new StudySession(name.getText(),plan.getID(),selectFromToDates.getFirstDate().getTime(),selectFromToDates.getSecondDate().getTime(),map.get(Quizzes.h),map.get(Quizzes.m),
-                Study.fromIdeas(ideas),null);
+                Study.fromIdeas(ideas),topics,subjects,null);
 
 
         controller.getSessionsScheduler().addSession(session);
-
-        this.window.setVisible(false);
 
 
     }
@@ -197,28 +211,14 @@ public class CreateStudySessionController {
 
     private void show(){
         clear();
+        this.name.setDisable(false);
         this.window.setVisible(true);
-        this.ideasLists.getSecondListView().getItems().clear();
+        this.ideasLists.getSecondListView().getItems().clear()
+        ;
         List<ObservableObject> list = new ArrayList<>();
         list.addAll(model.getAllIdeas());
         list.addAll(model.getAllTopics());
-
-        List<Subject> subjects = model.getAllSubjects();
-        for(Subject s: subjects){
-            if(!s.getName().equals("All")){
-                Topic topic = model.filterTopicBySubject(s);
-
-                Topic t = new Topic(s.getName());
-                for(Topic p: topic.getSubTopics()){
-                    t.add(p);
-                }
-                for(Idea i: topic.getIdeas()){
-                    t.add(i);
-                }
-
-                list.add(t);
-            }
-        }
+        list.addAll(model.getAllSubjects());
 
         this.ideasLists.setFirstList(list);
 
@@ -226,20 +226,71 @@ public class CreateStudySessionController {
         this.studyPlan.getItems().addAll(model.getStudyPlans());
         this.studyPlan.getSelectionModel().selectFirst();
 
+        setDates();
+    }
+
+    private void show(StudySession session){
+        clear();
+        this.window.setVisible(true);
+        this.ideasLists.getSecondListView().getItems().clear()
+        ;
+        List<ObservableObject> list = new ArrayList<>();
+        list.addAll(model.getAllIdeas());
+        list.addAll(model.getAllTopics());
+        list.addAll(model.getAllSubjects());
+
+        this.ideasLists.setFirstList(list);
+
+        List<ObservableObject> objects = new ArrayList<>();
+        objects.addAll(Study.toIdeas(session.getIdeas()));
+
+        List<Topic> topics = new ArrayList<>();
+        session.getTopics().forEach( t -> {topics.add(model.getTopic(t));});
+        topics.removeAll(Collections.singleton(null));
+
+        List<Subject> subjects = new ArrayList<>();
+        session.getSubjects().forEach( s -> {subjects.add(model.getSubject(s));});
+        subjects.removeAll(Collections.singleton(null));
+
+        objects.addAll(topics);
+        objects.addAll(subjects);
+
+        ideasLists.setSecondList(objects);
+
+        this.studyPlan.getItems().clear();
+        this.studyPlan.getItems().addAll(model.getStudyPlans());
+        this.studyPlan.getSelectionModel().selectFirst();
+        this.studyPlan.getSelectionModel().select(model.findPlan(session.getStudyPlan()));
+        setDates(new Date(session.getEndDate()));
+
+        this.name.setText(session.getName());
+        this.name.setDisable(true);
+
+
+        finalTime.setValue( Quizzes.h*session.getLastHour() + Quizzes.m*session.getLastMinute()    );
+
+    }
+
+
+
+
+    private void setDates(Date endDate){
         if(selectFromToDates!=null){
             selectFromToDates.close();
         }
 
         selectFromToDates = new SelectDates(
                 new Date(),
-                new Date(System.currentTimeMillis() + Quizzes.mth),
+                endDate,
                 new Date(System.currentTimeMillis() - Quizzes.m),
                 new Date(System.currentTimeMillis() + 8*Quizzes.mth)
         );
 
         studyPeriod.setCenter(selectFromToDates);
+    }
 
-
+    private void setDates(){
+        setDates(new Date(System.currentTimeMillis() + Quizzes.mth));
     }
 
     public void create(){
@@ -250,7 +301,21 @@ public class CreateStudySessionController {
 
     public void create(StudyPlan plan){
         show();
+        isEditing = false;
+        title.setText("Study Session");
         this.studyPlan.getSelectionModel().select(plan);
+    }
+
+
+    StudySession session;
+    boolean isEditing;
+
+
+    public void edit(StudySession session){
+        show(session);
+        this.session = session;
+        title.setText("Restart Study Session");
+        isEditing = true;
     }
 
 

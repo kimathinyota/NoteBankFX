@@ -37,7 +37,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                      <Button fx:id="exit" alignment="CENTER" mnemonicParsing="false" style="-fx-padding: 0px; -fx-background-color: transparent;" styleClass="exit" stylesheets="@../css/create-idea.css" text="× " textFill="WHITE">
+                      <Button fx:id="exit" alignment="CENTER" mnemonicParsing="false" style="-fx-padding: 0px; -fx-background-color: transparent;" styleClass="exit" stylesheets="@../../css/create-idea.css" text="× " textFill="WHITE">
                           <font>
                               <Font size="28.0" />
                           </font>

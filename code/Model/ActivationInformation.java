@@ -81,9 +81,15 @@ public class ActivationInformation {
     private int numbersOfIdeasPerSet;
 
 
+    public int getCalculatedNumberOfIdeas() {
+        return calculatedNumberOfIdeas;
+    }
 
+    public void setCalculatedNumberOfIdeas(int calculatedNumberOfIdeas) {
+        this.calculatedNumberOfIdeas = calculatedNumberOfIdeas;
+    }
 
-
+    int calculatedNumberOfIdeas;
 
     public String toXML(){
         String xml = "<ActivationInformation>" + System.lineSeparator();
@@ -95,6 +101,7 @@ public class ActivationInformation {
         xml += "<IdeasPerSet>" + numbersOfIdeasPerSet + "</IdeasPerSet>" + System.lineSeparator();
         xml += "<Ideas>";
         xml += "<IdeasNumber>" + startingIdeasNumber + "</IdeasNumber>";
+        xml += "<CalculatedNumberOfIdeas>" + calculatedNumberOfIdeas + "</CalculatedNumberOfIdeas>";
         for(String index: remainingIdeasList){
             xml += "<Idea>" + index + "</Idea>";
         }
@@ -110,6 +117,7 @@ public class ActivationInformation {
         long timePerSession =  Long.valueOf((element.getElementsByTagName("TimePerSession").item(0)).getTextContent().trim());
         int currentSession = Integer.valueOf((element.getElementsByTagName("CurrentSession").item(0)).getTextContent().trim());
         int numbersOfIdeasPerSet = Integer.valueOf((element.getElementsByTagName("IdeasPerSet").item(0)).getTextContent().trim());
+        int calculatedNumberOfIdeas = Integer.valueOf((element.getElementsByTagName("CalculatedNumberOfIdeas").item(0)).getTextContent().trim());
         Element ideas = (org.w3c.dom.Element) element.getElementsByTagName("Ideas").item(0);
         int ideasNumber = Integer.valueOf(ideas.getElementsByTagName("IdeasNumber").item(0).getTextContent().trim());
         NodeList nodes = ideas.getElementsByTagName("Idea");
@@ -121,11 +129,15 @@ public class ActivationInformation {
                 indexes.add(id);
             }
         }
-        return new ActivationInformation(timeStart,timeEnd,numberOfSessions,timePerSession,currentSession,numbersOfIdeasPerSet,ideasNumber,indexes);
+        return new ActivationInformation(timeStart,timeEnd,numberOfSessions,timePerSession,currentSession,numbersOfIdeasPerSet,ideasNumber,indexes, calculatedNumberOfIdeas);
     }
 
+
+
+
+
     public ActivationInformation(long timeStart,long timeEnd,int numberOfSessions,long timePerSession,int currentSesionIndex, int numbersOfIdeasPerSet,
-            int ideasNumber, List<String> remainingIdeasList){
+            int ideasNumber, List<String> remainingIdeasList, int calculatedNumberOfIdeas){
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.numberOfSessions = numberOfSessions;
@@ -134,14 +146,11 @@ public class ActivationInformation {
         this.remainingIdeasList = remainingIdeasList;
         this.numbersOfIdeasPerSet = numbersOfIdeasPerSet;
         this.startingIdeasNumber = ideasNumber;
+        this.calculatedNumberOfIdeas = calculatedNumberOfIdeas;
     }
 
 
-
-
-
-
-
-
-
+    public void setNumbersOfIdeasPerSet(int numbersOfIdeasPerSet) {
+        this.numbersOfIdeasPerSet = numbersOfIdeasPerSet;
+    }
 }

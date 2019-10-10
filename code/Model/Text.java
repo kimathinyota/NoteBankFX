@@ -33,10 +33,14 @@ public class Text extends Note {
 	}
 
 	public String loadContent() {
+		return content(this.getPath().toString());
+	}
+
+
+	public static String content(String path){
 		try{
 			String textContent = "";
-			File file = new File(this.getPath().toString().trim());
-			Scanner fileScanner = new Scanner(new File(this.getPath().toString()));
+			Scanner fileScanner = new Scanner(new File(path));
 			while(fileScanner.hasNextLine())
 				textContent += fileScanner.nextLine() + "\n";
 
@@ -46,6 +50,7 @@ public class Text extends Note {
 			return "";
 		}
 	}
+
 
 	public String getText(){
 		return Jsoup.parse(loadContent()).text();

@@ -12,6 +12,6 @@
             <Font name="Inter Semi Bold" size="18.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="rightChoice" styleClass="select-time" stylesheets="@../Quiz/quiz.css" />
+      <ChoiceBox fx:id="rightChoice" styleClass="select-time" stylesheets="@../../css/quiz.css" />
    </children>
 </fx:root>

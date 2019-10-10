@@ -3,7 +3,14 @@ package Code.Controller;
 import Code.Controller.RefreshInterfaces.RefreshSubjectsController;
 import Code.Controller.search.AdvancedSearchSettings;
 import Code.Model.Model;
+import Code.Model.Quizzes;
+import Code.Model.StudyPlan;
+import Code.Model.Subject;
+import Code.View.View;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.event.ActionEvent;
@@ -13,12 +20,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import javafx.util.StringConverter;
+import org.bouncycastle.math.raw.Mod;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -203,7 +214,7 @@ public class MainWindowController implements RefreshSubjectsController {
 
             /* Assumes Subject.xml, Topics.xml and Notes are all stored in the same directory */
             // @TODO: Need to create a workspace dialog - that let's user change/input their workspace
-            model.initialise(notesDirectory, notesDirectory, notesDirectory, notesDirectory);
+            model.initialise(notesDirectory, notesDirectory);
         } catch (Exception e) {
             // Can't be bothered to list the 3+ exceptions
         }
@@ -268,6 +279,20 @@ public class MainWindowController implements RefreshSubjectsController {
                     }
                 });
 
+                cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        if(menu!=null)
+                            menu.hide();
+
+                        if(event.getButton() == MouseButton.SECONDARY){
+                            cell.getStylesheets().add("/Code/View/css/context-menu.css");
+                            menu = new SubjectRightClickMenu(cell.getItem(),cell);
+                            menu.show(cell,event.getScreenX(),event.getScreenY());
+                        }
+                    }
+                });
+
                 return cell;
             }
         });
@@ -324,7 +349,20 @@ public class MainWindowController implements RefreshSubjectsController {
         setPage(Page.HomeFeatured);
 
 
+        Timeline timer = new Timeline(new KeyFrame(Duration.seconds(240), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                model.backup();
+            }
+        }));
+
+        timer.setCycleCount(Timeline.INDEFINITE);
+        timer.play();
+
+
     }
+
+    ContextMenu menu;
 
 
     private void enableAndShowMainWindowOnClosingNode(Node node){
@@ -668,7 +706,7 @@ public class MainWindowController implements RefreshSubjectsController {
      */
     @FXML protected void onNewNoteAction(ActionEvent e){
         closeOuterWindows();
-        createNote.setVisible(true);
+        controller.createNote();
     }
 
     /**
@@ -708,4 +746,28 @@ public class MainWindowController implements RefreshSubjectsController {
 
 
 
+}
+
+
+class SubjectRightClickMenu extends ContextMenu{
+
+    public SubjectRightClickMenu(String subject, Node node) {
+
+        this.getStyleClass().add("amenu");
+        MenuItem remove = new MenuItem("Remove");
+        remove.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Model model = Model.getInstance();
+                Subject sub =model.getSubject(subject);
+                if(sub.getName().equals("All")){
+                    View.displayPopUpForTime("Deletion Disabled","Cant delete the this subject",2,node,250);
+                    return;
+                }
+                model.remove(sub);
+            }
+        });
+
+        this.getItems().add(remove);
+    }
 }

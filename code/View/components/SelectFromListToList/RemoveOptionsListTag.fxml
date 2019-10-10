@@ -13,7 +13,7 @@
 
 <fx:root type="javafx.scene.control.ListCell" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
-      <BorderPane>
+      <BorderPane stylesheets="@../../css/viewnote.css">
          <center>
             <BorderPane BorderPane.alignment="CENTER_LEFT">
                <left>
@@ -112,7 +112,7 @@
          <left>
             <BorderPane BorderPane.alignment="CENTER">
                <center>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRemoveAction" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 20px; -fx-border-radius: 20px;" styleClass="add" stylesheets="@../css/viewnote.css" text="-" BorderPane.alignment="CENTER">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRemoveAction" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 20px; -fx-border-radius: 20px;" styleClass="add" text="-" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="Inter Medium" size="28.0" />
                      </font>

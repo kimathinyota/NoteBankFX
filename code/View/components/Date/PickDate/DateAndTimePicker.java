@@ -117,7 +117,7 @@ public class DateAndTimePicker extends BorderPane {
     private void loadFXML() {
         try {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Code/View/menus/study/pickdate.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Code/View/components/Date/PickDate/pickdate.fxml"));
             loader.setController(this);
             loader.setRoot(this);
             loader.load();

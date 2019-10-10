@@ -13,7 +13,7 @@
 <?import javafx.scene.web.HTMLEditor?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane style="-fx-background-color: rgb(43, 43, 43)rgb(43, 43, 43) rgb(43, 43, 43)rgb(43, 43, 43);" stylesheets="@../../Quiz/quiz.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.quiz.QuizPageController">
+<BorderPane style="-fx-background-color: rgb(43, 43, 43)rgb(43, 43, 43) rgb(43, 43, 43)rgb(43, 43, 43);" stylesheets="@../../css/quiz.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.quiz.QuizPageController">
    <center>
       <BorderPane BorderPane.alignment="CENTER">
          <top>

@@ -109,17 +109,22 @@ public class QuizPageController {
 
             controller.switchToPage(Page.HomeFeatured);
 
-            if(lastIdeaQuiz.getTime()==null){
-                lastIdeaQuiz.setTime(System.currentTimeMillis() - startingTime);
+
+            if(lastIdeaQuiz!=null){
+                if(lastIdeaQuiz.getTime()==null){
+                    lastIdeaQuiz.setTime(System.currentTimeMillis() - startingTime);
+                }
+
+                if(lastIdeaQuiz.getConfidence()==null){
+                    lastIdeaQuiz.setConfidence(numberOfStarsSelected + 1);
+                }
+
+                if(lastIdeaQuiz.getReadiness()==null){
+                    lastIdeaQuiz.setReadiness(model.calculateReadiness(model.getIdea(lastIdeaQuiz.getId()),lastIdeaQuiz.getConfidence()));
+                }
             }
 
-            if(lastIdeaQuiz.getConfidence()==null){
-                lastIdeaQuiz.setConfidence(numberOfStarsSelected + 1);
-            }
 
-            if(lastIdeaQuiz.getReadiness()==null){
-                lastIdeaQuiz.setReadiness(model.calculateReadiness(model.getIdea(lastIdeaQuiz.getId()),lastIdeaQuiz.getConfidence()));
-            }
 
             reset();
             refreshData();
@@ -439,6 +444,9 @@ public class QuizPageController {
         this.lastIdeaQuiz = null;
         type = null;
         currentIdea = null;
+        this.numberOfStarsSelected = 0;
+        selectAllStarsUpToIndex(numberOfStarsSelected);
+
     }
 
     private void refreshData(){

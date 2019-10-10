@@ -3,6 +3,7 @@ package Code.Model;
 import Code.View.ObservableObject;
 import com.sun.jmx.mbeanserver.NamedObject;
 import com.sun.tools.corba.se.idl.constExpr.Not;
+import org.bouncycastle.math.raw.Mod;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -160,6 +161,9 @@ public class Subject implements ObservableObject {
 
 
 
+    public String toString(){
+        return "Subject: " + getName();
+    }
 
 
     @Override
@@ -179,7 +183,22 @@ public class Subject implements ObservableObject {
 
     @Override
     public boolean contains(Object object) {
+
+        if(object instanceof Note){
+            return getNotePaths().contains( ( (Note) object ).getPath());
+        }
+
+        Model model = Model.getInstance();
+        if(object instanceof Idea){
+            return model.filterTopicBySubject(this).getAllIdeas().contains(object);
+        }
+
         return false;
+
     }
+
+
+
+
 
 }

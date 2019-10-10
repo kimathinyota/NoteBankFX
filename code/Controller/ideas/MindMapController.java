@@ -363,7 +363,7 @@ public class MindMapController implements RefreshIdeasController, RefreshSubject
 
     public MindMapRecursive fromIdea(Idea idea, Topic parent){
 
-        System.out.println("\n\n\n\n Let's start with idea: " + idea);
+        //System.out.println("\n\n\n\n Let's start with idea: " + idea);
         MindMapRecursive map = new MindMapRecursive(idea,getIdeaFactory("mind-map-topic","mind-map-idea","mind-map-idea-line", "mind-map-topic-line","mind-map-parent","mind-map-line-parent",parent));
         map.setAngle(60);
 
@@ -389,7 +389,7 @@ public class MindMapController implements RefreshIdeasController, RefreshSubject
             MindMapRecursive keyWords = fromString("Key Words","mind-map-keyword-line","mind-map-keyword-center");
             for(String s: idea.getKeyWords()){
                 if(s!=null){
-                    System.out.println("S: " + s);
+                    //System.out.println("S: " + s);
                     keyWords.addItem(fromString(s,getKeyWordsFactory("mind-map-line","mind-map-keyword")));
                 }
             }

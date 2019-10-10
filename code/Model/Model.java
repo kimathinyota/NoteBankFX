@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -85,9 +87,33 @@ public class Model {
 
         for(RefreshSubjectsController c: refreshSubjectsControllers){
             c.refreshSubjects();
+
         }
 
         saveSubject();
+    }
+
+
+    public void modify(StudySession session, List<String> topics, List<String> subjects, List<String> ideas, Date first, Date end, StudyPlan plan, int hours, int mins ){
+
+        session.setSubjects(subjects);
+        session.setTopics(topics);
+        session.setIdeas(ideas);
+        session.setStartDate(first);
+        session.setEndDate(end);
+        session.setStudyPlan(plan);
+        session.setFinalHours(hours);
+        session.setFinalMins(mins);
+        session.reactivate(null);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshStudy();
+            }
+        });
+
+
     }
 
 
@@ -227,6 +253,85 @@ public class Model {
         return notes;
     }
 
+
+
+    String recoveryPath;
+
+    private File addToRecoveryFolder(String pathToFileDirectory, String originalFileName, String newFileName, String fileExtension, String folder){
+        File file = new File(recoveryPath);
+        if(!file.exists()){
+            file.mkdir();
+        }
+
+        File found = new File(pathToFileDirectory + File.separator + originalFileName + fileExtension);
+        if(found.exists()){
+
+            String dest = recoveryPath + File.separator + folder + File.separator + newFileName + fileExtension;
+
+            File destination = new File(dest);
+
+            try{
+                Files.copy(found.toPath(),destination.toPath(),StandardCopyOption.REPLACE_EXISTING);
+                return new File(dest);
+            }catch (IOException e){
+                e.printStackTrace();
+
+            }
+        }
+
+        return null;
+    }
+
+    List<String> folders;
+
+    String studyDirectory;
+
+    public void backup(){
+
+        String date = new SimpleDateFormat("HH-mm-ss dd-MM-yyyy").format(new Date());
+
+
+        File folder = new File(recoveryPath + File.separator + date);
+        if(!folder.exists()){
+            folder.mkdir();
+        }
+
+        folders.add(folder.getPath());
+
+        File f = addToRecoveryFolder(rootDirectory,"Topics","Topics", ".xml",date);
+        File f2 = addToRecoveryFolder(subjectDirectory,"Subjects","Subjects",".xml", date);
+        File f3 = addToRecoveryFolder(quizDirectory,"Quizzes","Quizzes",".xml", date);
+        File f4 = addToRecoveryFolder(studyDirectory,"Study","Study",".xml", date);
+
+        trimRecoveryFolder();
+
+    }
+
+
+    private void trimRecoveryFolder(){
+        while (this.folders.size()>maxNumberOfBackupFolders) {
+            String path = folders.get(0);
+            File file = new File(path);
+            delete(file);
+            folders.remove(path);
+        }
+    }
+
+    private void delete(File folder){
+        if(!folder.isDirectory()){
+            return;
+        }
+        for(File f: folder.listFiles()){
+            f.delete();
+        }
+
+        folder.delete();
+    }
+
+
+
+
+
     /**
      * Gets root Topic in Topics.xml found in input rootDirectory
      * @param rootDirectory
@@ -236,6 +341,14 @@ public class Model {
         try{
             return Topic.fromXML(rootDirectory + File.separator + "Topics.xml");
         }catch (Exception e){
+            e.printStackTrace();
+
+            if(new File(rootDirectory + File.separator + "Topics.xml").exists()){
+                String date = new SimpleDateFormat("HH-mm-dd-MM-yyyy").format(new Date());
+                addToRecoveryFolder(rootDirectory,"Topics", "Topics-"+date,".xml", "corrupted");
+            }
+
+
             Topic allTopics = new Topic("All Topics");
             try{
                 saveXML(allTopics.toXML(), rootDirectory , "Topics");
@@ -255,7 +368,7 @@ public class Model {
         try{
             Book b = new Book(name,originalFilePath,notesDirectory);
             this.getSubject("All").add(b.getPath().toString());
-            if(!currentSubject.getName().equals("All")){
+            if(!isRootSubject()){
                 currentSubject.add(b.getPath().toString());
             }
             Platform.runLater(new Runnable() {
@@ -278,7 +391,7 @@ public class Model {
         try{
             Image i = new Image(name,originalPath,notesDirectory);
             this.getSubject("All").add(i.getPath().toString());
-            if(!currentSubject.getName().equals("All")){
+            if(!isRootSubject()){
                 currentSubject.add(i.getPath().toString());
             }
             Platform.runLater(new Runnable() {
@@ -301,7 +414,7 @@ public class Model {
         try{
             Text t = new Text(name,textContent,notesDirectory);
             this.getSubject("All").add(t.getPath().toString());
-            if(!currentSubject.getName().equals("All")){
+            if(!isRootSubject()){
                 currentSubject.add(t.getPath().toString());
             }
             Platform.runLater(new Runnable() {
@@ -395,6 +508,16 @@ public class Model {
     }
 
 
+    public double averageReadiness(List<Idea> ideas){
+        return quizzes.averageReadiness(ideas);
+    }
+
+
+    public double estimateNumberOfIncrementsForIdeaToReachScore(Idea idea, double goalScore, long timeRange){
+        return quizzes.estimateNumberOfIncrementsForIdeaToReachScore(idea,goalScore,timeRange);
+    }
+
+
     /**
      * Static method that saves xml string as a file
      * @param xml
@@ -448,6 +571,7 @@ public class Model {
             @Override
             public void run() {
                 refreshIdeas();
+
             }
         });
 
@@ -487,12 +611,16 @@ public class Model {
             @Override
             public void run() {
                 refreshIdeas();
+
             }
         });
     }
 
     private Idea addIdea(String ideaID,HashMap<Note,Boolean>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
         Idea idea = new Idea(ideaID,notes,keyWords,prompt,promptType,finalNote);
+        if(!isRootSubject()){
+            idea.addNote(new SubjectNote(getCurrentSubject()));
+        }
         this.root.add(idea);
         Platform.runLater(new Runnable() {
             @Override
@@ -617,8 +745,19 @@ public class Model {
         return o;
     }
 
+
     public Subject remove(Subject subject){
+
         this.subjects.remove(subject);
+        if(currentSubject.equals(subject)){
+            this.setCurrentSubject("All");
+        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+            }
+        });
         return subject;
     }
 
@@ -639,10 +778,12 @@ public class Model {
      */
     public Idea remove(Idea idea){
         Idea i = root.delete(idea);
+        quizzes.remove(i);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 refreshIdeas();
+                refreshData();
             }
         });
         return i;
@@ -654,11 +795,19 @@ public class Model {
      * @return
      */
     public Topic remove(Topic topic){
+        List<Idea> ideas = topic.getAllIdeas();
         Topic t = root.delete(topic);
+        List<Idea> rootIdeas = root.getAllIdeas();
+        for(Idea i: ideas){
+            if(!rootIdeas.contains(i)){
+                quizzes.remove(i);
+            }
+        }
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 refreshIdeas();
+                refreshData();
             }
         });
         return t;
@@ -673,7 +822,7 @@ public class Model {
         Idea i = root.findIdea(node);
         Topic loc = root.findTopic(newLocation);
 
-        //System.out.println("Move " + i + " to " + newLocation);
+        ////System.out.println("Move " + i + " to " + newLocation);
 
         if(i==null || loc==null){
             return;
@@ -683,6 +832,34 @@ public class Model {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                refreshIdeas();
+            }
+        });
+    }
+
+
+    public void remove(Note note){
+        if(isRootSubject()){
+            note.delete();
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    root.removeNote(note);
+                    refreshSubjects();
+                    refreshNotes();
+                    refreshIdeas();
+                }
+            });
+            return;
+
+        }
+        currentSubject.remove(note);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+                refreshNotes();
                 refreshIdeas();
             }
         });
@@ -698,7 +875,7 @@ public class Model {
             for(Object o: topicsIdeas){
                 if(o instanceof Topic ){
                     Topic p = root.findTopic((Topic) o);
-                    if(p.contains(t)){
+                    if(p!=null && p.contains(t)){
                         remove.add(t);
                     }
 
@@ -781,10 +958,12 @@ public class Model {
     }
 
     public Topic parent(Idea idea){
+        Topic root = filterTopicByCurrentSubject();
         return root.findParent(idea);
     }
 
     public Topic parent(Topic topic){
+        Topic root = filterTopicByCurrentSubject();
         return root.findParent(topic);
     }
 
@@ -894,6 +1073,7 @@ public class Model {
             @Override
             public void run() {
                 refreshSubjects();
+                refreshNotes();
             }
         });
 
@@ -1135,14 +1315,14 @@ public class Model {
         try {
             saveXML(quizzes.toXML(),quizDirectory ,"Quizzes");
         }catch (Exception e){
-
+            e.printStackTrace();
         }
     }
 
 
     public void saveStudy(){
         try {
-            System.out.println("Saving study");
+            
             saveXML(study.toXML(),quizDirectory ,"Study");
         }catch (Exception e){
             e.printStackTrace();
@@ -1155,6 +1335,8 @@ public class Model {
         return quizzes.getAllIdeaQuizzes(ideas);
     }
 
+    String corruptedDirectory;
+
     /**
      * Used to setup the Model key environmental paths
      * @param notesDirectory
@@ -1165,12 +1347,88 @@ public class Model {
      * @throws SAXException
      * @throws IOException
      */
-    public void initialise(String notesDirectory, String rootDirectory, String subjectDirectory, String quizDirectory) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException{
 
+
+    int maxNumberOfBackupFolders;
+
+
+
+
+
+
+    public void initialise(String notesDirectory, String settingsDirectory) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException{
         this.notesDirectory = notesDirectory;
-        this.rootDirectory = rootDirectory;
-        this.subjectDirectory = subjectDirectory;
-        this.quizDirectory = quizDirectory;
+
+        File notesFolder = new File(notesDirectory);
+        if(!notesFolder.exists()){
+            notesFolder.mkdirs();
+        }
+        File settingsFolder = new File(settingsDirectory);
+        if(!settingsFolder.exists()){
+            settingsFolder.mkdirs();
+        }
+
+
+        this.rootDirectory = settingsDirectory;
+        this.subjectDirectory = settingsDirectory;
+        this.quizDirectory = settingsDirectory;
+        this.studyDirectory = settingsDirectory;
+
+/*
+        File study = (new File(studyDirectory + File.separator + "Study.xml"));
+        if(!study.exists()){
+            this.study =
+        }
+        File topic = (new File(rootDirectory + File.separator + "Topics.xml"));
+        if(!topic.exists()){
+            topic.createNewFile();
+        }
+        File quizzes = (new File(quizDirectory + File.separator + "Quizzes.xml"));
+        if(!quizzes.exists()){
+            quizzes.createNewFile();
+        }
+        File subjects = (new File(subjectDirectory + File.separator + "Subjects.xml"));
+        if(!subjects.exists()){
+            subjects.createNewFile();
+        }
+
+        */
+
+
+        this.maxNumberOfBackupFolders = 4;
+
+        this.recoveryPath = notesDirectory + File.separator + "recovery";
+
+        this.corruptedDirectory = recoveryPath + File.separator + "corrupted";
+
+
+        File folder = new File(corruptedDirectory);
+        folder.mkdirs();
+        this.folders.clear();
+        File[] fs = new File(recoveryPath).listFiles();
+        List<File> files = Arrays.asList(fs);
+
+        files.sort(new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                return new Long(o1.lastModified()).compareTo(o2.lastModified());
+            }
+        });
+
+        for(File file: files){
+            if(!file.getPath().contains("corrupted")){
+                this.folders.add(file.getPath());
+            }
+        }
+
+
+
+        trimRecoveryFolder();
+
+
+
+
+
 
         Subject allSubject = new Subject("All");
         try{
@@ -1187,80 +1445,101 @@ public class Model {
         try{
             this.subjects.addAll(getSubjects());
         }catch (IOException e){
+            e.printStackTrace();
 
+
+            if(new File(subjectDirectory + File.separator + "Subjects.xml").exists()){
+                String date = new SimpleDateFormat("HH-mm-dd-MM-yyyy").format(new Date());
+                addToRecoveryFolder(subjectDirectory,"Subjects","Subjects-" + date,".xml", "corrupted");
+            }
+
+
+            saveSubject();
         }
 
         this.root = getRoot(rootDirectory);
 
-
         try {
             this.quizzes = new Quizzes(quizDirectory + File.separator + "Quizzes.xml");
         }catch (Exception e){
+
+            e.printStackTrace();
+
+            if(new File(quizDirectory + File.separator + "Quizzes.xml").exists()){
+                String date = new SimpleDateFormat("HH-mm-dd-MM-yyyy").format(new Date());
+                addToRecoveryFolder(quizDirectory,"Quizzes","Quizzes-"+date,".xml", "corrupted");
+            }
+
             this.quizzes = new Quizzes();
             saveQuiz();
+
+
         }
 
 
         try {
 
-            this.study = Study.fromXML(quizDirectory + File.separator + "Study.xml");
-
-            StudyPlan low = study.findStudyPlan("lower");
-            if(low==null){
-                String name = "Learning";
-                String description = "A simple plan with plenty of time for deep learning of notes. Best started weeks before an exam.";
-                low = new StudyPlan("lower",name,description,0.2,0.2,1);
-                this.add(low);
-                System.out.println("Adding learning" );
-
-            }
-
-            StudyPlan med = study.findStudyPlan("medium");
-            if(med==null){
-                String name = "Exam Cure";
-                String description = "A kinda intense study plan. Best completed plenty of time before an exam for reviewing (not learning) your notes. ";
-                med = new StudyPlan("medium",name,description,0.4,0.4,1);
-                this.add(med);
-                System.out.println("Adding Exam Cure" );
-            }
-
-            StudyPlan high = study.findStudyPlan("higher");
-            if(high==null){
-                String name = "Kid to Einstein ASAP";
-                String description = "An incredibly intense study plan.  Best suited for a level 100 procrastinator who barely has a week of study before the exam.";
-                high = new StudyPlan("higher",name,description,0.6,0.6,1);
-                this.add(high);
-                System.out.println("Adding Higher" );
-            }
-
+            this.study = Study.fromXML(studyDirectory + File.separator + "Study.xml");
 
 
         }catch (Exception e){
 
             e.printStackTrace();
+
+            if(new File(studyDirectory + File.separator + "Study.xml").exists()){
+                String date = new SimpleDateFormat("HH-mm-dd-MM-yyyy").format(new Date());
+                addToRecoveryFolder(studyDirectory,"Study","Study-"+date,".xml", "corrupted");
+            }
+
             this.study = new Study();
             saveStudy();
 
         }
 
+        setDefaultStudyPlans();
 
+    }
 
-
-/*
-        for(int i=0; i<this.root.getAllIdeas().size(); i++){
-            if(i<4){
-                Topic topic = this.addTopic("The first topic i've created");
-                this.move(this.getAllIdeas().get(i),topic);
-            }else if(i<8){
-                Topic topic = this.addTopic("The second topic i've created");
-                this.move(this.getAllIdeas().get(i),topic);
-            }else if(i<12){
-                Topic topic = this.addTopic("The third topic i've created");
-                this.move(this.getAllIdeas().get(i),topic);
-            }
+    public void modify(Note note, String textContent){
+        if(!(note instanceof Text)){
+            return;
         }
-        */
+        Text text = (Text) note;
+        try{
+            text.setTextContent(textContent);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
+    private void setDefaultStudyPlans(){
+        StudyPlan low = this.study.findStudyPlan("lower");
+        if(low==null){
+            String name = "Learning";
+            String description = "A simple plan with plenty of time for deep learning of notes. Best started weeks before an exam.";
+            low = new StudyPlan("lower",name,description,0.2,0.2,1);
+            this.add(low);
+            //System.out.println("Adding learning" );
+
+        }
+
+        StudyPlan med = this.study.findStudyPlan("medium");
+        if(med==null){
+            String name = "Exam Cure";
+            String description = "A kinda intense study plan. Best completed plenty of time before an exam for reviewing (not learning) your notes. ";
+            med = new StudyPlan("medium",name,description,0.4,0.4,1);
+            this.add(med);
+            //System.out.println("Adding Exam Cure" );
+        }
+
+        StudyPlan high = this.study.findStudyPlan("higher");
+        if(high==null){
+            String name = "Kid to Einstein ASAP";
+            String description = "An incredibly intense study plan.  Best suited for a level 100 procrastinator who barely has a week of study before the exam.";
+            high = new StudyPlan("higher",name,description,0.6,0.6,1);
+            this.add(high);
+            //System.out.println("Adding Higher" );
+        }
     }
 
     public Subject getCurrentSubject(){
@@ -1268,7 +1547,7 @@ public class Model {
     }
 
     public void removeFromIdea(Idea idea, Note note){
-        //System.out.println("Remove " + note + " from " + idea);
+
         Idea i = root.findIdea(idea.getID());
 
         if(i==null){
@@ -1278,13 +1557,13 @@ public class Model {
         i.removeNote(note);
 
         refreshIdeas();
-        //refreshNotes();
-
 
     }
 
+
+
     public void addToIdea(Idea idea, Note note, boolean isFinalNote, boolean isPrompt){
-        ////System.out.println("Add " + note + " to " + idea);
+
         if(idea==null || note==null)
             return;
         Idea i = root.findIdea(idea.getID());
@@ -1293,11 +1572,7 @@ public class Model {
             return;
         }
 
-
         i.addNote(note,isPrompt);
-
-        //System.out.println("Added " + note + " to " + idea + " of (isFinalNote,isPrompt) = (" + isFinalNote + "," + isPrompt + ")" );
-
 
         if(isFinalNote)
             i.setFinalNote(note);
@@ -1308,6 +1583,76 @@ public class Model {
                 refreshIdeas();
             }
         });
+    }
+
+
+    public void addIdeaToSubject(Idea idea, Subject subject){
+        Idea i = getIdea(idea.getID());
+        Subject s = getSubject(subject.getName());
+        if(i==null || s==null){
+            return;
+        }
+        i.addNote(new SubjectNote(s));
+        for(Note n: i.getNotes()){
+            s.add(n);
+        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshSubjects();
+                refreshIdeas();
+            }
+        });
+    }
+
+    public void removeIdeaFromSubject(Idea idea, Subject subject){
+        Idea i = getIdea(idea.getID());
+        Subject s = getSubject(subject.getName());
+        if(i==null || s==null){
+            return;
+        }
+
+        for(Note note: listOfNodesPresentInBothIdeaAndSubject(i,s)){
+            i.removeNote(note);
+        }
+
+        i.removeNote(new SubjectNote(s));
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+                refreshSubjects();
+            }
+        });
+
+
+    }
+
+
+    private List<Note> listOfNodesPresentInBothIdeaAndSubject(Idea idea, Subject subject){
+        List<Note> notes = new ArrayList<>();
+
+        for(Note n: idea.getNotes()){
+            if(subject.memberOf(n)){
+                notes.add(n);
+            }
+        }
+
+        return notes;
+    }
+
+
+    public List<Note> listOfNotesPresentInBothIdeaAndSubject(Idea idea, Subject subject){
+        Idea i = getIdea(idea.getID());
+        Subject s = getSubject(subject.getName());
+        if(i==null || s==null){
+            return new ArrayList<>();
+        }
+
+        return listOfNodesPresentInBothIdeaAndSubject(idea,subject);
+
+
     }
 
     public Topic addToTopic(Object object, Topic topic){
@@ -1354,6 +1699,10 @@ public class Model {
         return root.findIdea(uniqueID);
     }
 
+    public Topic getTopic(String uniqueID){
+        return root.findTopic(uniqueID);
+    }
+
     public void setCurrentSubject(String subject){
         Subject sub = this.getSubject(subject);
         if(sub==null)
@@ -1391,7 +1740,7 @@ public class Model {
 
 
     public boolean isRootSubject(){
-        return currentSubject.equals("All");
+        return currentSubject.getName().equals("All");
     }
 
 
@@ -1453,9 +1802,10 @@ public class Model {
         refreshSubjectsControllers = new ArrayList<>();
         refreshDataControllers = new ArrayList<>();
         refreshStudyControllers = new ArrayList<>();
-
+        this.folders = new ArrayList<>();
 
     }
+
 
     public boolean studySessionNameExists(String name){
 
@@ -1465,9 +1815,7 @@ public class Model {
             }
         }
         return false;
-
     }
-
 
     public ActivationInformation getActivation(StudySession session, Date finalDate){
         return study.getActivation(quizzes.getRegionToFrequency(),session,finalDate);

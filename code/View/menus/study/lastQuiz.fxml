@@ -91,7 +91,7 @@
                            <center>
                               <BorderPane BorderPane.alignment="CENTER_LEFT">
                                  <center>
-                                    <ChoiceBox fx:id="ideaSelect" styleClass="select-idea" stylesheets="@../../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                    <ChoiceBox fx:id="ideaSelect" styleClass="select-idea" stylesheets="@../../css/quiz.css" BorderPane.alignment="CENTER" />
                                  </center>
                                  <right>
                                     <BorderPane BorderPane.alignment="CENTER_LEFT">

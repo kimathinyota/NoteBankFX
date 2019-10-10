@@ -1,6 +1,7 @@
 package Code.Controller.study;
 
 import Code.Controller.Controller;
+import Code.Controller.IntegerValue;
 import Code.Controller.RefreshInterfaces.RefreshStudyController;
 import Code.Controller.RefreshInterfaces.RefreshSubjectsController;
 import Code.Model.Model;
@@ -34,6 +35,8 @@ public class FocusController implements RefreshSubjectsController, RefreshStudyC
     Model model;
     Controller controller;
 
+    IntegerValue plansIndex = new IntegerValue(-1);
+
     public void initialize(){
         model = Model.getInstance();
         controller = Controller.getInstance();
@@ -54,16 +57,16 @@ public class FocusController implements RefreshSubjectsController, RefreshStudyC
             }
         });
 
-
+        View.setUpListForArrowManipulation(studyPlans,plansIndex);
 
     }
 
     @FXML protected void handleRightClick(ActionEvent e){
-        //handleRightClick(underusedNotes,underusedIndex);
+        View.handleRightClick(studyPlans,plansIndex);
     }
 
     @FXML protected void handleLeftClick(ActionEvent e){
-        // handleLeftClick(underusedNotes,underusedIndex);
+        View.handleLeftClick(studyPlans,plansIndex);
     }
 
 
@@ -102,12 +105,14 @@ public class FocusController implements RefreshSubjectsController, RefreshStudyC
 
                     if(event.getButton() == MouseButton.SECONDARY){
                         pane.getStylesheets().add("/Code/View/css/context-menu.css");
-                        menu = new StudyPlanRightClickMenu(plan);
+                        menu = new StudyPlanRightClickMenu(plan,studyPlans);
                         menu.show(pane,event.getScreenX(),event.getScreenY());
                         return;
                     }
 
-                    Controller.getInstance().createStudySession(plan);
+                    Controller.getInstance().editStudyPlan(plan);
+
+
 
                 }
             };
@@ -190,9 +195,16 @@ public class FocusController implements RefreshSubjectsController, RefreshStudyC
 
 class StudyPlanRightClickMenu extends ContextMenu{
 
-    public StudyPlanRightClickMenu(StudyPlan plan) {
+    public StudyPlanRightClickMenu(StudyPlan plan, ListView view) {
 
         this.getStyleClass().add("amenu");
+        MenuItem simulate = new MenuItem("Simulate");
+        simulate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Controller.getInstance().createStudySession(plan);
+            }
+        });
         MenuItem edit = new MenuItem("Edit");
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -204,9 +216,15 @@ class StudyPlanRightClickMenu extends ContextMenu{
         remove.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                if(plan.getID().equals("lower") || plan.getID().equals("medium") || plan.getID().equals("higher")){
+                    View.displayPopUpForTime("Important Study Plan", "Can't remove " + plan.getName(),3,view,250);
+                    return;
+                }
                 Model.getInstance().remove(plan);
             }
         });
+
+        this.getItems().add(simulate);
         this.getItems().add(edit);
         this.getItems().add(remove);
     }

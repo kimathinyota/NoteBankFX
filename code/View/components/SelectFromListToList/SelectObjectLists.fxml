@@ -30,7 +30,7 @@
                      <center>
                         <BorderPane style="-fx-background-color: white; -fx-background-radius: 10px; -fx-border-radius: 10px;">
                            <left>
-                              <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleSearchAction" prefHeight="25.0" prefWidth="24.0" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="search" stylesheets="@../css/notes.css" BorderPane.alignment="CENTER">
+                              <Button alignment="BASELINE_LEFT" ellipsisString="" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleSearchAction" prefHeight="25.0" prefWidth="24.0" style="-fx-background-color: transparent; -fx-padding: 0px;" styleClass="search" stylesheets="@../../css/notes.css" BorderPane.alignment="CENTER">
                                  <graphic>
                                     <AnchorPane layoutX="3.0" prefHeight="26.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-padding: 0px;">
                                        <children>
@@ -61,7 +61,7 @@
                <center>
                   <BorderPane BorderPane.alignment="CENTER">
                      <center>
-                        <ListView fx:id="firstList" styleClass="mylistview" stylesheets="@../css/viewnote.css" />
+                        <ListView fx:id="firstList" styleClass="mylistview" stylesheets="@../../css/viewnote.css" />
                      </center>
                      <top>
                         <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />
@@ -99,7 +99,7 @@
                <center>
                   <BorderPane BorderPane.alignment="CENTER">
                      <center>
-                        <ListView fx:id="secondList" styleClass="mylistview" stylesheets="@../css/viewnote.css" />
+                        <ListView fx:id="secondList" styleClass="mylistview" stylesheets="@../../css/viewnote.css" />
                      </center>
                      <bottom>
                         <Pane prefHeight="10.0" BorderPane.alignment="CENTER" />

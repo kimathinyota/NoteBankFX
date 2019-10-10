@@ -11,9 +11,6 @@ import Code.Controller.home.notes.filters.View;
 import Code.Model.Model;
 import Code.Model.Note;
 
-import Code.View.menus.NoteIconCellFactory;
-import Code.View.menus.NoteTextCellFactory;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -113,9 +110,18 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
 
         refreshSubjects();
 
-        addSelectedItemListener(underusedNotes,underusedIndex);
-        addSelectedItemListener(utilisedNotes, utilisedIndex);
-        addSelectedItemListener(allNotes,allIndex);
+
+
+
+        Code.View.View.setUpListForArrowManipulation(underusedNotes,underusedIndex);
+        Code.View.View.setUpListForArrowManipulation(utilisedNotes,utilisedIndex);
+        Code.View.View.setUpListForArrowManipulation(allNotes,allIndex);
+
+
+
+
+
+
 
 
         rareNotesDisplay.setOnAction(new EventHandler<ActionEvent>() {
@@ -180,22 +186,11 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         });
 
 
-        setLeftRightKeyPressed(allNotes, allIndex);
-        setLeftRightKeyPressed(underusedNotes,underusedIndex);
-        setLeftRightKeyPressed(utilisedNotes,utilisedIndex);
+
 
     }
 
-    public void setLeftRightKeyPressed(ListView<Note>list, IntegerValue index){
-        list.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.LEFT){
 
-                handleLeftClick(null);
-            }else if(event.getCode() == KeyCode.RIGHT){
-                handleLeftClick(null);
-            }
-        });
-    }
 
     @FXML protected void handleSearchEnterPress(KeyEvent e){
         if(e.getCode() == KeyCode.ENTER){
@@ -204,9 +199,7 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
         }
     }
 
-    public void addSelectedItemListener(ListView<Note> notes, IntegerValue notesIndex){
-        notes.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> setIndex(notesIndex,newValue.intValue()));
-    }
+
 
     public void setIndex(IntegerValue i, int val){
         i.setInteger(val);
@@ -238,60 +231,30 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
     }
 
     @FXML protected void handleRightClick(ActionEvent e){
-        handleRightClick(underusedNotes,underusedIndex);
+        Code.View.View.handleRightClick(underusedNotes,underusedIndex);
     }
 
     @FXML protected void handleLeftClick(ActionEvent e){
-        handleLeftClick(underusedNotes,underusedIndex);
+        Code.View.View.handleLeftClick(underusedNotes,underusedIndex);
     }
 
     @FXML protected void handleRight2Click(ActionEvent e){
-        handleRightClick(utilisedNotes,utilisedIndex);
+        Code.View.View.handleRightClick(utilisedNotes,utilisedIndex);
     }
 
     @FXML protected void handleLeft2Click(ActionEvent e){
-        handleLeftClick(utilisedNotes,utilisedIndex);
+        Code.View.View.handleLeftClick(utilisedNotes,utilisedIndex);
     }
 
     @FXML protected void handleRight3Click(ActionEvent e){
-        handleRightClick(allNotes,allIndex);
+        Code.View.View.handleRightClick(allNotes,allIndex);
     }
 
     @FXML protected void handleLeft3Click(ActionEvent e){
-        handleLeftClick(allNotes,allIndex);
+        Code.View.View.handleLeftClick(allNotes,allIndex);
     }
 
-    private void handleLeftClick(ListView<Note>allNotes, IntegerValue allIndex){
 
-        if(allNotes.getItems().isEmpty()){
-            return;
-        }
-
-        if(allIndex.intValue()==-1){
-            allIndex.setInteger(1);
-        }
-
-        allIndex.setInteger((allIndex.intValue()-1)%allNotes.getItems().size());
-        allIndex.setInteger( (allIndex.intValue()<0 ? allIndex.intValue() + allNotes.getItems().size() :allIndex.intValue())  );
-        allIndex.setInteger (allIndex.intValue()<0 ? allIndex.intValue() + allNotes.getItems().size() : allIndex.intValue());
-
-        allNotes.scrollTo( allIndex.intValue() );
-        allNotes.getSelectionModel().select(allIndex.intValue());
-
-
-    }
-
-    private void handleRightClick(ListView<Note>allNotes, IntegerValue allIndex){
-
-        if(allNotes.getItems().isEmpty()){
-            return;
-        }
-
-        allIndex.setInteger((allIndex.intValue()+1)%allNotes.getItems().size());
-        allNotes.scrollTo( allIndex.intValue() );
-        allNotes.getSelectionModel().select(allIndex.intValue());
-
-    }
 
     @FXML protected void handleOpenFilterAction(ActionEvent e){
         filter.setVisible(true);

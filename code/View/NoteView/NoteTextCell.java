@@ -1,7 +1,7 @@
 package Code.View.NoteView;
 
 import Code.Model.Note;
-import Code.View.menus.NoteTextCellFactory;
+import Code.Controller.home.notes.NoteTextCellFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContentDisplay;
@@ -24,7 +24,7 @@ public class NoteTextCell extends ListCell<Note> {
 
     private void loadFXML() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Code/View/NoteView/note_cell_text.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Code/View/NoteView/note_cell_text.fxml"));
             loader.setController(this);
             loader.setRoot(this);
             loader.load();

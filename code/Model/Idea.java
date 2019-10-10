@@ -4,7 +4,6 @@ import Code.View.ObservableObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import javax.security.auth.Subject;
 import java.io.IOException;
 import java.util.*;
 import java.lang.Integer;
@@ -239,6 +238,9 @@ public class Idea implements ObservableObject {
 		if(this.finalNote!=null && this.finalNote.equals(note))
 			this.finalNote = null;
 		notes.remove(note);
+		if(note instanceof SubjectNote){
+			subjectNotes.remove(note);
+		}
 	}
 
 	public void addNotes(Collection<Note> notes) {
@@ -280,6 +282,8 @@ public class Idea implements ObservableObject {
 		}
 		return false;
 	}
+
+
 	
 
 	public PromptType getPromptType() {
@@ -370,13 +374,18 @@ public class Idea implements ObservableObject {
 	public String toXML() {
 		String promptNotesXML = "";
 		String nonPromptNotesXML = "";
-		  
+		String subjectNotesXML = "";
 		for(Note n: notes.keySet()) {
 			if(n!=null && notes.get(n).booleanValue()==true)
 				promptNotesXML += n.toXML() + System.lineSeparator();
 			else if(n!=null)
 				nonPromptNotesXML += n.toXML() + System.lineSeparator();
 		}
+
+		for(SubjectNote s: subjectNotes){
+			subjectNotesXML += s.toXML() + System.lineSeparator();
+		}
+
 
 
 			
@@ -401,6 +410,7 @@ public class Idea implements ObservableObject {
 						+ "<KeyWords>" + keyWordsXML + "</KeyWords>" + System.lineSeparator()
 						+ "<PromptNotes>" + System.lineSeparator() + promptNotesXML + "</PromptNotes>"  + System.lineSeparator()
 						+ "<NonPromptNotes>" + System.lineSeparator() + nonPromptNotesXML + "</NonPromptNotes>"  + System.lineSeparator()
+						+ "<SubjectNotes>" + System.lineSeparator() + subjectNotesXML + "</SubjectNotes>" + System.lineSeparator()
 						+ "<FinalNote>"
 						+ finalNoteXML
 						+ "</FinalNote>" + System.lineSeparator() +

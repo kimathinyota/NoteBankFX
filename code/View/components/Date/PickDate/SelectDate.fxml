@@ -7,7 +7,7 @@
 
 <fx:root alignment="CENTER" type="VBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="date" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" prefHeight="46.0" prefWidth="175.0" style="-fx-background-color: transparent; -fx-border-color: white;" styleClass="idea-label" stylesheets="@../Quiz/quiz.css" text="TODAY " textFill="WHITE">
+      <Button fx:id="date" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" prefHeight="46.0" prefWidth="175.0" style="-fx-background-color: transparent; -fx-border-color: white;" styleClass="idea-label" stylesheets="@../../../css/quiz.css" text="TODAY " textFill="WHITE">
          <font>
             <Font name="Inter Medium" size="20.0" />
          </font>

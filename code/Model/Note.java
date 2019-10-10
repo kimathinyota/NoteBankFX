@@ -127,7 +127,11 @@ public abstract class Note implements ObservableObject {
 	 */
 	@Override
 	public boolean equals(Object n) {
-		return (n instanceof Note) && this.path.toString().equals( ((Note) n).getPath().toString() );
+		return
+				(n instanceof Note) &&
+				(  (n instanceof SubjectNote) && (this instanceof SubjectNote) && ( ( (SubjectNote) n).getSubject().equals(   ((SubjectNote) this).getSubject()   ) )
+
+						|| !(n instanceof SubjectNote) && !(this instanceof SubjectNote) && this.path.toString().equals( ((Note) n).getPath().toString() )  );
 	}
 
 	/**

@@ -1,1 +1,0 @@
-<html dir="ltr"><head></head><body contenteditable="true"><h1><font face="Lucida Grande" size="6">This is a heading for THE test</font></h1><p><font face="Lucida Grande">This is a test, i repeat this is a test</font></p></body></html>

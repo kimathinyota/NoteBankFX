@@ -51,9 +51,6 @@ public class CreateIdeaController {
 
         isEditing = false;
 
-        // Listener to clear createIdea window when window is closed
-        window.visibleProperty().addListener((observable, oldValue, newValue) -> clear());
-
         //Will prevent user from entering any incorrect symbol
         this.prompt.textProperty().addListener((obs, oldText, newText) ->{
             this.prompt.setText(newText.replaceAll("[^a-zA-Z0-9_. ]",""));
@@ -101,6 +98,8 @@ public class CreateIdeaController {
             return;
         }
 
+        window.setVisible(false);
+
         PromptType type = ideaType.getSelectionModel().getSelectedItem();
 
         if(!isEditing){
@@ -114,7 +113,7 @@ public class CreateIdeaController {
             model.updateIdea(editingIdea.getID(),prompt.getText(),getKeyWords(),type);
         }
 
-        window.setVisible(false);
+
 
 
     }
@@ -192,12 +191,17 @@ public class CreateIdeaController {
     Topic topic;
 
     public void createIdea(Topic topic){
-        createIdea();
+        clear();
+        isEditing = false;
+        create.setText("CREATE");
+        title.setText("Create Idea");
+        this.window.setVisible(true);
         this.topic = topic;
     }
 
 
     public void createIdea(){
+        clear();
         isEditing = false;
         create.setText("CREATE");
         title.setText("Create Idea");

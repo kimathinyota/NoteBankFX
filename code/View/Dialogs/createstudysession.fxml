@@ -81,7 +81,7 @@
                                           </Label>
                                        </left>
                                        <center>
-                                          <Slider fx:id="finalTime" prefHeight="32.0" prefWidth="459.0" showTickLabels="true" styleClass="custom-slider" stylesheets="@../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                          <Slider fx:id="finalTime" prefHeight="32.0" prefWidth="459.0" showTickLabels="true" styleClass="custom-slider" stylesheets="@../css/quiz.css" BorderPane.alignment="CENTER" />
                                        </center>
                                     </BorderPane>
                                  </children>

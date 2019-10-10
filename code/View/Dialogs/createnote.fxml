@@ -11,8 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.HTMLEditor?>
 
-
-<BorderPane fx:id="window" style="-fx-background-color: transparent;" visible="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.Dialogs.Create.CreateNoteController">
+<BorderPane fx:id="window" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Code.Controller.Dialogs.Create.CreateNoteController">
    <center>
       <BorderPane styleClass="window" stylesheets="@../css/create-note.css">
          <center>
@@ -24,7 +23,7 @@
                            <center>
                               <TabPane fx:id="tabPane" prefHeight="452.0" prefWidth="746.0" stylesheets="@../css/tab.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                                 <tabs>
-                                  <Tab text="Text">
+                                  <Tab fx:id="textTab" text="Text">
                                        <content>
                                           <BorderPane prefHeight="419.0" prefWidth="737.0">
                                              <center>
@@ -42,7 +41,7 @@
                                           </BorderPane>
                                        </content>
                                     </Tab>
-                                  <Tab text="Other">
+                                  <Tab fx:id="otherTab" text="Other">
                                        <content>
                                           <BorderPane>
                                              <center>
@@ -150,7 +149,7 @@
                   <Pane prefHeight="1.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
                </bottom>
                <center>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" text="Create Note" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                  <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" text="Create Note" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="Inter Semi Bold" size="20.0" />
                      </font>

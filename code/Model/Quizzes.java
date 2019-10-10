@@ -1,6 +1,8 @@
 package Code.Model;
 
 import Code.Controller.Dialogs.ViewNotes.ViewNotesController;
+import javafx.collections.FXCollections;
+import org.bouncycastle.math.raw.Mod;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -64,6 +66,11 @@ public class Quizzes {
         return xml;
     }
 
+
+
+
+
+
     public List<IdeaQuiz> getIdeaQuizzesBetweenDates(Idea idea, long startingDate, long endingDate ){
         List<IdeaQuiz> is = new ArrayList<>();
         for(Quiz q: quizzes){
@@ -90,6 +97,13 @@ public class Quizzes {
        return getIdeaQuizzesBetweenDates(idea,startingDate,endingDate).size();
 
     }
+
+
+
+
+
+
+
 
     public List<IdeaQuiz> getAllIdeaQuizzes(Idea idea){
         List<IdeaQuiz> list = new ArrayList<>();
@@ -144,14 +158,13 @@ public class Quizzes {
         return total/list.size();
     }
 
-    public static double averageReadiness(List<IdeaQuiz>list){
-        double total = 0;
-        for(IdeaQuiz i: list){
-            //System.out.println(i + " " + i.getReadiness());
 
-            total += i.getReadiness();
+    public double averageReadiness(List<Idea> ideas){
+        double readiness = 0;
+        for(Idea i: ideas){
+            readiness += getReadiness(i,System.currentTimeMillis(),null);
         }
-        return total/list.size();
+        return readiness/ideas.size();
     }
 
     public static double totalConfidence(List<IdeaQuiz>list){
@@ -163,7 +176,8 @@ public class Quizzes {
     }
 
     public double minimumReadinessScore(List<Idea> ideas){
-        Double readiness = null;
+        Double max = new Double(1000000);
+        Double readiness = max;
         for(Idea i: ideas){
             double r = getReadiness(i,System.currentTimeMillis(),null);
             if(r < readiness){
@@ -171,7 +185,7 @@ public class Quizzes {
             }
         }
 
-        if(readiness==null){
+        if(readiness.equals(max)){
             return 0;
         }
 
@@ -280,8 +294,6 @@ public class Quizzes {
                                  (totalConfidence(subtract(quizPerTime.get("half-year"),quizPerTime.get("quarter")))*readinessScore)/(averageConfidnce*frequency(6*mth)) +
                                  (totalConfidence(subtract(quizPerTime.get("year"),quizPerTime.get("half-year")))*readinessScore)/(averageConfidnce*frequency(y));
 
-
-
         if(confidence==null){
             IdeaQuiz lastIdea = getLastIdeaQuiz(idea);
             if(lastIdea!=null){
@@ -289,12 +301,50 @@ public class Quizzes {
             }else{
                 confidence = 0;
             }
-
-
         }
 
         return (3*confidence + 7*confidenceScore)/10;
     }
+
+
+
+    public double getScoreIncrement(long timeLeft){
+        List<Long> regions = FXCollections.observableArrayList(y,6*mth,3*mth,mth,w,d,h);
+
+        long reg = y;
+
+        for(int i=0; i<regions.size()-1; i++){
+            long r = regions.get(i);
+            if(timeLeft < r){
+                reg = regions.get(i+1);
+            }
+        }
+
+        return 2.5*readinessScore/(averageConfidnce*frequency(reg));
+
+    }
+
+
+
+    public double estimateNumberOfIncrementsForIdeaToReachScore(Idea idea, double goalScore, long timeRange){
+
+        double currentScore = getReadiness(idea,System.currentTimeMillis(),null);
+        //System.out.println("Score: " + currentScore + " Goal: " + goalScore);
+
+        if(currentScore>=goalScore){
+            return 0;
+        }
+
+        double increment = getScoreIncrement(timeRange);
+
+       // System.out.println("Increment: " + increment);
+
+        return (goalScore-currentScore)/increment;
+    }
+
+
+
+
 
     private Integer frequency(long region){
         Integer f = this.regionToFrequency.get(region);
@@ -326,7 +376,7 @@ public class Quizzes {
 
     public void remove(Idea idea){
         for(Quiz q: quizzes){
-            remove(idea);
+            q.remove(idea);
         }
     }
 

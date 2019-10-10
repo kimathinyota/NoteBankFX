@@ -48,7 +48,7 @@
                                           </Label>
                                        </left>
                                        <right>
-                                          <ToggleButton fx:id="includeKeyWords" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" styleClass="custom-quiz-toggle-button" stylesheets="@../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                          <ToggleButton fx:id="includeKeyWords" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" styleClass="custom-quiz-toggle-button" stylesheets="@../css/quiz.css" BorderPane.alignment="CENTER" />
                                        </right>
                                     </BorderPane>
                                     <Pane prefHeight="10.0" />
@@ -61,7 +61,7 @@
                                           </Label>
                                        </left>
                                        <right>
-                                          <ToggleButton fx:id="includeQuestions" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" styleClass="custom-quiz-toggle-button" stylesheets="@../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                          <ToggleButton fx:id="includeQuestions" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" styleClass="custom-quiz-toggle-button" stylesheets="@../css/quiz.css" BorderPane.alignment="CENTER" />
                                        </right>
                                     </BorderPane>
                                     <Pane layoutX="10.0" layoutY="49.0" prefHeight="10.0" />
@@ -74,7 +74,7 @@
                                           </Label>
                                        </left>
                                        <right>
-                                          <ToggleButton fx:id="includeStatements" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" styleClass="custom-quiz-toggle-button" stylesheets="@../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                          <ToggleButton fx:id="includeStatements" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" styleClass="custom-quiz-toggle-button" stylesheets="@../css/quiz.css" BorderPane.alignment="CENTER" />
                                        </right>
                                     </BorderPane>
                                     <Pane layoutX="10.0" layoutY="93.0" prefHeight="10.0" />
@@ -87,7 +87,7 @@
                                           </Label>
                                        </left>
                                        <right>
-                                          <ToggleButton fx:id="shuffleIdeaOrder" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" styleClass="custom-quiz-toggle-button" stylesheets="@../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                          <ToggleButton fx:id="shuffleIdeaOrder" mnemonicParsing="false" prefHeight="39.0" prefWidth="88.0" styleClass="custom-quiz-toggle-button" stylesheets="@../css/quiz.css" BorderPane.alignment="CENTER" />
                                        </right>
                                     </BorderPane>
                                     <Pane layoutX="10.0" layoutY="137.0" prefHeight="10.0" />
@@ -110,7 +110,7 @@
                                           </Label>
                                        </left>
                                        <center>
-                                          <Slider fx:id="ideaLimit" prefHeight="32.0" prefWidth="459.0" showTickLabels="true" styleClass="custom-slider" stylesheets="@../Quiz/quiz.css" BorderPane.alignment="CENTER" />
+                                          <Slider fx:id="ideaLimit" prefHeight="32.0" prefWidth="459.0" showTickLabels="true" styleClass="custom-slider" stylesheets="@../css/quiz.css" BorderPane.alignment="CENTER" />
                                        </center>
                                     </BorderPane>
                                  </children>

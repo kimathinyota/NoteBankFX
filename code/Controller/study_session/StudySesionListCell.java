@@ -80,6 +80,7 @@ public class StudySesionListCell extends ListCell<StudySet> {
 
     Timeline timer;
 
+
     private void setup(StudySet set){
         setTimer(set.getTimeToKill());
         sessionName.setText(set.getName());
@@ -92,7 +93,9 @@ public class StudySesionListCell extends ListCell<StudySet> {
         String progressText = "You have completed "+(set.getNumberOfIdeasStudied())+" of "+set.getTotalNumberOfIdeas()+" Ideas";
         this.progressText.setText(progressText);
 
-        progress.setProgress( set.getNumberOfIdeasStudied()/set.getTotalNumberOfIdeas() );
+
+
+        progress.setProgress( ( (double) set.getNumberOfIdeasStudied()/ (double) set.getTotalNumberOfIdeas()) );
 
         play.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -109,6 +112,12 @@ public class StudySesionListCell extends ListCell<StudySet> {
         timer = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
+                if(set.getSession()==null || set.getSession().getActivation()==null){
+                    timer.stop();
+                    return;
+                }
+
                 long ttk = set.getTimeToKill();
 
                 //System.out.println("LOOOOL: " + ViewNotesController.getOverview(ttk,"years","months","weeks","days"," hours"," mins"," secs","0","",""));

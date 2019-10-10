@@ -127,7 +127,7 @@ class RemoveNoteIdeasOptionListCell extends RemoveNoteOptionListCell{
 
         ((RemoveNoteIdeaListCellOptionsFactory) factory).remove(note);
 
-        System.out.println(idea + " " + note);
+        //System.out.println(idea + " " + note);
         Model.getInstance().removeFromIdea(idea,note);
     }
 

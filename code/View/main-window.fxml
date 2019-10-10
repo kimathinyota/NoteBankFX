@@ -401,9 +401,9 @@
                                     </GridPane>
                                  </children>
                               </GridPane>
-                              <BorderPane fx:id="quizProgress" prefHeight="50.0" stylesheets="@Quiz/quiz.css" visible="false" GridPane.columnIndex="3" GridPane.columnSpan="61" GridPane.rowIndex="16" GridPane.rowSpan="5">
+                              <BorderPane fx:id="quizProgress" prefHeight="50.0" stylesheets="@css/quiz.css" visible="false" GridPane.columnIndex="3" GridPane.columnSpan="61" GridPane.rowIndex="16" GridPane.rowSpan="5">
                                  <center>
-                                    <ProgressBar fx:id="quizProgressBar" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="568.0" progress="0.39" styleClass="quiz-progress" stylesheets="@Quiz/quiz.css" />
+                                    <ProgressBar fx:id="quizProgressBar" maxWidth="1.7976931348623157E308" prefHeight="19.0" prefWidth="568.0" progress="0.39" styleClass="quiz-progress" stylesheets="@css/quiz.css" />
                                  </center>
                                  <right>
                                     <BorderPane BorderPane.alignment="CENTER">

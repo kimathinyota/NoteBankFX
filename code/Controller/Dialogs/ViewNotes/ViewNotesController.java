@@ -294,22 +294,16 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         show(notes,ViewMode.SelectWithListView);
     }
 
-
     private ObservableList<Tab> fullConfiguration;
     private ObservableList<Tab> viewFullConfiguration;
     private ObservableList<Tab> viewLimitedConfiguration;
     private ObservableList<Tab> selectLimitedConfiguration;
-
-
 
     public void displayAndSelectNotes(List<Note>notes){
         this.tabPane.getTabs().clear();
         this.tabPane.getTabs().addAll(selectLimitedConfiguration);
         show(notes,ViewMode.Select);
     }
-
-
-
 
     public List<Note> finish(){
 
@@ -338,13 +332,6 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
         return new ArrayList<>();
     }
-
-
-
-
-
-
-
 
     private void show(List<Note>notes, ViewMode mode){
 
@@ -378,7 +365,6 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         viewNotes.setVisible(true);
 
     }
-
 
     public static Pair<Long,Pair<Long,Long>> regionToQuotientRemainder(long date,Collection<Long>timeRegions){
         List<Long> regions = new ArrayList<>(timeRegions);
@@ -436,7 +422,6 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
     }
 
-
     public static int getDay(Date date){
         return ((int) (date.getTime()/Quizzes.d));
     }
@@ -452,8 +437,6 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
     public static int getSeconds(Date date){
         return ((int) (date.getTime()/Quizzes.s));
     }
-
-
 
     public static String getOverview(long date,
                                String yearText,String monthText,
@@ -518,7 +501,6 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
             return (  scs + secondText + suffix);
         }
 
-
         return zeroText;
 
     }
@@ -528,10 +510,9 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
     public static String getOverview(long date){
 
-        return getOverview(new Date().getTime() - new Date(date).getTime()," years"," months", " weeks", " days", " hours", " minutes", " seconds","NOW"," ago"," from now");
+        return getOverview(new Date().getTime() - new Date(date).getTime()," years"," months", " weeks", " days", " hours", " minutes", " seconds","NOW"," from now"," ago");
 
     }
-
 
     public void setTime(Label overview, Label time, long date ){
         overview.setText(getOverview(date) + "");
@@ -578,9 +559,8 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
     }
 
     private void setupNote(Note note){
+
         this.noteTitle.setText( note.getType() + ": " + note.getName());
-        //this.subjectLists.setSecondList(model.getSubjects(note));
-        //this.ideasLists.setSecondList(model.getIdeasMap(note));
 
         subjectLists = new SelectSubjectLists(note,model.getSubjects(note));
         ideasLists = new SelectIdeaLists(note, convertToIdeaMap(note));
@@ -745,6 +725,7 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
     }
 
+
     /*
     public void updateIdeas(){
         model.limitNoteToTheseIdeas(notes.get(currentNoteIndex),ideasLists.getMap());
@@ -754,13 +735,12 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         model.limitNoteToTheseSubjects(notes.get(currentNoteIndex),subjectLists.getSecondList());
     }
 
-
     public void save(){
         updateSubject();
         updateIdeas();
-    }*/
+    }
 
-
+    */
 
 
     private List<java.lang.Integer> getPages(Note n, List<java.lang.Integer>pages){

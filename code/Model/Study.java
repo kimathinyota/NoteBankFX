@@ -1,6 +1,9 @@
 package Code.Model;
 
+import Code.Controller.Dialogs.ViewNotes.ViewNotesController;
+import Code.Controller.study_session.StudySet;
 import javafx.util.Pair;
+import org.bouncycastle.math.raw.Mod;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -46,6 +49,7 @@ public class Study {
     }
 
     private Pair<Long,Long> upperLowerPair(Map<Long,Integer> regionToFrequency, long timeLeft){
+
         List<Long> regions = new ArrayList<>(regionToFrequency.keySet());
         Collections.sort(regions);
 
@@ -85,10 +89,6 @@ public class Study {
         //System.out.println( "Upper: " + ViewNotesController.getOverview(upper,"years","months","weeks","days", " hours"," mins"," secs", "0","",""));
 
 
-
-
-
-
         return new Pair<>(upper,lower);
     }
 
@@ -97,23 +97,25 @@ public class Study {
         if(regionToFrequency.containsKey(timeLeft)){
             //System.out.println("Found region: " + regionToFrequency.get(timeLeft));
             return regionToFrequency.get(timeLeft);
+
         }else{
             Pair<Long,Long> upperLower = upperLowerPair(regionToFrequency,timeLeft);
-            //System.out.println("UpperLower: " + upperLower);
 
+            double frequency;
+            if(upperLower.getKey().longValue()==-1){
+                frequency = timeLeft/upperLower.getValue() * regionToFrequency.get(upperLower.getValue());
+            }else if(upperLower.getValue().longValue()==-1){
+                frequency = timeLeft/upperLower.getKey() * regionToFrequency.get(upperLower.getKey());
+            }else{
+                frequency =  regionToFrequency.get(upperLower.getValue()) +  (((double) timeLeft/upperLower.getKey()) * (regionToFrequency.get(upperLower.getKey())));
+            }
 
-            //System.out.println("Freqs: " + regionToFrequency.get(upperLower.first) + " " + regionToFrequency.get(upperLower.second));
-
-
-            double frequency =  regionToFrequency.get(upperLower.getValue()) +  (((double) timeLeft/upperLower.getKey()) * (regionToFrequency.get(upperLower.getKey())));
-
-            //System.out.println(   ( (double) timeLeft/upperLower.first) + " " +  regionToFrequency.get(upperLower.first) + " " + regionToFrequency.get(upperLower.second));
-
-            //System.out.println("Frequency: " + frequency + " Number of ideas: " + numberOfIdeas);
             double tot = frequency*numberOfIdeas;
-            //System.out.println( "Total: " + tot);
+
             return (int) Math.round(tot);
+
         }
+
     }
 
     public static List<String> fromIdeas(List<Idea> ideas) {
@@ -157,12 +159,92 @@ public class Study {
         return ideas;
     }
 
+    private static boolean containsOnlyZeros(Collection<Integer> collection){
+        for(Integer i: collection){
+            if(i.intValue()!=0){
+                return false;
+            }
+        }
+        return true;
+    }
 
-    public static List<Idea> getIdeasForSet(StudySession sp,int totalNumberOfIdeas){
+    public static List<Idea> sortIdeasByLength(List<Idea> time){
+
+        Model model = Model.getInstance();
+
+        time.sort(new Comparator<Idea>() {
+            @Override
+            public int compare(Idea o1, Idea o2) {
+                Long time = Quizzes.totalTime(model.getAllIdeaQuizzes(Collections.singletonList(o1)));
+                Long time2 = Quizzes.totalTime(model.getAllIdeaQuizzes(Collections.singletonList(o2)));
+                return time.compareTo(time2);
+            }
+        });
+
+        return time;
+
+    }
+
+
+    public static List<Idea> getIdeasForSet(StudySession sp,int totalNumberOfIdeas, long timeRange){
+
+        Model model = Model.getInstance();
+        StudyPlan plan = model.findPlan(sp.getStudyPlan());
+        double goalScore = model.getReadinessScore() * plan.getScorePercentage();
+
+
+        HashMap<Idea,Integer> ideaToNumberNeeded = new HashMap<>();
+
+        List<Idea> sessionIdeas = StudySet.getIdeas(sp);
+
+
+        for(Idea i: sessionIdeas){
+            ideaToNumberNeeded.put(i,(int) Math.ceil(model.estimateNumberOfIncrementsForIdeaToReachScore(i,goalScore,timeRange)));
+        }
+
+
+        List<Idea> ideas = new ArrayList<>();
+        ideas.addAll(ideaToNumberNeeded.keySet());
+
+
+        Comparator<Idea> comparator = new Comparator<Idea>() {
+            @Override
+            public int compare(Idea o1, Idea o2) {
+                return ideaToNumberNeeded.get(o2).compareTo(ideaToNumberNeeded.get(o1));
+            }
+        };
+        ideas.sort(comparator);
+
+        List<Idea> setIdeas = new ArrayList<>();
+        int current = 0;
+
+        while(setIdeas.size() < totalNumberOfIdeas && !containsOnlyZeros(ideaToNumberNeeded.values())){
+
+            Idea idea = ideas.get(current%ideas.size());
+            if(idea!=null && ideaToNumberNeeded.get(idea)>0){
+                setIdeas.add(idea);
+                ideaToNumberNeeded.put(idea,ideaToNumberNeeded.get(idea)-1);
+            }
+
+            current += 1;
+
+        }
+
+        Collections.shuffle(ideas);
+
+        current = 0;
+        while(setIdeas.size() < totalNumberOfIdeas){
+            setIdeas.add(ideas.get(current%ideas.size()));
+            current += 1;
+        }
+
+
+        return setIdeas;
+
+
+        /*
         //Get ideas meant for this set
         List<Idea> ideas = sortByReadiness(toIdeas(sp.getIdeas()));
-        Collections.reverse(ideas);
-
 
         ideas = ideas.subList(0,( totalNumberOfIdeas > ideas.size() ? ideas.size() : totalNumberOfIdeas));
 
@@ -175,44 +257,103 @@ public class Study {
         }
         ideas.addAll(extraIdeas);
         return ideas;
+        */
+
+    }
+
+    public static int determineNumberOfIdeas(StudySession sp, long timeRange){
+
+        Model model = Model.getInstance();
+        StudyPlan plan = model.findPlan(sp.getStudyPlan());
+        double goalScore = model.getReadinessScore() * plan.getScorePercentage();
+
+        List<Idea> ideas = StudySet.getIdeas(sp);
+
+        if(ideas.isEmpty()){
+            return -1;
+        }
+
+/*
+        for(Idea i: ideas){
+            double f = model.estimateNumberOfIncrementsForIdeaToReachScore(i,goalScore,timeRange);
+            //System.out.println( i + " - " + f );
+            freqs.add(f);
+        }
+
+
+        double inc = 2.5;
+        List<Double> upper = freqs.subList( (int) (freqs.size() - freqs.size()/inc) , freqs.size() );
+        while (upper.isEmpty()){
+            inc *= 1.5;
+            int low = (int) (freqs.size() - freqs.size()/inc);
+            low = (low < 0 ? 0 : low);
+            upper = freqs.subList( low , freqs.size() );
+        }
+
+        double frequency = upper.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
+
+        frequency = (frequency < 0.5 ? 0.5 : frequency);
+
+
+        int numberOfIdeas = (int) Math.ceil(frequency*ideas.size());
+        numberOfIdeas = (numberOfIdeas<1 ? 1 : numberOfIdeas  );*/
+
+        int numberOfIdeas = 0;
+
+        for(Idea i: ideas){
+            double f = model.estimateNumberOfIncrementsForIdeaToReachScore(i,goalScore,timeRange);
+            //System.out.println( i + " - " + f );
+            numberOfIdeas += Math.round(f);
+        }
+
+        return (numberOfIdeas< 1 ? 1 : numberOfIdeas);
+
     }
 
     public ActivationInformation getActivation(Map<Long,Integer> regionToFrequency, StudySession sp, Date finishDate){
         long currentTime = System.currentTimeMillis();
         long workingTime = finishDate.getTime() - currentTime;
-        int numberOfIdeas = determineNumberOfIdeas(regionToFrequency,sp.getIdeas().size(),workingTime);
+        //int numberOfIdeas = determineNumberOfIdeas(regionToFrequency,sp.getIdeas().size(),workingTime);
+
+        int numberOfIdeas = determineNumberOfIdeas(sp,finishDate.getTime() - System.currentTimeMillis());
+
+        if(numberOfIdeas==-1){
+            return null;
+        }
+
+        //System.out.println(sp.getIdeas().size() + " <-> " + numberOfIdeas );
+
+
 
         StudyPlan plan = findStudyPlan(sp.getStudyPlan());
 
-        double p = 0.25 + 0.75*plan.getIPS();
-        numberOfIdeas = (int) Math.round(p*numberOfIdeas);
+
 
         //System.out.print("According to IPS " + plan.getIPS() + ": ");
         long time = Math.round(plan.getIPS() * workingTime);
         double ips = 1 + (plan.getIPS() * (numberOfIdeas - 1));
         //System.out.println(ips + " ideas every " + ViewNotesController.getOverview(time,"years","months","weeks","days", " hours"," mins"," secs", "0","",""));
 
-        System.out.print("According to MSL " + plan.getMSL() + ": ");
+       // System.out.print("According to MSL " + plan.getMSL() + ": ");
         long msl = Math.round(2*Quizzes.m + ( (long) (plan.getMSL()* ( (long) (workingTime - 2*Quizzes.m))) ) );
         double ideaNumber = plan.getMSL() * numberOfIdeas;
 
         //System.out.println(ideaNumber + " ideas every " + ViewNotesController.getOverview(msl,"years","months","weeks","days", " hours"," mins"," secs", "0","",""));
 
-
-
         double xIdeaNumber = (ideaNumber + ips)/2;
         long xTime = (msl + time)/2;
 
-        //System.out.println("Combined: " + xIdeaNumber + " ideas every " + ViewNotesController.getOverview(xTime,"years","months","weeks","days", " hours"," mins"," secs", "0","",""));
 
-
-        int totalNumberOfIdeas = (int) Math.round(xIdeaNumber);
+        int totalNumberOfIdeas = (int) Math.ceil(xIdeaNumber);
         long sessionTime = xTime;
 
-        List<Idea> ideas = getIdeasForSet(sp,totalNumberOfIdeas);
+        List<Idea> ideas = getIdeasForSet(sp,totalNumberOfIdeas, finishDate.getTime() - System.currentTimeMillis()  );
 
-        return new ActivationInformation(currentTime,currentTime+workingTime,numberOfIdeas/totalNumberOfIdeas,sessionTime,0,totalNumberOfIdeas,ideas.size(),fromIdeas(ideas));
+        //System.out.println(numberOfIdeas + " " + totalNumberOfIdeas);
 
+        int numberOfSessions = (int) Math.ceil( ((double) numberOfIdeas)/ ((double) totalNumberOfIdeas) );
+
+        return new ActivationInformation(currentTime,currentTime+workingTime, numberOfSessions ,sessionTime,0,totalNumberOfIdeas,ideas.size(),fromIdeas(ideas), numberOfIdeas);
 
     }
 
@@ -291,11 +432,11 @@ public class Study {
     public Study(){
         this.studyPlans = new ArrayList<>();
         this.studySessions = new ArrayList<>();
-
-
-
-
     }
+
+
+
+
 
 
 

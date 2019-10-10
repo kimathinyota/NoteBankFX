@@ -70,7 +70,7 @@
                                           <Font name="Inter Light BETA" size="19.0" />
                                        </font>
                                     </Button>
-                                    <ChoiceBox fx:id="timeInterval" styleClass="select-idea" stylesheets="@../../Quiz/quiz.css" />
+                                    <ChoiceBox fx:id="timeInterval" styleClass="select-idea" stylesheets="@../../css/quiz.css" />
                                  </children>
                               </HBox>
                            </center>

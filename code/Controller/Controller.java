@@ -1,9 +1,6 @@
 package Code.Controller;
 
-import Code.Controller.Dialogs.Create.CreateIdeaController;
-import Code.Controller.Dialogs.Create.CreateStudyPlanController;
-import Code.Controller.Dialogs.Create.CreateStudySessionController;
-import Code.Controller.Dialogs.Create.CustomQuizController;
+import Code.Controller.Dialogs.Create.*;
 import Code.Controller.Dialogs.ViewNotes.ViewMode;
 import Code.Controller.Dialogs.ViewNotes.ViewNotesController;
 import Code.Controller.ideas.IdeasPageController;
@@ -47,6 +44,12 @@ public class Controller {
 
     QuizPageController quizPageController;
 
+    public void setCreateNoteController(CreateNoteController createNoteController) {
+        this.createNoteController = createNoteController;
+    }
+
+    CreateNoteController createNoteController;
+
 
     public void createStudySession(){
         createStudySessionController.create();
@@ -56,6 +59,9 @@ public class Controller {
         createStudySessionController.create(plan);
     }
 
+    public void restartStudySession(StudySession session){
+        createStudySessionController.edit(session);
+    }
 
     public void createStudyPlan(){
         createStudyPlanController.create();
@@ -66,6 +72,13 @@ public class Controller {
     }
 
 
+    public void createNote(){
+        createNoteController.create();
+    }
+
+    public void editNote(Note note){
+        createNoteController.edit(note);
+    }
 
 
     public void setCustomQuizController(CustomQuizController customQuizController) {
@@ -201,7 +214,7 @@ public class Controller {
         label.setContentDisplay(ContentDisplay.CENTER);
         label.setWrapText(true);
         label.getStyleClass().add("idea-label");
-        label.getStylesheets().add("/Code/View/Quiz/quiz.css");
+        label.getStylesheets().add("/Code/View/css/quiz.css");
         label.setFont(Font.font("Inter-Semi-Bold",size));
         label.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -214,15 +227,20 @@ public class Controller {
 
 
     public void startQuiz(List<Idea>ideas){
+        if(ideas.isEmpty()){
+            return;
+        }
         switchToPage(Page.QuizPage);
         this.quizPageController.startQuiz(ideas);
     }
 
     public void startSession(List<Idea>ideas, StudySet set){
+        if(ideas.isEmpty()){
+            return;
+        }
         switchToPage(Page.QuizPage);
         this.quizPageController.startSession(ideas,set);
     }
-
 
 
 
