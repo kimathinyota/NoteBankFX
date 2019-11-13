@@ -101,12 +101,12 @@ public class SelectIdeaLists extends SelectWithOptionsLists<Idea> {
 
     public SelectIdeaLists(Note note) {
         this.note = note;
-        init(new HashMap<>(),"FINAL NOTE","NORMAL NOTE", "NON-PROMPT","PROMPT");
+        init(new HashMap<>(),"FINAL NOTE","NORMAL NOTE", "PROMPT","NON-PROMPT");
     }
 
     public SelectIdeaLists(Note note, HashMap<Idea, Pair<Boolean,Boolean>> map) {
         this.note = note;
-        init(map,"FINAL NOTE","NORMAL NOTE", "NON-PROMPT","PROMPT");
+        init(map,"FINAL NOTE","NORMAL NOTE", "PROMPT","NON-PROMPT");
     }
 
 

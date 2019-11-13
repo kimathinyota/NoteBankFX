@@ -130,8 +130,9 @@ public class StudySesionListCell extends ListCell<StudySet> {
 
                     //System.out.println("Generate it bro");
                     //we need to generate the next set
+                    System.out.println("Done baby");
                     scheduleSessions.generateNextStudySet(set);
-                    timer.stop();
+
                 }
 
             }

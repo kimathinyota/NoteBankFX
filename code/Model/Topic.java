@@ -107,6 +107,7 @@ public class Topic implements ObservableObject {
 
 	public Topic copy(){
 		Topic copy = new Topic(this.getName(),this.uniqueID);
+
 		for(Idea i: this.getIdeas()){
 			copy.add(i);
 		}
@@ -114,8 +115,10 @@ public class Topic implements ObservableObject {
 		for(Topic t: this.getSubTopics()){
 			copy.add(t.copy());
 		}
+
 		return copy;
 	}
+
 
 
 	public void removeAllUnassociatedWithNotes(List<Note>notes){
@@ -136,6 +139,24 @@ public class Topic implements ObservableObject {
 
 		}
 		this.subTopics.removeAll(topics);
+	}
+
+
+
+	public boolean isTopicInSubject(Subject subject){
+		for(Idea i: ideas){
+			if(i.isIdeaApartOfSubject(subject)){
+				return true;
+			}
+		}
+		for(Topic t: subTopics){
+			if(t.isTopicInSubject(subject)){
+				return true;
+			}
+		}
+
+		return false;
+
 	}
 
 

@@ -53,7 +53,7 @@ public class CreateIdeaController {
 
         //Will prevent user from entering any incorrect symbol
         this.prompt.textProperty().addListener((obs, oldText, newText) ->{
-            this.prompt.setText(newText.replaceAll("[^a-zA-Z0-9_. ]",""));
+            this.prompt.setText(newText.replaceAll("[^a-zA-Z0-9_.)(? ]",""));
         });
     }
 
@@ -105,12 +105,18 @@ public class CreateIdeaController {
         if(!isEditing){
             Idea idea = model.addIdea(prompt.getText(),this.listView.getItems(),type);
             if(topic!=null){
+                System.out.println("Topic: " + topic + " " + idea);
+                //model.parent(idea).delete(idea);
+               // topic.add(idea);
                 model.move(idea,topic);
+
             }
             controller.displayIdea(idea);
         }else{
             //model.updateIdea(editingIdea.getID())
-            model.updateIdea(editingIdea.getID(),prompt.getText(),getKeyWords(),type);
+            model.updateIdea(editingIdea,prompt.getText(),getKeyWords(),type);
+
+
         }
 
 

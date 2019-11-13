@@ -195,7 +195,7 @@ public class SelectNoteForIdeaLists extends SelectNoteLists  {
 
         super();
         this.idea = idea;
-        init(map,"FINAL NOTE","NORMAL NOTE", "NON-PROMPT","PROMPT");
+        init(map,"FINAL NOTE","NORMAL NOTE", "PROMPT","NON-PROMPT");
 
     }
 

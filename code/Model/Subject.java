@@ -190,7 +190,8 @@ public class Subject implements ObservableObject {
 
         Model model = Model.getInstance();
         if(object instanceof Idea){
-            return model.filterTopicBySubject(this).getAllIdeas().contains(object);
+            return ((Idea) object).isIdeaApartOfSubject(this);
+            //return model.filterTopicBySubject(this).getAllIdeas().contains(object);
         }
 
         return false;

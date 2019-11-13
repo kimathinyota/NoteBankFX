@@ -1,6 +1,7 @@
 package Code.Model;
 
 import Code.View.ObservableObject;
+import javafx.collections.FXCollections;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -132,7 +133,7 @@ public class Idea implements ObservableObject {
 	public List<Note> getNotes(){
 		ArrayList<Note> notes = new ArrayList<Note>();
 		notes.addAll(this.notes.keySet());
-		notes.remove(null);
+		notes.removeAll(Collections.singleton(null));
 		return notes;
 	}
 	
@@ -146,8 +147,7 @@ public class Idea implements ObservableObject {
 			if(this.notes.get(n).booleanValue()==isPrompt)
 				notes.add(n);
 		}
-		//notes.remove(null);
-
+		notes.removeAll(Collections.singleton(null));
 		return notes;
 	}
 
@@ -500,4 +500,38 @@ public class Idea implements ObservableObject {
 	public boolean contains(Object object) {
 		return (object instanceof Note) && (this.getNotes().contains((Note) object) || this.subjectNotes.contains(object) );
 	}
+
+
+	private boolean containsPath(String path){
+
+		for(Note n: notes.keySet()){
+			if(n!=null && n.getPath().toString().equals(path)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsAny(List<String> notes){
+
+		for(String n: notes){
+			if(containsPath(n)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+
+	public boolean isIdeaApartOfSubject(Subject subject){
+
+		return subjectNotes.contains(new SubjectNote(subject)) || containsAny(subject.getNotePaths());
+
+	}
+
+
+
+
 }

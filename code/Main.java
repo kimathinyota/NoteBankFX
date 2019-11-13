@@ -12,6 +12,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
+
         Parent root = FXMLLoader.load(getClass().getResource("View/main-window.fxml"));
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 

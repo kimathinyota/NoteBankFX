@@ -86,8 +86,14 @@ public class StudySet {
 
     public static List<Idea> getIdeas(StudySession session){
 
+        //System.out.println("Ideas: " +  session.getName() );
+
+
         List<Idea> ideas = Study.toIdeas(session.getIdeas());
         Model model = Model.getInstance();
+
+        //System.out.println( ideas);
+
 
 
         for(String subject: session.getSubjects()){
@@ -98,10 +104,21 @@ public class StudySet {
             //System.out.println( sub);
 
             if(sub!=null ){
+
+
+                for(Idea i: model.getRoot().getAllIdeas()){
+                    if(i.isIdeaApartOfSubject(sub)){
+                        ideas.add(i);
+                    }
+                }
+
+
+                /*
                 Topic topic = model.filterTopicBySubject(sub);
                 if(topic!=null){
                     ideas.addAll(topic.getAllIdeas());
                 }
+                */
             }
         }
 

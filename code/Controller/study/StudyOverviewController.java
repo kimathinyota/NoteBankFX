@@ -5,6 +5,7 @@ import Code.Controller.Dialogs.ViewNotes.ViewNotesController;
 import Code.Controller.RefreshInterfaces.RefreshDataController;
 import Code.Controller.RefreshInterfaces.RefreshIdeasController;
 import Code.Controller.RefreshInterfaces.RefreshSubjectsController;
+import Code.Model.Idea;
 import Code.Model.Model;
 import Code.Model.Quizzes;
 import Code.Model.Topic;
@@ -23,9 +24,10 @@ import org.controlsfx.control.PopOver;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
+import java.util.List;
 
 
 public class StudyOverviewController implements RefreshDataController, RefreshSubjectsController, RefreshIdeasController {
@@ -282,16 +284,18 @@ public class StudyOverviewController implements RefreshDataController, RefreshSu
 
     }
 
-    public Topic setupGraph(Date first, Date second, long time){
+    public void setupGraph(Date first, Date second, long time){
 
-        Topic root = (model.isRootSubject() ? null : model.filterTopicByCurrentSubject());
+        //Topic root = (model.isRootSubject() ? null : model.filterTopicByCurrentSubject());
 
-        if( ((second.getTime()-first.getTime())/time) > (150) ){
+        Topic root = model.getRoot();
+
+        if( ((time + second.getTime()-first.getTime())/time) > (150) ){
             Label label = new Label("TOO MANY ENTRIES TO LOAD GRAPH");
             label.setFont(Font.font("Inter", 25));
             label.setTextFill(Color.WHITE);
             graphPane.setCenter(label);
-            return root;
+            return;
         }
 
         graphPane.setCenter(graphScrollPane);
@@ -342,40 +346,59 @@ public class StudyOverviewController implements RefreshDataController, RefreshSu
             if(model.isRootSubject()){
                 tot = model.getStudyDuration(first.getTime(),start);
             }else{
-                tot = model.getStudyDuration(first.getTime(),start,root.getAllIdeas());
+                List<Idea> ideas = new ArrayList<>();
+
+                if(model.isRootSubject()){
+                    ideas.addAll(root.getAllIdeas());
+                }else{
+                    for(Idea i: root.getAllIdeas()){
+                        if(model.isRootSubject() || i.isIdeaApartOfSubject(model.getCurrentSubject())){
+                            ideas.add(i);
+                        }
+                    }
+                }
+
+
+                //tot = model.getStudyDuration(first.getTime(),start,root.getAllIdeas());
+                tot = model.getStudyDuration(first.getTime(),start,ideas);
             }
 
             data.getData().add(new XYChart.Data( start, tot));
         }
 
 
-        studyChart.setPrefWidth(data.getData().size()*150);
+        studyChart.setPrefWidth(data.getData().size()*230);
 
 
         studyChart.getData().add(data);
 
         studyChart.setLegendVisible(false);
 
-        return root;
 
 
     }
 
-    public Topic refreshChart(){
-        return setupGraph(start,end,times[timeInterval.getSelectionModel().getSelectedIndex()]);
+    public void refreshChart(){
+        setupGraph(start,end,times[timeInterval.getSelectionModel().getSelectedIndex()]);
     }
 
     @Override
     public void refreshData() {
 
-        Topic root = refreshChart();
+        refreshChart();
 
         long totalTime;
 
-        if(root==null){
+        if(model.isRootSubject()){
             totalTime = model.getStudyDuration(start.getTime(),end.getTime());
         }else{
-            totalTime = model.getStudyDuration(start.getTime(),end.getTime(),root.getAllIdeas());
+            List<Idea> ideas = new ArrayList<>();
+            for(Idea i: model.getRoot().getAllIdeas()){
+                if(model.isRootSubject() || i.isIdeaApartOfSubject(model.getCurrentSubject())){
+                    ideas.add(i);
+                }
+            }
+            totalTime = model.getStudyDuration(start.getTime(),end.getTime(),ideas);
         }
 
         String overview = ViewNotesController.getDateOverviewName(totalTime,timeToSuffix,2,". ");

@@ -11,12 +11,17 @@ import Code.Controller.components.lists.SelectSubjectLists;
 import Code.Model.*;
 
 
+import com.sun.tools.corba.se.idl.constExpr.Not;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -25,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 import javafx.util.Pair;
 import org.apache.commons.lang3.StringUtils;
 
@@ -141,6 +147,7 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         if( !(n instanceof Book)){
             return 1;
         }
+        //KIMATHI NYOTA
         return ((Book) n).getPages().size();
     }
 
@@ -207,7 +214,7 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         if(!(note instanceof Book))
             return FXCollections.observableArrayList(1);
 
-
+        //KIMATHI NYOTA
         return ((Book) note).getPages();
     }
 
@@ -216,7 +223,6 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         this.selectedToggle.setSelected(true);
 
         this.notesSelected.put(note,getAllPageIndexes(note));
-
         this.selectedPages.setText( Book.displayName(getAllPages(note)) );
         this.selectedPages.selectEnd();
         this.selectedPages.setDisable(false);
@@ -254,6 +260,7 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
             if(!this.notesSelected.get(note).isEmpty()){
                 if(note instanceof Book){
                     try{
+                        //KIMATHI NYOTA
                         Book book = new Book( note.getPath().toString(), Book.getPageRanges(getPages(note,this.notesSelected.get(note))));
                         copy.add(book);
                     }catch (IOException e){
@@ -269,15 +276,23 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
     }
 
 
+
+
     public void displayNotes(List<Note>notes, ViewMode mode){
         if(!(mode.equals(ViewMode.ViewFull) || mode.equals(ViewMode.ViewLimited  ))){
             return;
         }
 
         this.displayIdea = null;
+        viewNotes.setVisible(true);
         this.tabPane.getTabs().clear();
         this.tabPane.getTabs().addAll(   (mode.equals(ViewMode.ViewFull) ?  viewFullConfiguration : viewLimitedConfiguration) );
+
+
+
         show(notes,mode);
+
+
     }
 
 
@@ -287,9 +302,11 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
 
     public void displayAndSelectNotes(List<Note>notes, ListView<Note> externalSelectedNotesList, Idea idea){
+        viewNotes.setVisible(true);
         this.externalSelectedNotesList = externalSelectedNotesList;
         this.tabPane.getTabs().clear();
         this.tabPane.getTabs().addAll(selectLimitedConfiguration);
+
         this.displayIdea = idea;
         show(notes,ViewMode.SelectWithListView);
     }
@@ -300,12 +317,20 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
     private ObservableList<Tab> selectLimitedConfiguration;
 
     public void displayAndSelectNotes(List<Note>notes){
+        viewNotes.setVisible(true);
         this.tabPane.getTabs().clear();
         this.tabPane.getTabs().addAll(selectLimitedConfiguration);
         show(notes,ViewMode.Select);
     }
 
     public List<Note> finish(){
+
+        if(loadPage!=null)  loadPage.cancel();
+        if(loadAllPages!=null) loadAllPages.cancel();
+
+        displayVerbatim(loadingGIF);
+
+        notes.forEach( note -> {if(note instanceof Book) ((Book) note).stopViewing();});
 
         viewNotes.setVisible(false);
 
@@ -342,27 +367,23 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         tabPane.getSelectionModel().select(viewTab);
 
 
-
         if(notes==null || notes.isEmpty() ){
             return;
         }
 
+
         this.notesSelected = new HashMap<>();
-        refreshIdeas();
-        refreshSubjects();
 
 
-        for(Note note: notes){
-            this.notesSelected.put(note,new ArrayList<>());
-        }
 
         this.notes = notes;
 
 
         currentNoteIndex = -1;
+
+
         nextNote();
 
-        viewNotes.setVisible(true);
 
     }
 
@@ -522,7 +543,7 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
     }
 
-    private int getTotalPages(Note note){
+    private Integer getTotalPages(Note note){
         if(!(note instanceof Book)){
             return 1;
         }
@@ -536,7 +557,9 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
             this.noteName.setText(note.getName());
             this.noteSize.setText((attr.size() / (Math.pow(10, 3))) + "Kbs");
 
-            this.noteTypeInfo.setText(note.getType() + "  Pages: " + Book.displayName(getAllPages(note)) + "  Total Pages: " + getTotalPages(note));
+
+            Integer totalNumberOfPages = getTotalPages(note);
+            this.noteTypeInfo.setText(note.getType() + "  Pages: " + Book.displayName(getAllPages(note)) +  (totalNumberOfPages!=null ? "  Total Pages: " + totalNumberOfPages : "")     );
 
             setTime(this.createdOverview, this.createdFull, attr.creationTime().toMillis());
             setTime(this.modifiedOverview, this.modifiedFull, attr.lastModifiedTime().toMillis());
@@ -560,26 +583,106 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
     private void setupNote(Note note){
 
-        this.noteTitle.setText( note.getType() + ": " + note.getName());
 
-        subjectLists = new SelectSubjectLists(note,model.getSubjects(note));
-        ideasLists = new SelectIdeaLists(note, convertToIdeaMap(note));
-        refreshIdeas();
-        refreshSubjects();
-        subjectPane.setCenter(subjectLists);
-        ideaPane.setCenter(ideasLists);
-        setDetails(note);
-        this.totalPages.setText(getNumberOfPageIndexes(note) + "");
-        this.totalPages.setDisable(true);
+
+            subjectLists = new SelectSubjectLists(note,model.getSubjects(note));
+            ideasLists = new SelectIdeaLists(note, convertToIdeaMap(note));
+            refreshIdeas();
+            refreshSubjects();
+            subjectPane.setCenter(subjectLists);
+            ideaPane.setCenter(ideasLists);
+            setDetails(note);
+            totalPages.setText(getNumberOfPageIndexes(note) + "");
+            totalPages.setDisable(true);
+
+
+
+
+
+
+
     }
 
     public void nextNote(){
         if(notes==null) return;
-        currentNoteIndex = (currentNoteIndex + 1) % this.notes.size();
+
+        currentNoteIndex = (currentNoteIndex + 1) % notes.size();
         currentPageIndex = -1;
-        nextPage();
-        setupNote(notes.get(currentNoteIndex));
+
+        Note note = notes.get(currentNoteIndex);
+
+        organiseNote(note);
+
     }
+
+
+    Book lastBook;
+
+
+    private void organiseNote(Note note){
+        this.noteTitle.setText( note.getType() + ": " + note.getName());
+
+        disableNavButtons(true);
+
+        Task<String> task = new Task<String>() {
+            @Override
+            protected String call() throws Exception {
+                if(note instanceof Book ){
+
+                    try{
+                        Book book = ((Book) note);
+
+                        boolean isSetUp = book.isSetUpForViewing();
+
+                        if(!isSetUp){
+                            Integer numberOfPages = model.getNumberOfPages(book);
+                            if(numberOfPages!=null){
+                                book.setSpecifyPages(numberOfPages);
+                                // System.out.println("BOOOBOOIES");
+                            }else{
+                                //System.out.println("setup");
+                                book.setupForViewing();
+                                model.addNumberOfPages(book,book.getMaximumNumberOfPages());
+
+
+                            }
+                        }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+
+                }
+                return null;
+            }
+        };
+
+
+        task.setOnSucceeded( event -> {
+            nextPage();
+            setupNote(note);
+            disableTabs(false,false,false,false);
+        });
+
+        task.setOnRunning( event -> {
+            displayVerbatim(loadingGIF);
+            disableNavButtons(true);
+            disableTabs(false,true,true,true);
+        });
+
+        executeTask(task);
+    }
+
+
+    private void disableTabs(boolean view, boolean ideas, boolean subject,  boolean details){
+        this.ideasTab.setDisable(ideas);
+        this.subjectTab.setDisable(subject);
+        this.detailsTab.setDisable(details);
+        this.viewTab.setDisable(view);
+    }
+
+
 
     public void previousNote(){
         if(notes==null) return;
@@ -587,11 +690,12 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         currentNoteIndex = (currentNoteIndex==-1 ? 0 : (currentNoteIndex - 1) % this.notes.size());
         currentNoteIndex = (currentNoteIndex < 0 ? (currentNoteIndex + this.notes.size() ) : currentNoteIndex   );
 
-        this.currentPage.setText((currentPageIndex + 1) + "");
+        ///this.currentPage.setText((currentPageIndex + 1) + "");
         currentPageIndex = -1;
-        previousPage();
 
-        setupNote(notes.get(currentNoteIndex));
+
+        Note note = notes.get(currentNoteIndex);
+        organiseNote(note);
 
     }
 
@@ -599,6 +703,10 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
 
         List<java.lang.Integer> pages = this.notesSelected.get(note);
+        if(pages==null){
+            pages = new ArrayList<>();
+            this.notesSelected.put(note,pages);
+        }
         if(!pages.contains(pageIndex)){
             pages.add(pageIndex);
         }
@@ -606,6 +714,7 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         this.selectedPages.setDisable(false);
 
 
+        //KIMATHI NYOTA
         this.selectedPages.setText((!pages.isEmpty() ? Book.displayName(getPages(note,pages)) : "NONE"));
 
     }
@@ -626,6 +735,7 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         List<java.lang.Integer> pages = this.notesSelected.get(note);
         this.notesSelected.get(note).remove(new java.lang.Integer(pageIndex));
         this.selectedToggle.setSelected(false);
+        //KIMATHI NYOTA
         this.selectedPages.setText((!this.notesSelected.get(note).isEmpty() ? Book.displayName(getPages(note,this.notesSelected.get(note))) : "NONE") );
         this.selectedPages.selectEnd();
         this.selectedPages.setDisable(false);
@@ -633,12 +743,14 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
     private void setSelectPage(int pageIndex, Note note){
         List<java.lang.Integer> pages = this.notesSelected.get(note);
-        this.selectedToggle.setSelected(pages.contains(pageIndex));
 
+        this.selectedToggle.setSelected(pages!=null && pages.contains(pageIndex));
+
+        //KIMATHI NYOTA
         if(mode.equals(ViewMode.ViewLimited) || mode.equals(ViewMode.ViewFull)){
             this.selectedPages.setText(Book.displayName(getAllPages(note)));
         }else{
-            this.selectedPages.setText( (!pages.isEmpty() ? Book.displayName(getPages(note,pages)) : "NONE") );
+            this.selectedPages.setText( (pages!=null && !pages.isEmpty() ? Book.displayName(getPages(note,pages)) : "NONE") );
         }
 
         this.selectedPages.selectEnd();
@@ -657,6 +769,7 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
         this.currentPage.setText(java.lang.Integer.toString(currentPageIndex+1));
         this.setSelectPage(currentPageIndex,currentNote);
+
         try{
             display(currentNote,currentPageIndex);
         }catch (IOException e){
@@ -669,6 +782,7 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         if(notes==null) return;
         Note currentNote = notes.get(currentNoteIndex);
         setPage((currentPageIndex + 1));
+
     }
 
     public void previousPage(){
@@ -687,16 +801,12 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         controller.setViewNotesController(this);
 
 
-
         this.loadingGIF = new Image(getClass().getResourceAsStream("/Code/View/Icons/loading.gif"));
-
 
 
 
         imageHolder.minWidthProperty().bind(Bindings.createDoubleBinding(() ->
                 imageScroll.getViewportBounds().getWidth(), imageScroll.viewportBoundsProperty()));
-
-
 
 
         notes = null;
@@ -723,6 +833,28 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
             }
         });
 
+
+        /*
+        currentPage.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!=null && !newValue.isEmpty() && StringUtils.isNumeric(currentPage.getText())){
+                setPage(java.lang.Integer.parseInt(currentPage.getText()) - 1);
+            }else if(newValue!=null){
+                currentPage.setText((currentPageIndex+1) + "");
+            }
+        });
+        */
+
+
+
+        viewNotes.visibleProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!=null && newValue.equals(false) && !newValue.equals(oldValue)){
+                //loadAllPages.cancel();
+                //loadPage.cancel();
+            }
+        });
+
+
+
     }
 
 
@@ -747,37 +879,132 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         if(!(n instanceof Book)){
             return pages;
         }
+        //KIMATHI NYOTA
         List<java.lang.Integer> lst = new ArrayList<>();
         for(java.lang.Integer i: pages){
+            //KIMATHI NYOTA
             lst.add( ((Book) n).getPages().get(i) );
         }
         return lst;
     }
 
+
+    Task<Image>  loadPage;
+
+    Task<String> loadAllPages;
+
+
+    private void loadPages(Book book, int index){
+
+        if(loadAllPages!=null){
+            loadAllPages.cancel();
+        }
+
+        int start1 = (index - 1) % book.getPages().size();
+        int start = (start1 < 0 ? start1 + book.getPages().size() : start1);
+        int end = (index + 1) % book.getPages().size();
+
+        System.out.println("Loading pages: " +  start + " - " + end);
+
+        loadAllPages = new Task<String>() {
+            @Override
+            protected String call() throws Exception {
+                try{
+                    book.loadImages(start,end);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+
+        loadAllPages.setOnSucceeded(event -> {
+            book.onlyKeepPages(start,end);
+        });
+
+
+        loadAllPages.setOnCancelled(event -> {
+            book.onlyKeepPages(start,end);
+
+        });
+
+
+        Controller.executeTask(loadAllPages);
+
+
+    }
+
+
     private void display(Note note, java.lang.Integer bookIndex) throws IOException {
 
+
         if(note instanceof Book){
-            List<java.lang.Integer> pages = ((Book) note).getPages();
-            if(!(bookIndex.intValue()<pages.size())){
-                return;
+
+            List<Integer> pages = ((Book) note).getPages();
+            int page = pages.get(bookIndex.intValue()) - 1;
+            Book book = (Book) note;
+/*
+
+            loadPages((Book) note,bookIndex.intValue());
+
+
+
+            if(loadPage!=null){
+                loadPage.cancel();
             }
 
-            int page = pages.get(bookIndex.intValue())-1;
+            loadPage = new Task<Image>() {
+                @Override
+                protected Image call() throws Exception {
+                    //will wait until page is loaded in memory before returning the page
+                    try{
+                        while(!book.isLoaded(page));
+                        return SwingFXUtils.toFXImage(((Book) book).loadPage(page), null);
+                    }catch (Exception e){
+                        e.printStackTrace();;
+                    }
+
+                    return loadingGIF;
+
+                }
+            };
+
+            loadPage.setOnRunning(event -> {
+                if(bookIndex.intValue()==currentPageIndex){
+                    displayVerbatim(loadingGIF);
+                }
+            });
+
+            loadPage.setOnSucceeded(event -> {
+                if(bookIndex.intValue()==currentPageIndex){
+                    displayImage(loadPage.getValue(),true);
+                }
+            });
+
+            Controller.executeTask(loadPage);
+*/
 
 
-            LoadBookPageTask task = new LoadBookPageTask((Book) note, page);
+            //loadPages((Book) note,bookIndex.intValue());
 
-            task.setOnRunning( (running) -> {
-                displayImage(loadingGIF,false);
+
+            LoadBookPageTask pageTask = new LoadBookPageTask(book,page);
+
+            pageTask.setOnRunning(event -> {
+                displayVerbatim(loadingGIF);
                 disableNavButtons(true);
             });
 
-            task.setOnSucceeded( (succeeded) -> {
-                displayImage(task.getValue(),true);
+            pageTask.setOnSucceeded( event -> {
+                displayImage(pageTask.getValue(),true);
                 disableNavButtons(false);
             });
 
-            executeTask(task);
+
+            Controller.executeTask(pageTask);
+
+
+            return;
 
 
         }else if(note instanceof Code.Model.Image){
@@ -785,8 +1012,10 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
             LoadImagePageTask task = new LoadImagePageTask((Code.Model.Image) note);
 
             task.setOnRunning( (running) -> {
-                displayImage(loadingGIF,false);
+                //displayImage(loadingGIF,false);
+                displayVerbatim(loadingGIF);
                 disableNavButtons(true);
+
             });
 
             task.setOnSucceeded( (succeeded) -> {
@@ -801,7 +1030,8 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
             LoadTextPageTask task = new LoadTextPageTask((Code.Model.Text) note);
 
             task.setOnRunning( (running) -> {
-                displayImage(loadingGIF,false);
+                //displayImage(loadingGIF,false);
+                displayVerbatim(loadingGIF);
                 disableNavButtons(true);
 
             });
@@ -843,6 +1073,13 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
         this.TextPane.setVisible(false);
     }
 
+    private void displayVerbatim(Image image){
+        displayImage(image,false);
+        imageView.setFitHeight(300);
+        imageView.setFitWidth(300);
+
+    }
+
     @Override
     public void refreshIdeas() {
         if(ideasLists==null) return;
@@ -851,10 +1088,12 @@ public class ViewNotesController implements RefreshSubjectsController, RefreshId
 
     @Override
     public void refreshSubjects() {
+
         if(subjectLists==null) return;
         List<Subject> subjects = FXCollections.observableArrayList(model.getAllSubjects());
         subjects.remove(model.getSubject("All"));
         subjectLists.setFirstList(subjects);
+
     }
 
 

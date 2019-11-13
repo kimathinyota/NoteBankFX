@@ -98,9 +98,15 @@ public class CustomQuizController{
         for(ObservableObject o: ideasLists.getSecondList()){
             if(o instanceof Idea && !ideas.contains((Idea) o) ){
                 ideas.add((Idea) o);
-            }else if(o instanceof Topic && !ideas.contains((Topic) o)){
+            }else if(o instanceof Topic ){
                 for(Idea i: ((Topic) o).getAllIdeas()){
                     if(!ideas.contains(i)){
+                        ideas.add(i);
+                    }
+                }
+            }else if( o instanceof Subject){
+                for(Idea i: model.getRoot().getAllIdeas()){
+                    if(!ideas.contains(i) && i.isIdeaApartOfSubject((Subject) o)){
                         ideas.add(i);
                     }
                 }
@@ -150,6 +156,9 @@ public class CustomQuizController{
         List<ObservableObject> list = new ArrayList<>();
         list.addAll(model.getAllIdeas());
         list.addAll(model.getAllTopics());
+        list.addAll(model.getAllSubjects());
+
+        /*
 
         List<Subject> subjects = model.getAllSubjects();
         for(Subject s: subjects){
@@ -167,6 +176,8 @@ public class CustomQuizController{
                 list.add(t);
             }
         }
+
+        */
 
         this.ideasLists.setFirstList(list);
         this.ideaLimit.setMax(list.size());

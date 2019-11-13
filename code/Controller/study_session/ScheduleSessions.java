@@ -51,6 +51,9 @@ public class ScheduleSessions implements RefreshSubjectsController, RefreshIdeas
         //check if set has been completed (and so should be removed)
         if(set.isBonus() && areAllIdeasGreaterThanReadinessScore(set.getSession())){
 
+            set.getSession().getActivation().setRemainingIdeasList(new ArrayList<>());
+            set.getSession().getActivation().setStartingIdeasNumber(0);
+
             listView.getItems().remove(set);
             listView.refresh();
 
@@ -83,7 +86,7 @@ public class ScheduleSessions implements RefreshSubjectsController, RefreshIdeas
         }
         //set can now be regenerated
 
-        //increment session index to represent addition of new set
+        //increment session index to represent additFion of new set
         set.getSession().getActivation().setCurrentSesionIndex(set.getSession().getActivation().getCurrentSesionIndex() + 1);
 
 
@@ -104,7 +107,7 @@ public class ScheduleSessions implements RefreshSubjectsController, RefreshIdeas
             //it shouldn;t ever be zero but im not 100% sure
             if(total==0){
                 total = 1;
-                new Exception("WHY IS IT ZERO").printStackTrace();
+                //generateNextStudySet(set);
             }
 
             remainingIdeasLeftToStudy.addAll(Study.getIdeasForSet(set.getSession(), total , set.getSession().getActivation().getTimeEnd() - System.currentTimeMillis()));
@@ -113,7 +116,12 @@ public class ScheduleSessions implements RefreshSubjectsController, RefreshIdeas
 
             int extraIdeas = Study.determineNumberOfIdeas(set.getSession(),set.getSession().getActivation().getTimeEnd() - System.currentTimeMillis());
             System.out.println(set.getSession().getName() + " " + extraIdeas);
-            remainingIdeasLeftToStudy.addAll(Study.getIdeasForSet(set.getSession(), extraIdeas, set.getSession().getActivation().getTimeEnd() - System.currentTimeMillis()));
+
+            if(extraIdeas>0){
+                remainingIdeasLeftToStudy.addAll(Study.getIdeasForSet(set.getSession(), extraIdeas, set.getSession().getActivation().getTimeEnd() - System.currentTimeMillis()));
+            }
+
+
         }
 
 
@@ -225,8 +233,6 @@ public class ScheduleSessions implements RefreshSubjectsController, RefreshIdeas
 
     private StudySet reactivate(StudySession session){
 
-        System.out.println(session.getName() + " brapbrap");
-
         long currentTime = System.currentTimeMillis();
         //check if session has already expired
         if(currentTime > session.getEndDate()){
@@ -256,13 +262,18 @@ public class ScheduleSessions implements RefreshSubjectsController, RefreshIdeas
             //if <= 24 hours before end of session, session will be activated from now until then, else just use end of working date
             Date finalDate = ( ( (session.getEndDate() - currentTime) <= Quizzes.d ) ? new Date(session.getEndDate()) : endWorkingDate);
 
-            session.reactivate(model.getActivation(session,finalDate));
+            ActivationInformation activation = model.getActivation(session,finalDate);
+            if(activation==null){
+                return null;
+            }
+            session.reactivate(activation);
 
         }
 
         if(currentTime > session.getActivation().getTimeEnd()){
             //study session activation has expired so lets reset it
             session.reactivate(null);
+            return null;
         }
 
         //by this point session is activated and within the activation date windows
@@ -277,9 +288,21 @@ public class ScheduleSessions implements RefreshSubjectsController, RefreshIdeas
             return null;
         }
 
+
+
+
         boolean shouldRemove = removeIfDone(set);
 
-        return (shouldRemove ? null : set) ;
+        if(shouldRemove){
+            return null;
+        }
+
+
+        if(set.getIdeas().isEmpty() && set.isBonus()){
+            generateNextStudySet(set);
+        }
+
+        return set ;
 
     }
 
@@ -459,10 +482,16 @@ public class ScheduleSessions implements RefreshSubjectsController, RefreshIdeas
     public void studied(StudySet set, List<Idea> ideas){
         //called when quiz has been run on idea
         set.removeIdeas(ideas);
+
+        model.saveStudy();
+
+        listView.refresh();
+
+        System.out.println(set.getIdeas());
+
         if(set.getIdeas().isEmpty()){
             generateNextStudySet(set);
         }
-        listView.refresh();
     }
 
 
@@ -504,7 +533,7 @@ public class ScheduleSessions implements RefreshSubjectsController, RefreshIdeas
 
         @Override
     public void refreshSubjects() {
-       // initialise(listView);
+       initialise(listView);
     }
 
 }

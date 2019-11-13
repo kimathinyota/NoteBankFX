@@ -7,10 +7,13 @@ import Code.Controller.RefreshInterfaces.RefreshSubjectsController;
 import Code.Model.*;
 import Code.View.ObservableObject;
 import Code.View.View;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -28,7 +31,7 @@ public class IdeaOverviewController implements RefreshSubjectsController, Refres
     Model model;
     Controller controller;
 
-    public TreeItem<ObservableObject> getRoot(Topic topic){
+    public static TreeItem<ObservableObject> getRoot(Topic topic){
         TreeItem<ObservableObject> t = new TreeItem<>(topic);
         for(Idea i: topic.getIdeas()){
             t.getChildren().add(new TreeItem<>(i));
@@ -39,12 +42,62 @@ public class IdeaOverviewController implements RefreshSubjectsController, Refres
         return t;
     }
 
+
+
+
+
+    public static TreeItem<ObservableObject> getFilteredRoot(Topic topic, Subject subject){
+
+        TreeItem<ObservableObject> t;
+
+        boolean isRoot = Model.getInstance().isRootSubject() ;
+
+        if(Model.getInstance().getRoot().equals(topic)){
+            //this is the root
+            Topic subjectTopic = new Topic(subject.getName(),topic.getID());
+            t = new TreeItem<>(subjectTopic);
+        }else{
+            t = new TreeItem<>(topic);
+        }
+
+
+        for(Idea i: topic.getIdeas()){
+            if(isRoot || i.isIdeaApartOfSubject(subject)){
+                t.getChildren().add(new TreeItem<>(i));
+            }
+
+        }
+
+
+        for(Topic c: topic.getSubTopics()){
+            if(isRoot || c.isTopicInSubject(subject)){
+                t.getChildren().add(getFilteredRoot(c,subject));
+            }
+        }
+
+
+        return t;
+
+    }
+
+
+
+
+
+    Image loadingGIF;
+    ImageView loading;
+
     public void initialize(){
 
         this.model = Model.getInstance();
         model.addRefreshSubjectsController(this);
         model.addRefreshIdeasController(this);
         this.controller = Controller.getInstance();
+
+        this.loadingGIF = new Image(getClass().getResourceAsStream("/Code/View/Icons/loading.gif"));
+
+        this.loading = new ImageView(loadingGIF);
+
 
         treeView = new TreeView<>();
         treeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -102,14 +155,46 @@ public class IdeaOverviewController implements RefreshSubjectsController, Refres
 
     }
 
+
+
     TreeRightClickMenu menu;
 
     @Override
     public void refreshSubjects() {
-        Topic root = model.filterTopicByCurrentSubject().copy();
-        root.setName(model.getCurrentSubject().getName());
-        treeView.setRoot(getRoot(root));
-        treeView.refresh();
+
+        Task<TreeItem<ObservableObject>> task = new Task<TreeItem<ObservableObject>>() {
+            @Override
+            protected TreeItem<ObservableObject> call() throws Exception {
+                /*
+                Topic root = model.filterTopicByCurrentSubject().copy();
+                root.setName(model.getCurrentSubject().getName());
+                return getRoot(root);*/
+
+                try{
+                    return getFilteredRoot(model.getRoot(),model.getCurrentSubject());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                return null;
+
+            }
+        };
+
+        task.setOnRunning(event -> {
+            treeView.setVisible(false);
+        });
+
+        task.setOnSucceeded(event -> {
+            treeView.setRoot(task.getValue());
+            treeView.refresh();
+            window.setCenter(treeView);
+            treeView.setVisible(true);
+        });
+
+        Controller.executeTask(task);
+
+
     }
 
     public void refreshIdeas(){
@@ -134,7 +219,8 @@ class TreeRightClickMenu extends ContextMenu{
             this.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    Model.getInstance().move(selected,topic);
+                    //Model.getInstance().move(selected,topic);
+                    Model.getInstance().move(topic,selected);
                 }
             });
         }
@@ -143,14 +229,16 @@ class TreeRightClickMenu extends ContextMenu{
     public void refreshIdeas(List<TreeItem<ObservableObject>> items) {
         if(menu==null) return;
         menu.getItems().clear();
-        Topic topic = Model.getInstance().filterTopicByCurrentSubject().copy();
-        topic.setName(Model.getInstance().getCurrentSubject().getName());
+        //Topic topic = Model.getInstance().filterTopicByCurrentSubject().copy();
+        //topic.setName(Model.getInstance().getCurrentSubject().getName());
         List<Object> selectedIdeasOrTopics = getObjects(items);
 
         List<Topic> movableTopics = Model.getInstance().findMovableTopics(selectedIdeasOrTopics);
+        /*
         if(!items.isEmpty() && items.get(0).getParent()!=null){
             movableTopics.remove(items.get(0).getParent().getValue());
-        }
+        }*/
+
         for(Topic t: movableTopics){
             TopicMenu m  =  new TopicMenu(t,selectedIdeasOrTopics);
             menu.getItems().add(m);
@@ -208,6 +296,7 @@ class TreeRightClickMenu extends ContextMenu{
         });
         newItem.getItems().add(newIdea);
         Menu topic = new Menu("Topic");
+        topic.setDisable( items.contains(root) );
         topic.getStyleClass().add("amenu");
 
         BorderPane pane = new BorderPane();
@@ -253,13 +342,10 @@ class TreeRightClickMenu extends ContextMenu{
                     return;
                 }
 
-                Topic top = Model.getInstance().addTopic(topic);
-
-                TreeItem<ObservableObject> topicItem = new TreeItem<>(top);
 
                 if(items.size()==1 && items.get(0).getValue() instanceof Topic){
 
-                    Model.getInstance().move(top, (Topic) items.get(0).getValue());
+                    Model.getInstance().addAndMoveTopicToTopic(topic,(Topic) items.get(0).getValue());
 
                     refreshIdeas(items);
 
@@ -267,13 +353,17 @@ class TreeRightClickMenu extends ContextMenu{
                 }
 
                 if(!items.isEmpty() && shareSameParent(items)){
-                    Model.getInstance().move(top,(Topic) items.get(0).getParent().getValue());
-                    //p.getChildren().add(topicItem);
+
+                    List<Object> children = new ArrayList<>();
+
                     for(TreeItem<ObservableObject> t: items){
                         if(t.getValue() instanceof Idea || t.getValue() instanceof Topic){
-                            Model.getInstance().move(t.getValue(),top);
+                            children.add(t.getValue());
                         }
                     }
+
+
+                    Model.getInstance().addAndMoveIdeasToTopic(children,topic);
 
                     refreshIdeas(items);
                     return;
@@ -281,7 +371,7 @@ class TreeRightClickMenu extends ContextMenu{
                 }
 
                 refreshIdeas(items);
-                root.getChildren().add(topicItem);
+                //root.getChildren().add(topicItem);
 
 
             }
@@ -400,7 +490,7 @@ class TreeRightClickMenu extends ContextMenu{
 
 
         MenuItem removeItem = new MenuItem("Remove");
-        removeItem.setDisable( !(items.size()==1 && !items.contains(root)) );
+        removeItem.setDisable( items.contains(root) );
         this.getItems().add(removeItem);
         removeItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override

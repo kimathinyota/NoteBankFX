@@ -208,8 +208,6 @@ public class LastQuizController {
 
 
 
-
-
     public void showQuiz(Quiz quiz){
         this.ideaFacts.getItems().clear();
         this.quizFacts.getItems().clear();

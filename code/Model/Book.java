@@ -1,6 +1,9 @@
 package Code.Model;
 
+import com.sun.applet2.AppletParameters;
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.io.RandomAccessBufferedFileInputStream;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -12,10 +15,7 @@ import org.w3c.dom.Element;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -29,7 +29,7 @@ public class Book extends Note {
 	/**
 	 * gives total number of pages in PDF file
 	 */
-	private int numberOfPages;
+	private Integer numberOfPages = null;
 
 
 	/**
@@ -45,33 +45,76 @@ public class Book extends Note {
 	 * @return Page as image of type BufferedImage
 	 * @throws IOException 
 	 */
-	
+
+
+	/*volatile*/ LinkedHashMap<Integer,BufferedImage> pageToImage;
+
+
+	private boolean isBetween(int n, int startIndex, int endIndex){
+
+		boolean a =  (startIndex < endIndex && ( n >= startIndex && n <= endIndex)) ||
+				(startIndex > endIndex &&  (n >= startIndex || n <= endIndex) ) ||
+				(startIndex == endIndex && n==startIndex);
+
+		return a;
+
+	}
+
+
+	public void loadImages(int startIndex, int endIndex) throws IOException{
+
+		for(int i=0; i<getPages().size(); i++){
+			if(isBetween(i,startIndex,endIndex)){
+				loadPage(getPages().get(i)-1);
+			}
+		}
+	}
+
+
+	PDDocument document;
+	PDFRenderer pdfRenderer;
+
 	public synchronized BufferedImage loadPage(int pageNumber) throws IOException {
 
-		PDDocument document = PDDocument.load(new File(this.getPath().toString()));
+		List<Integer> keySet = new ArrayList<>(pageToImage.keySet());
+		if(pageToImage.containsKey(pageNumber)){
+			return pageToImage.get(pageNumber);
+		}
 
-		PDFRenderer pdfRenderer = new PDFRenderer(document);
+		if(document==null)
+			document =  PDDocument.load(new File(this.getPath().toString()), MemoryUsageSetting.setupTempFileOnly());
+
+		if(pdfRenderer==null){
+			pdfRenderer = new PDFRenderer(document);
+			pdfRenderer.setSubsamplingAllowed(true);
+		}
+
 		BufferedImage bim = pdfRenderer.renderImageWithDPI(pageNumber, 300, ImageType.RGB);
+		//document.close();
 
-		document.close();
 
 		return bim;
 
 	}
 
+
 	private int getNumberOfPages() throws IOException{
-		PDDocument document = PDDocument.load(new File(this.getPath().toString()));
+
+		if(document==null)
+			document =  PDDocument.load(new File(this.getPath().toString()), MemoryUsageSetting.setupTempFileOnly());
+
+		//PDDocument document = PDDocument.load(new File(this.getPath().toString()));
 		this.numberOfPages = document.getNumberOfPages();
-		document.close();
+		//document.close();
 		return numberOfPages;
 	}
 
 
-	public int getMaximumNumberOfPages(){
+	public Integer getMaximumNumberOfPages(){
 		return numberOfPages;
 	}
 
-	private String getSpecifyPages(int numberOfPages){
+	public static String getSpecifyPages(int numberOfPages){
 		String pages = "";
 		for(int i=1; i<numberOfPages+1; i++){
 			pages += i + ",";
@@ -80,25 +123,48 @@ public class Book extends Note {
 		return pages;
 	}
 
+	String pathToNotesDirectory;
+
 	public Book(String name, String originalFilePath, String pathToNotesDirectory) throws IOException{
 		super(name,originalFilePath,pathToNotesDirectory,NoteType.Book);
-
 		this.numberOfPages = getNumberOfPages();
-
 		this.specifyPages = getSpecifyPages(numberOfPages);
+		pageToImage = new LinkedHashMap<>();
+	}
+
+	public void stopViewing(){
+		pageToImage.clear();
+
+		try{
+			if(document==null)
+				document.close();
+			document=null;
+
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	public /*synchronized*/ boolean isLoaded(int page){
+		return pageToImage.containsKey(page);
+	}
+
+	public void onlyKeepPages(int startIndex, int endIndex){
+		List<Integer> pages = getPages();
+		for(int i=0; i<pages.size(); i++ ){
+			if( !(isBetween(i,startIndex,endIndex)) ) {
+				pageToImage.remove( Integer.valueOf(pages.get(i)-1));
+			}
+		}
 	}
 
 	public Book(String path, String specifyPages) throws IOException{
-
 		super(path,NoteType.Book );
-
 		if(!new File(path).exists()) {
 			throw new IOException();
 		}
-
-		this.numberOfPages = getNumberOfPages();
-
-		this.specifyPages = specifyPages;
+		this.specifyPages = (specifyPages.contains("null") ? null : specifyPages);
+		pageToImage = new LinkedHashMap<>();
 	}
 
 	public Book(String path) throws IOException{
@@ -107,15 +173,45 @@ public class Book extends Note {
 		if(!new File(path).exists()) {
 			throw new IOException();
 		}
-
-		this.numberOfPages = getNumberOfPages();
-
-		this.specifyPages = getSpecifyPages(numberOfPages);
+		this.specifyPages = null;
+		pageToImage = new LinkedHashMap<>();
 	}
+
+	public boolean isSetUpForViewing(){
+		return specifyPages!=null;
+	}
+
+
+
+	public void setSpecifyPages(int numberOfPages){
+		this.numberOfPages = numberOfPages;
+		if(specifyPages==null){
+			this.specifyPages = getSpecifyPages(numberOfPages);
+		}
+	}
+
+
+	public void setupForViewing(){
+		try {
+
+			if(specifyPages==null){
+
+				this.numberOfPages = getNumberOfPages();
+				this.specifyPages = getSpecifyPages(numberOfPages);
+
+			}
+		}catch (IOException e){
+
+		}
+	}
+
+
 
 	public List<Integer> getPages(){
-		return this.getIntegers(this.specifyPages);
+		setupForViewing();
+		return getIntegers( specifyPages  );
 	}
+
 
 	/**
 	 * Converts [1,2,3,5,6,7,8,9] to 1,2,3,5,6,7,8,9
@@ -167,6 +263,7 @@ public class Book extends Note {
 	public static Book fromXML(Element book) throws IOException {
 		String path = ((Element) book.getElementsByTagName("Path").item(0)).getTextContent() ;
 		String pages = ((Element) book.getElementsByTagName("Pages").item(0)).getTextContent() ;
+
 		return new Book(path,pages);
 	}
 	
@@ -177,10 +274,15 @@ public class Book extends Note {
 	 * @return List<Integer> list of integers
 	 */
 	public static List<Integer> getIntegers(String pages){
+
+		if(pages.isEmpty() || pages.contains("null")){
+			return new ArrayList<>();
+		}
 		pages = pages.trim();
 
 		pages = pages.replaceAll("\\(","");
 		pages = pages.replaceAll("\\)","");
+
 
 		List<String> integerList = Arrays.asList(pages.split(","));
 		List<Integer> intList = new ArrayList<Integer>();
@@ -292,15 +394,13 @@ public class Book extends Note {
 
 
 	public String toString() {
-		String ext = displayName(this.specifyPages);
-
-		return ("Book: " + this.getName().replaceAll("-"," ") + " (" +  (ext) + ")");
-
+		String ext = "";
+		if(this.specifyPages!=null){
+			ext = displayName(this.specifyPages);
+			ext = " (" +  (ext) + ")";
+		}
+		return ("Book: " + this.getName().replaceAll("-"," ") + ext);
 	}
-
-
-
-
 
 
 }

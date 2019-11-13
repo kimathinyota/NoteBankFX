@@ -24,6 +24,7 @@ import org.controlsfx.control.PopOver;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class QuizPageController {
 
@@ -233,7 +234,8 @@ public class QuizPageController {
             public void handle(ActionEvent event) {
                 Idea idea = model.getIdea(currentIdea.getID());
                 if(idea!=null){
-                    if(!idea.getNotes().isEmpty()){
+                    if(!idea.getPromptNotes().isEmpty()){
+
                         controller.displayNotes(idea.getPromptNotes(),ViewMode.ViewLimited);
                     }else{
                         View.displayPopUpForTime("Information","No prompt notes have been found ",2,promptNotes,200);
@@ -440,13 +442,13 @@ public class QuizPageController {
     }
 
     private void reset(){
+
         this.quiz = null;
         this.lastIdeaQuiz = null;
         type = null;
         currentIdea = null;
         this.numberOfStarsSelected = 0;
         selectAllStarsUpToIndex(numberOfStarsSelected);
-
     }
 
     private void refreshData(){

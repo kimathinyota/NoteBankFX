@@ -11,6 +11,7 @@ import Code.Controller.home.notes.filters.View;
 import Code.Model.Model;
 import Code.Model.Note;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+
+import java.util.List;
 
 /**
  * NotesPageController
@@ -289,6 +292,24 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
              *  -> Task 3 => loads list z to highlyUsed listview, where z = x - y (set minus) (must follow from Task 2 and Task 1)
              */
 
+/*
+            allNotes.getItems().clear();
+
+            List<Note> notes = model.getNotes(model.getCurrentSubject().getName());
+
+
+            for(Note n: notes){
+                allNotes.getItems().add(n);
+            }
+            */
+
+
+
+
+
+
+
+
             AllNotesListTask task = new AllNotesListTask(filterSettings);
             allNotes.setItems(task.getValue());
 
@@ -337,6 +358,7 @@ public class NotesPageController implements RefreshNotesController, RefreshSubje
             });
 
             Controller.executeTask(task);
+
 
 
 

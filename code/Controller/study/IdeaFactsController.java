@@ -360,8 +360,15 @@ public class IdeaFactsController implements RefreshIdeasController, RefreshSubje
 
 
 
-        List<Idea> ideas = model.filterTopicByCurrentSubject().getAllIdeas();
+        //List<Idea> ideas = model.filterTopicByCurrentSubject().getAllIdeas();
 
+        List<Idea> ideas = new ArrayList<>();
+
+        for(Idea i: model.getRoot().getAllIdeas()){
+            if(model.isRootSubject() || i.isIdeaApartOfSubject(model.getCurrentSubject())){
+                ideas.add(i);
+            }
+        }
 
         for (Idea idea: ideas){
 

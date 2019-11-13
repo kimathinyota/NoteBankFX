@@ -18,6 +18,8 @@ public class UnderusedNotesListTask extends Task<ObservableList<Note>> {
         try{
             ObservableList<Note> allNotesCopy = FXCollections.observableArrayList(allNotes.subList(0,allNotes.size()));
             ObservableList<Note> ret =  FXCollections.observableArrayList(model.getUnderutilisedNotes(filterSettings,allNotesCopy));
+            //ObservableList<Note> ret = allNotesCopy;
+
             return ret;
         }catch (Exception e){
             e.printStackTrace();

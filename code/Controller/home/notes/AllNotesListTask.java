@@ -17,7 +17,9 @@ public class AllNotesListTask extends Task<ObservableList<Note>> {
     protected ObservableList<Note> call() throws Exception {
 
         try {
+
             List<Note> notes = filterSettings.applyFilters(model.getNotes(model.getCurrentSubject().getName() ));
+            //List<Note> notes = model.getNotes(model.getCurrentSubject().getName());
             ObservableList<Note> ret =  FXCollections.observableArrayList(notes);
             return ret;
         }catch (Exception e){

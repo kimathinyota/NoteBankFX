@@ -5,10 +5,7 @@ import Code.Controller.Dialogs.ViewNotes.ViewMode;
 import Code.Controller.DisplayString;
 import Code.Controller.RefreshInterfaces.RefreshIdeasController;
 import Code.Controller.RefreshInterfaces.RefreshSubjectsController;
-import Code.Model.Idea;
-import Code.Model.Model;
-import Code.Model.Note;
-import Code.Model.Topic;
+import Code.Model.*;
 import Code.View.*;
 import Code.View.components.MindMap.MindMapCell;
 import Code.View.components.MindMap.MindMapFactory;
@@ -21,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Line;
@@ -193,13 +191,17 @@ public class MindMapController implements RefreshIdeasController, RefreshSubject
                                 try{
                                     if(cell.getItem() instanceof Topic){
                                         Topic parent = Model.getInstance().parent((Topic) cell.getItem());
+                                        /*
                                         if(parent!=null){
                                             parent = parent.copy();
                                         }
                                         MindMapRecursive recursive = fromTopic((Topic) cell.getItem(),parent);
+                                        */
+                                        MindMapRecursive recursive = fromFilteredTopic((Topic) cell.getItem(),parent,Model.getInstance().getCurrentSubject());
                                         return recursive;
                                     }else if(cell.getItem() instanceof Idea){
                                         Topic parent = Model.getInstance().parent((Idea) cell.getItem());
+                                        //MindMapRecursive recursive = fromIdea((Idea) cell.getItem(),parent);
                                         MindMapRecursive recursive = fromIdea((Idea) cell.getItem(),parent);
                                         return recursive;
                                     }
@@ -435,6 +437,9 @@ public class MindMapController implements RefreshIdeasController, RefreshSubject
         return fromTopic(topic,null);
     }
 
+
+
+
     public  MindMapRecursive fromTopic(Topic topic, Topic parent ){
 
         MindMapRecursive recursive = new MindMapRecursive(topic,getTopicFactory("mind-map-topic","mind-map-idea","mind-map-idea-line", "mind-map-topic-line","mind-map-parent","mind-map-line-parent",parent));
@@ -462,6 +467,70 @@ public class MindMapController implements RefreshIdeasController, RefreshSubject
         return recursive;
     }
 
+
+    public  MindMapRecursive fromFilteredTopic(Topic topic, Topic parent, Subject subject){
+
+
+        MindMapRecursive recursive;
+
+        if(model.getRoot().equals(topic)){
+            //this is the root
+            Topic subjectTopic = new Topic(subject.getName(),topic.getID());
+            recursive = new MindMapRecursive(subjectTopic,getTopicFactory("mind-map-topic","mind-map-idea","mind-map-idea-line", "mind-map-topic-line","mind-map-parent","mind-map-line-parent",parent));
+        }else{
+            recursive = new MindMapRecursive(topic,getTopicFactory("mind-map-topic","mind-map-idea","mind-map-idea-line", "mind-map-topic-line","mind-map-parent","mind-map-line-parent",parent));
+        }
+
+        boolean isRoot = Model.getInstance().isRootSubject() ;
+
+
+        if(parent!=null){
+            recursive.addItem(new MindMapRecursive(parent,getTopicFactory("mind-map-topic","mind-map-idea","mind-map-idea-line", "mind-map-topic-line","mind-map-parent","mind-map-line-parent",parent)));
+        }
+
+        List<ObservableObject> ideasTopics = new ArrayList<>();
+
+
+        for(Idea i: topic.getIdeas()){
+            if(isRoot || i.isIdeaApartOfSubject(subject)){
+                ideasTopics.add(i);
+            }
+
+        }
+
+
+        for(Topic c: topic.getSubTopics()){
+            if(isRoot || c.isTopicInSubject(subject)){
+                ideasTopics.add(c);
+            }
+        }
+
+
+        ideasTopics.sort(new Comparator<ObservableObject>() {
+            @Override
+            public int compare(ObservableObject o1, ObservableObject o2) {
+                return ((Integer) o1.getMindMapName().length()).compareTo(o2.getMindMapName().length());
+            }
+        });
+
+
+        for(ObservableObject o: ideasTopics){
+            recursive.addItem(new MindMapRecursive(o,getTopicFactory("mind-map-topic","mind-map-idea","mind-map-idea-line", "mind-map-topic-line","mind-map-parent","mind-map-line-parent",parent)));
+        }
+
+        return recursive;
+
+    }
+
+
+    public  MindMapRecursive fromFilteredTopic(Topic topic, Subject subject ){
+
+        return fromFilteredTopic(topic,null,subject);
+    }
+
+
+
+
     @Override
     public void refreshSubjects() {
 
@@ -471,9 +540,13 @@ public class MindMapController implements RefreshIdeasController, RefreshSubject
             protected MindMapRecursive call() throws Exception {
 
                 try{
+                    /*
                     Topic root = Model.getInstance().filterTopicByCurrentSubject();
                     root.setName(model.getCurrentSubject().getName());
                     MindMapRecursive map = fromTopic(root);
+*/
+
+                    MindMapRecursive map = fromFilteredTopic(model.getRoot(),model.getCurrentSubject());
                     return map;
                 }catch (Exception e){
                     e.printStackTrace();

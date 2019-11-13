@@ -263,11 +263,15 @@ public class Study {
 
     public static int determineNumberOfIdeas(StudySession sp, long timeRange){
 
+        System.out.println("For " + sp.getName());
         Model model = Model.getInstance();
         StudyPlan plan = model.findPlan(sp.getStudyPlan());
         double goalScore = model.getReadinessScore() * plan.getScorePercentage();
+        System.out.println("GS: " + goalScore);
 
         List<Idea> ideas = StudySet.getIdeas(sp);
+
+        System.out.println( "Ideas: " + ideas + " " + ideas.size());
 
         if(ideas.isEmpty()){
             return -1;
@@ -298,15 +302,18 @@ public class Study {
         int numberOfIdeas = (int) Math.ceil(frequency*ideas.size());
         numberOfIdeas = (numberOfIdeas<1 ? 1 : numberOfIdeas  );*/
 
-        int numberOfIdeas = 0;
+        double numberOfIdeas = 0;
 
         for(Idea i: ideas){
             double f = model.estimateNumberOfIncrementsForIdeaToReachScore(i,goalScore,timeRange);
+            System.out.println("For: " + i + " is " + f);
             //System.out.println( i + " - " + f );
-            numberOfIdeas += Math.round(f);
+            numberOfIdeas += f;
         }
 
-        return (numberOfIdeas< 1 ? 1 : numberOfIdeas);
+        //return (numberOfIdeas< 1 ? 1 : numberOfIdeas);
+
+        return (int) Math.ceil(numberOfIdeas);
 
     }
 
@@ -317,9 +324,11 @@ public class Study {
 
         int numberOfIdeas = determineNumberOfIdeas(sp,finishDate.getTime() - System.currentTimeMillis());
 
-        if(numberOfIdeas==-1){
+        if(numberOfIdeas<=0){
             return null;
         }
+
+
 
         //System.out.println(sp.getIdeas().size() + " <-> " + numberOfIdeas );
 
@@ -351,7 +360,8 @@ public class Study {
 
         //System.out.println(numberOfIdeas + " " + totalNumberOfIdeas);
 
-        int numberOfSessions = (int) Math.ceil( ((double) numberOfIdeas)/ ((double) totalNumberOfIdeas) );
+        int numberOfSessions = (int) Math.ceil( ((double) workingTime)/ ((double) sessionTime) );
+        //numberOfSessions = numberOfSessions +
 
         return new ActivationInformation(currentTime,currentTime+workingTime, numberOfSessions ,sessionTime,0,totalNumberOfIdeas,ideas.size(),fromIdeas(ideas), numberOfIdeas);
 

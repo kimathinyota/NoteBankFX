@@ -149,6 +149,7 @@ public class Controller {
 
     public void displayNotes(List<Note>notes, ViewMode mode){
         this.viewNotesController.displayNotes(notes, mode);
+
     }
 
     public void displayAndSelectNotes(List<Note>notes, ListView<Note> listForAddingSelectedNotes, Idea idea){
@@ -160,6 +161,7 @@ public class Controller {
         executorService.execute(task);
         executorService.shutdown();
     }
+
 
 
     public void createIdea(){

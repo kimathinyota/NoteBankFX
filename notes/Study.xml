@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Study>
 <StudyPlan><ID>lower</ID><Name>Learning</Name><Description>A simple plan with plenty of time for deep learning of notes. Best started weeks before an exam.</Description><MSL>0.2</MSL><IPS>0.2</IPS><Score>1.0</Score></StudyPlan>
-<StudyPlan><ID>medium</ID><Name>Exam Cure</Name><Description>A kinda intense study plan. Best completed plenty of time before an exam for reviewing (not learning) your notes. </Description><MSL>0.4</MSL><IPS>0.4</IPS><Score>1.0</Score></StudyPlan>
+<StudyPlan><ID>medium</ID><Name>Exam Cure</Name><Description>A kinda intense study plan. Best completed plenty of time before an exam for reviewing (not learning) your notes.</Description><MSL>0.4</MSL><IPS>0.4</IPS><Score>1.0</Score></StudyPlan>
 <StudyPlan><ID>higher</ID><Name>Kid to Einstein ASAP</Name><Description>An incredibly intense study plan.  Best suited for a level 100 procrastinator who barely has a week of study before the exam.</Description><MSL>0.6</MSL><IPS>0.6</IPS><Score>1.0</Score></StudyPlan>
+<StudySession>
+<Name>Computer Vision</Name><StudyPlanID>higher</StudyPlanID><LastTime><Hour>21</Hour><Minute>2</Minute></LastTime><StartDate>1571829514247</StartDate><EndDate>1573599572227</EndDate>
+<Ideas></Ideas>
+<Dynamic>
+<Subject>Computer vision</Subject>
+</Dynamic><ActivationInformation>
+<TimeStart>1573582891402</TimeStart><TimeEnd>1573599572227</TimeEnd><NumberOfSessions>2</NumberOfSessions><TimePerSession>10032495</TimePerSession><CurrentSession>0</CurrentSession>
+<IdeasPerSet>27</IdeasPerSet>
+<Ideas><IdeasNumber>27</IdeasNumber><CalculatedNumberOfIdeas>44</CalculatedNumberOfIdeas><Idea>b24744b3-58db-434d-9968-b7a8133047b8</Idea><Idea>74591a72-f60d-495c-b0b2-4cff40eed2cf</Idea><Idea>089a78e6-acff-4af7-9018-ccb32b178024</Idea><Idea>6e1d3b52-cdeb-40fc-8b55-42270d0baa07</Idea><Idea>40dd93f3-7cee-4d6d-94f1-e1f2f4272426</Idea><Idea>969911e5-18ed-452a-8925-f12f92f87aec</Idea><Idea>952355ab-bf20-4b7a-b4b4-aee0000f0cf3</Idea><Idea>7cfee8dc-3ae4-422e-b4be-67a593e8a008</Idea><Idea>b7a8cb07-b6fc-4378-84ba-985a677fd39e</Idea><Idea>e37d7fa1-f590-4630-b1ba-f4e2f39e8f46</Idea><Idea>4494f60a-f4e3-4e5e-820b-43cbb03341f4</Idea><Idea>ef9c82b0-a42b-4757-b617-4c21068742fe</Idea><Idea>ae4eb5d9-ec49-4234-b289-ad3d9c01aa53</Idea><Idea>3a867ec4-f967-4005-b285-3dde6740396e</Idea><Idea>9aefa16a-5dc5-4f46-a8bd-6aae92af2785</Idea><Idea>aaf97316-e4ae-4251-b399-61e81b7a9ee4</Idea><Idea>dec9774f-a5fd-4dfa-957d-c8dda25a0a47</Idea><Idea>6c429d32-2818-4c75-b825-399c6d393461</Idea><Idea>ce6ec926-4600-456c-8ba3-4e76b6d45c00</Idea><Idea>41605e88-e4ed-439a-92bc-1abdcc9184ec</Idea><Idea>07aa69aa-2019-4752-bb6e-e51225b9700d</Idea><Idea>02ebaec4-6aa9-468e-8945-38323754c00b</Idea><Idea>d53cd57f-db12-4005-88b3-70631169e855</Idea><Idea>e8da6bfb-4a56-4729-90a5-e922048f838c</Idea><Idea>b2013c0d-afb7-4095-8b0c-38abb96a1d82</Idea><Idea>66751573-75a5-4247-8a3d-772a63de7793</Idea><Idea>0eb28320-ff89-4257-8743-b48c304b5a3b</Idea></Ideas>
+</ActivationInformation>
+</StudySession>
+<StudySession>
+<Name>Cloud Computing</Name><StudyPlanID>higher</StudyPlanID><LastTime><Hour>21</Hour><Minute>0</Minute></LastTime><StartDate>1571586096589</StartDate><EndDate>1573599617584</EndDate>
+<Ideas></Ideas>
+<Dynamic>
+<Subject>Cloud Computing</Subject>
+</Dynamic><ActivationInformation>
+<TimeStart>1573582891458</TimeStart><TimeEnd>1573599617584</TimeEnd><NumberOfSessions>2</NumberOfSessions><TimePerSession>10059675</TimePerSession><CurrentSession>0</CurrentSession>
+<IdeasPerSet>6</IdeasPerSet>
+<Ideas><IdeasNumber>6</IdeasNumber><CalculatedNumberOfIdeas>9</CalculatedNumberOfIdeas><Idea>0146a753-032c-4616-beaf-717596d9b23a</Idea><Idea>eb78aa80-55d0-45f3-8327-2d4fe8805c37</Idea><Idea>1a0b0344-079b-4063-aa73-24a773a22c0b</Idea><Idea>d0e69974-0d99-4cba-9084-2c237838eacc</Idea><Idea>095c841d-9942-495d-8fd1-787ca3332bdc</Idea><Idea>d1017d25-8879-4564-8d88-d4f972acb355</Idea></Ideas>
+</ActivationInformation>
+</StudySession>
+<StudySession>
+<Name>Another test</Name><StudyPlanID>lower</StudyPlanID><LastTime><Hour>18</Hour><Minute>54</Minute></LastTime><StartDate>1571593277220</StartDate><EndDate>1574185252196</EndDate>
+<Ideas></Ideas>
+<Dynamic>
+<Subject>Test Subject</Subject>
+</Dynamic></StudySession>
 </Study>

@@ -61,15 +61,14 @@ public class IdeasPageController implements RefreshNotesController, RefreshIdeas
             return;
         }
 
-
         displayDetails(idea);
 
         Task<SelectNoteForIdeaLists> listsTask = new Task<SelectNoteForIdeaLists>() {
             @Override
             protected SelectNoteForIdeaLists call() throws Exception {
-                SelectNoteForIdeaLists l = new SelectNoteForIdeaLists(convertPromptTypeHashMap(idea.getNotesMap(), idea.getFinalNote()),idea);
-                l.setFirstList(model.getAllNotes());
-                return l;
+            SelectNoteForIdeaLists l = new SelectNoteForIdeaLists(convertPromptTypeHashMap(idea.getNotesMap(), idea.getFinalNote()),idea);
+            l.setFirstList(model.getAllNotes());
+            return l;
             }
         };
 
@@ -91,8 +90,11 @@ public class IdeasPageController implements RefreshNotesController, RefreshIdeas
     public static HashMap<Note, Pair<Boolean,Boolean>> convertPromptTypeHashMap(HashMap<Note,Boolean> a, Note finalNote){
         HashMap<Note,Pair<Boolean,Boolean>> b = new HashMap<>();
         for(Note n: a.keySet() ){
-            if(n!=null)
-                b.put( n,  new Pair( n.equals(finalNote), a.get(n) )) ;
+
+            if(n!=null) {
+                System.out.println(n + " - " +  new Pair(n.equals(finalNote), a.get(n)));
+                b.put(n, new Pair(n.equals(finalNote), a.get(n)));
+            }
         }
         return b;
     }
@@ -151,7 +153,7 @@ public class IdeasPageController implements RefreshNotesController, RefreshIdeas
 
         //new Task<Integer>()
         if(lastIdea!=null){
-            this.lastIdea = model.getIdea(lastIdea.getID());
+            //this.lastIdea = model.getIdea(lastIdea.getID());
             displayDetails(lastIdea);
         }
 

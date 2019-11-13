@@ -5,7 +5,7 @@ import Code.Controller.home.notes.filters.FilterSettings;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.util.Pair;
+
 import org.xml.sax.SAXException;
 
 import javax.imageio.ImageIO;
@@ -34,7 +34,8 @@ public class Model {
     private List<Subject> subjects;
     private String notesDirectory,rootDirectory,subjectDirectory;
 
-
+    HashMap<String,Idea> ideas;
+    HashMap<String,Topic> topics;
 
     public void addRefreshNotesController(RefreshNotesController controller){
         refreshNotesControllers.add(controller);
@@ -52,47 +53,36 @@ public class Model {
         refreshDataControllers.add(controller);
     }
 
-
     public void addRefreshStudyController(RefreshStudyController controller){
         refreshStudyControllers.add(controller);
     }
 
-
     public void refreshNotes(){
-
         for(RefreshNotesController c: refreshNotesControllers){
             c.refreshNotes();
         }
-
     }
 
     public void refreshData(){
-
         for(RefreshDataController c: refreshDataControllers){
             c.refreshData();
         }
-
     }
 
     public void refreshIdeas(){
-
         for(RefreshIdeasController c: refreshIdeasControllers){
             c.refreshIdeas();
         }
-
         saveIdea();
     }
 
     public void refreshSubjects(){
-
         for(RefreshSubjectsController c: refreshSubjectsControllers){
             c.refreshSubjects();
 
         }
-
         saveSubject();
     }
-
 
     public void modify(StudySession session, List<String> topics, List<String> subjects, List<String> ideas, Date first, Date end, StudyPlan plan, int hours, int mins ){
 
@@ -116,7 +106,6 @@ public class Model {
 
     }
 
-
     public void refreshStudy(){
 
         for(RefreshStudyController c: refreshStudyControllers){
@@ -125,10 +114,6 @@ public class Model {
 
         saveStudy();
     }
-
-
-
-
 
     /*
         @TODO: Consider why you have chosen to go for a look-up approach (less memory, more CPU) instead of referencing
@@ -204,14 +189,18 @@ public class Model {
         if(!file.exists()){
             return null;
         }
+
         if (ImageIO.read(file) != null) {
             return new Image(path);
         } else if (file.getPath().contains(".pdf")) {
-            return new Book(path);
+            Book book = new Book(path);
+            return book;
         } else if (file.getPath().contains(".txt")) {
             return new Text(path);
         }
+
         return null;
+
     }
 
     /**
@@ -239,10 +228,10 @@ public class Model {
         List<Note> notes = new ArrayList<>();
         for(String path: getNotesPaths(subject)){
             try{
-
                 Note found = fromPath(path);
+
                 if(found!=null){
-                    notes.add(fromPath(path));
+                    notes.add(found);
                 }
 
 
@@ -252,8 +241,6 @@ public class Model {
         }
         return notes;
     }
-
-
 
     String recoveryPath;
 
@@ -307,7 +294,6 @@ public class Model {
 
     }
 
-
     private void trimRecoveryFolder(){
         while (this.folders.size()>maxNumberOfBackupFolders) {
             String path = folders.get(0);
@@ -327,10 +313,6 @@ public class Model {
 
         folder.delete();
     }
-
-
-
-
 
     /**
      * Gets root Topic in Topics.xml found in input rootDirectory
@@ -355,6 +337,7 @@ public class Model {
                 return allTopics;
             }catch (IOException e2){
             }
+
             return null;
         }
     }
@@ -364,7 +347,7 @@ public class Model {
      * @param name
      * @param originalFilePath
      */
-    public void addBook(String name, String originalFilePath){
+    public Book addBook(String name, String originalFilePath){
         try{
             Book b = new Book(name,originalFilePath,notesDirectory);
             this.getSubject("All").add(b.getPath().toString());
@@ -377,9 +360,11 @@ public class Model {
                     refreshNotes();
                 }
             });
+            return b;
         }catch (IOException e){
 
         }
+        return null;
     }
 
     /**
@@ -438,7 +423,6 @@ public class Model {
 
         return text;
 
-
     }
 
     public boolean doesNoteNameExist(String name, String fileExtension){
@@ -457,46 +441,6 @@ public class Model {
     public Text getText(String path){
         try{
             return new Text(path);
-        }catch (IOException e){
-            return null;
-        }
-    }
-
-    /**
-     * Gets book note given path
-     * @param path
-     * @return
-     */
-    public Book getBook(String path){
-        try{
-            return new Book(path);
-        }catch (IOException e){
-            return null;
-        }
-    }
-
-    /**
-     * Gets book note given path and number of pages
-     * @param path
-     * @param specifyPage
-     * @return
-     */
-    public Book getBook(String path, String specifyPage){
-        try{
-            return new Book(path,specifyPage);
-        }catch (IOException e){
-            return null;
-        }
-    }
-
-    /**
-     * Get image note given path
-     * @param path
-     * @return
-     */
-    public Image getImage(String path){
-        try{
-            return new Image(path);
         }catch (IOException e){
             return null;
         }
@@ -544,52 +488,13 @@ public class Model {
         }
     }
 
-    /**
-     * Allows user to update an Idea (or create one)
-     * @param ideaID
-     * @param notes
-     * @param keyWords
-     * @param prompt
-     * @param promptType
-     * @param finalNote
-     * @return
-     */
-    public Idea updateIdea(String ideaID,HashMap<Note,Boolean>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
 
-        Idea idea = root.findIdea(ideaID);
+    public Idea updateIdea(Idea idea, String prompt, List<String>keyWords, PromptType promptType){
+        //Idea idea = root.findIdea(ideaID);
 
-
-        if(idea==null){
-            idea = new Idea(ideaID,notes,keyWords,prompt,promptType,finalNote);
-            this.root.add(idea);
-
-        }else{
-            idea.initialise(notes,keyWords,prompt,promptType,finalNote); ;
-        }
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-
-            }
-        });
-
-        return idea;
-    }
-
-    public Idea updateIdea(String ideaID, String prompt, List<String>keyWords, PromptType promptType){
-        Idea idea = root.findIdea(ideaID);
-
-        if(idea==null){
-            idea = new Idea(ideaID,new HashMap<>(),keyWords,prompt,promptType,null);
-            this.root.add(idea);
-
-        }else{
-            idea.setKeyWords(keyWords);
-            idea.setPromptType(promptType);
-            idea.setPrompt(prompt);
-        }
+        idea.setKeyWords(keyWords);
+        idea.setPromptType(promptType);
+        idea.setPrompt(prompt);
 
         Platform.runLater(new Runnable() {
             @Override
@@ -601,20 +506,6 @@ public class Model {
         return idea;
     }
 
-    public void addNoteToIdea(Idea i, Note note){
-        Idea idea = root.findIdea(i.getID());
-        if(idea==null){
-            return;
-        }
-        idea.addNote(note);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-
-            }
-        });
-    }
 
     private Idea addIdea(String ideaID,HashMap<Note,Boolean>notes, List<String>keyWords, String prompt, PromptType promptType, Note finalNote) {
         Idea idea = new Idea(ideaID,notes,keyWords,prompt,promptType,finalNote);
@@ -622,6 +513,8 @@ public class Model {
             idea.addNote(new SubjectNote(getCurrentSubject()));
         }
         this.root.add(idea);
+        this.ideas.put(idea.getID(),idea);
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -639,84 +532,10 @@ public class Model {
         return addIdea(prompt,null,keyWords,promptType,null);
     }
 
-    /**
-     * Allows user to update a Topic (or create one)
-     * @param topicID
-     * @param name
-     * @return
-     */
-    public Topic updateTopic(String topicID,String name){
-        Topic topic = root.findTopic(topicID);
-        if(topic==null)
-            return null;
-        topic.setName(name);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-            }
-        });
-        return topic;
-    }
-
-    public Topic updateTopic(String topicID,String name,List<Idea> ideas, List<Topic>topics){
-        Topic topic = root.findTopic(topicID);
-        if(topic==null)
-            return null;
-        topic.initialise(name,ideas,topics);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-            }
-        });
-        return topic;
-    }
-
-    public Topic updateTopic(String topicID, String name, List<Idea> ideas){
-        Topic topic = root.findTopic(topicID);
-        if(topic==null)
-            return null;
-        topic.initialise(name,ideas,null);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-            }
-        });
-        return topic;
-    }
-
-    public Topic updateTopic(String topicID, List<Topic>topics, String name){
-        Topic topic = root.findTopic(topicID);
-        if(topic==null)
-            return null;
-        topic.initialise(name,null,topics);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-            }
-        });
-        return topic;
-    }
-
-    public Topic addTopic(String name,List<Idea> ideas, List<Topic>topics){
-        Topic topic = new Topic(name);
-        topic.initialise(name,ideas,topics);
-        this.root.add(topic);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-            }
-        });
-        return topic;
-    }
-
     public Topic addTopic(String name){
         Topic topic = new Topic(name);
         this.root.add(topic);
+        this.topics.put(topic.getID(),topic);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -724,14 +543,6 @@ public class Model {
             }
         });
         return topic;
-    }
-
-    public Topic addTopic(String name, List<Idea> ideas){
-        return addTopic(name,ideas,null);
-    }
-
-    public Topic addTopic(List<Topic>topics, String name){
-       return addTopic(name,null,topics);
     }
 
     public Object remove(String ID){
@@ -779,6 +590,8 @@ public class Model {
     public Idea remove(Idea idea){
         Idea i = root.delete(idea);
         quizzes.remove(i);
+        ideas.remove(idea.getID());
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -797,6 +610,7 @@ public class Model {
     public Topic remove(Topic topic){
         List<Idea> ideas = topic.getAllIdeas();
         Topic t = root.delete(topic);
+        topics.remove(topic.getID());
         List<Idea> rootIdeas = root.getAllIdeas();
         for(Idea i: ideas){
             if(!rootIdeas.contains(i)){
@@ -819,16 +633,13 @@ public class Model {
      * @param newLocation
      */
     public void move(Idea node, Topic newLocation){
-        Idea i = root.findIdea(node);
-        Topic loc = root.findTopic(newLocation);
 
-        ////System.out.println("Move " + i + " to " + newLocation);
+        Topic loc = topics.get(newLocation.getID());
 
-        if(i==null || loc==null){
-            return;
-        }
-        root.delete(i);
-        loc.add(i);
+        root.delete(node);
+
+        loc.add(node);
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -836,6 +647,63 @@ public class Model {
             }
         });
     }
+
+
+    public void addAndMoveIdeasToTopic(List<Object> ideasTopics, String newTopic){
+        Topic topic = new Topic(newTopic);
+        this.root.add(topic);
+        this.topics.put(topic.getID(),topic);
+
+        for(Object o: ideasTopics){
+            this.root.delete(o);
+            topic.add(o);
+        }
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
+
+    }
+
+
+    public void move( Topic topic,List<Object> ideasTopics){
+        topic = topics.get(topic.getID());
+        if(topic==null)
+            return;
+
+        for(Object o: ideasTopics){
+            this.root.delete(o);
+            topic.add(o);
+        }
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
+
+    }
+
+
+    public void addAndMoveTopicToTopic(String newTopic, Topic topic){
+        Topic top = topics.get(topic.getID());
+        Topic t = new Topic(newTopic);
+        this.topics.put(t.getID(),t);
+        top.add(t);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                refreshIdeas();
+            }
+        });
+
+    }
+
 
 
     public void remove(Note note){
@@ -874,8 +742,8 @@ public class Model {
             Topic t = topics.get(i);
             for(Object o: topicsIdeas){
                 if(o instanceof Topic ){
-                    Topic p = root.findTopic((Topic) o);
-                    if(p!=null && p.contains(t)){
+                    Topic p = this.topics.get(((Topic) o).getID());
+                    if(p!=null && p.contains(t) ){
                         remove.add(t);
                     }
 
@@ -890,8 +758,11 @@ public class Model {
     }
 
     public void move(Topic node, Topic newLocation){
-        Topic t = root.findTopic(node);
-        Topic loc = root.findTopic(newLocation);
+        //Topic t = root.findTopic(node);
+        //Topic loc = root.findTopic(newLocation);
+/*
+        Topic t = node;
+        Topic loc = newLocation;
 
         if(node==null || loc==null){
 
@@ -899,50 +770,35 @@ public class Model {
         }
 
         root.delete(t);
-        loc.add(t);
+        loc.add(t);*/
+
+        root.delete(node);
+        //root.findTopic(newLocation).add(node);
+
+        Topic top = topics.get(newLocation.getID());
+        top.add(node);
+        System.out.println("TT Move: "+ node +" "+top);
+
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 refreshIdeas();
             }
         });
+
     }
 
-    public void move(Object object, Topic newLocation){
-        if(object instanceof Idea){
-            move((Idea) object, newLocation);
-        }else if(object instanceof Topic){
-            move((Topic) object, newLocation);
-        }
-    }
+
 
     public boolean containsTopicOfName(String topic){
         return root.containsTopicOfName(topic);
     }
 
-    public void move(List<Object>ideasOrTopics, Topic newLocation){
-
-        Topic loc = root.findTopic(newLocation);
-        if(loc==null)
-            return;
-
-        for(Object o: ideasOrTopics){
-            if(o instanceof Topic || o instanceof Idea){
-                root.delete(o);
-                loc.add(o);
-            }
-        }
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-            }
-        });
-    }
-
     public void disband(Topic topic){
-        Topic loc = root.findTopic(topic);
+
+        Topic loc = topics.get(topic.getID());
+
         if(loc==null)
             return;
 
@@ -953,17 +809,17 @@ public class Model {
         Topic parent = root.findParent(loc);
         root.delete(loc);
 
-        move(children,parent);
+        move(parent,children);
 
     }
 
     public Topic parent(Idea idea){
-        Topic root = filterTopicByCurrentSubject();
+        //Topic root = filterTopicByCurrentSubject();
         return root.findParent(idea);
     }
 
     public Topic parent(Topic topic){
-        Topic root = filterTopicByCurrentSubject();
+        //Topic root = filterTopicByCurrentSubject();
         return root.findParent(topic);
     }
 
@@ -1003,22 +859,6 @@ public class Model {
         return false;
     }
 
-    /**
-     * Adds subject to model. Returns false if subject can't be added
-     * @param subject: name of the subject
-     * @return
-     */
-    public boolean addSubject(String subject){
-        if(subjectExists(subject)) return false;
-        this.subjects.add(new Subject(subject));
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshSubjects();
-            }
-        });
-        return true;
-    }
 
     /**
      * Adds subject to model. Returns false if subject can't be added
@@ -1063,22 +903,6 @@ public class Model {
         return null;
     }
 
-    public void addNoteToSubject(String subjectName, Note note){
-        Subject subject = getSubject(subjectName);
-        if(!subject.memberOf(note)){
-            getSubject(subjectName).add(note.getPath().toString());
-        }
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshSubjects();
-                refreshNotes();
-            }
-        });
-
-    }
-
     public Subject getSubject(String name){
         for(Subject s: subjects){
             if(s.getName().equals(name)){
@@ -1088,27 +912,6 @@ public class Model {
         return null;
     }
 
-    /**
-     * Adds subject to model. Returns false if subject can't be added
-     * @param notePaths: notes paths associated with the subject
-     * @param subject: name of the subject
-     * @return
-     */
-    public boolean addSubject(List<String>notePaths,String subject){
-        if(subjectExists(subject)) return false;
-        Subject sub = new Subject(subject);
-        for(String p: notePaths){
-            sub.add(p);
-        }
-        this.subjects.add(sub);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshSubjects();
-            }
-        });
-        return true;
-    }
 
     /**
      * Gets all subjects a note is a member of
@@ -1129,26 +932,7 @@ public class Model {
         return root.getIdeas(note);
     }
 
-    public void limitNoteToTheseSubjects(Note note, List<Subject>subjects){
-        for(Subject s: this.getAllSubjects()){
-            if(!s.getName().equals("All")){
-                if(subjects.contains(s)){
-                    //note should be added to subject
-                    s.add(note);
-                }else{
-                    s.remove(note);
-                }
-            }
-        }
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshSubjects();
-            }
-        });
-    }
-
+    /*
     public Topic filterTopicBySubject(Subject currentSubject){
         if(currentSubject.getName().equals("All")){
             return root;
@@ -1164,31 +948,7 @@ public class Model {
     public Topic filterTopicByCurrentSubject(){
         return filterTopicBySubject(currentSubject);
     }
-
-    public void limitNoteToTheseIdeas(Note note, HashMap<Idea, Pair<String,Boolean>>map){
-        for(Idea i: this.getAllIdeas()){
-            if(map.containsKey(i)){
-                i.setFinalNote(null);
-                //note should be added to idea
-                Idea idea = root.findIdea(i);
-                Pair<String,Boolean> p = map.get(i);
-                idea.addNote(note,p.equals("Prompt"));
-                if(p.getValue()){
-                    idea.setFinalNote(note);
-                }
-            }else {
-                root.findIdea(i).removeNote(note);
-            }
-        }
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-            }
-        });
-    }
-
+*/
     public void removeFromSubject(String subject, Note note){
         Subject s = getSubject(subject);
         if(s==null) return;
@@ -1322,7 +1082,6 @@ public class Model {
 
     public void saveStudy(){
         try {
-            
             saveXML(study.toXML(),quizDirectory ,"Study");
         }catch (Exception e){
             e.printStackTrace();
@@ -1352,9 +1111,25 @@ public class Model {
     int maxNumberOfBackupFolders;
 
 
+    NotesInformation notesInformation;
 
+    public void saveNotesInformation(){
+        try {
+            saveXML(notesInformation.toXML(),notesDirectory,"NotesInformation");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
+    public void addNumberOfPages(Note note, int numberOfPages){
+        notesInformation.addNumberOfPages(note.getPath().toString(),numberOfPages);
+        saveNotesInformation();
+    }
 
+    public Integer getNumberOfPages(Note note){
+        Integer yo =  notesInformation.getNumberOfPages(note.getPath().toString());
+        return yo;
+    }
 
     public void initialise(String notesDirectory, String settingsDirectory) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException{
         this.notesDirectory = notesDirectory;
@@ -1368,31 +1143,13 @@ public class Model {
             settingsFolder.mkdirs();
         }
 
-
         this.rootDirectory = settingsDirectory;
         this.subjectDirectory = settingsDirectory;
         this.quizDirectory = settingsDirectory;
         this.studyDirectory = settingsDirectory;
 
-/*
-        File study = (new File(studyDirectory + File.separator + "Study.xml"));
-        if(!study.exists()){
-            this.study =
-        }
-        File topic = (new File(rootDirectory + File.separator + "Topics.xml"));
-        if(!topic.exists()){
-            topic.createNewFile();
-        }
-        File quizzes = (new File(quizDirectory + File.separator + "Quizzes.xml"));
-        if(!quizzes.exists()){
-            quizzes.createNewFile();
-        }
-        File subjects = (new File(subjectDirectory + File.separator + "Subjects.xml"));
-        if(!subjects.exists()){
-            subjects.createNewFile();
-        }
-
-        */
+        this.topics = new HashMap<>();
+        this.ideas = new HashMap<>();
 
 
         this.maxNumberOfBackupFolders = 4;
@@ -1421,16 +1178,22 @@ public class Model {
             }
         }
 
-
-
         trimRecoveryFolder();
 
+        try{
 
+            notesInformation = NotesInformation.fromXML(notesDirectory + File.separator + "NotesInformation.xml");
 
+        }catch (Exception e){
 
+            notesInformation = new NotesInformation();
 
+            saveNotesInformation();
+
+        }
 
         Subject allSubject = new Subject("All");
+
         try{
             allSubject.setPaths(Model.getPaths(this.getAllNotes(notesDirectory)));
         }catch (Exception e){
@@ -1447,7 +1210,6 @@ public class Model {
         }catch (IOException e){
             e.printStackTrace();
 
-
             if(new File(subjectDirectory + File.separator + "Subjects.xml").exists()){
                 String date = new SimpleDateFormat("HH-mm-dd-MM-yyyy").format(new Date());
                 addToRecoveryFolder(subjectDirectory,"Subjects","Subjects-" + date,".xml", "corrupted");
@@ -1458,6 +1220,10 @@ public class Model {
         }
 
         this.root = getRoot(rootDirectory);
+
+        this.root.getAllIdeas().forEach(idea -> {ideas.put(idea.getID(),idea);});
+        this.root.getTopics().forEach(topic -> {topics.put(topic.getID(),topic);});
+
 
         try {
             this.quizzes = new Quizzes(quizDirectory + File.separator + "Quizzes.xml");
@@ -1473,14 +1239,12 @@ public class Model {
             this.quizzes = new Quizzes();
             saveQuiz();
 
-
         }
 
 
         try {
 
             this.study = Study.fromXML(studyDirectory + File.separator + "Study.xml");
-
 
         }catch (Exception e){
 
@@ -1548,7 +1312,8 @@ public class Model {
 
     public void removeFromIdea(Idea idea, Note note){
 
-        Idea i = root.findIdea(idea.getID());
+        //Idea i = root.findIdea(idea.getID());
+        Idea i = idea;
 
         if(i==null){
             return;
@@ -1560,13 +1325,14 @@ public class Model {
 
     }
 
-
-
     public void addToIdea(Idea idea, Note note, boolean isFinalNote, boolean isPrompt){
 
         if(idea==null || note==null)
             return;
-        Idea i = root.findIdea(idea.getID());
+
+        //Idea i = root.findIdea(idea.getID());
+
+        Idea i = idea;
 
         if(i==null){
             return;
@@ -1583,8 +1349,8 @@ public class Model {
                 refreshIdeas();
             }
         });
-    }
 
+    }
 
     public void addIdeaToSubject(Idea idea, Subject subject){
         Idea i = getIdea(idea.getID());
@@ -1629,7 +1395,6 @@ public class Model {
 
     }
 
-
     private List<Note> listOfNodesPresentInBothIdeaAndSubject(Idea idea, Subject subject){
         List<Note> notes = new ArrayList<>();
 
@@ -1642,7 +1407,6 @@ public class Model {
         return notes;
     }
 
-
     public List<Note> listOfNotesPresentInBothIdeaAndSubject(Idea idea, Subject subject){
         Idea i = getIdea(idea.getID());
         Subject s = getSubject(subject.getName());
@@ -1653,24 +1417,6 @@ public class Model {
         return listOfNodesPresentInBothIdeaAndSubject(idea,subject);
 
 
-    }
-
-    public Topic addToTopic(Object object, Topic topic){
-        Topic t = root.findTopic(topic);
-        if(t==null || !(object instanceof Idea || object instanceof Topic )){
-            return null;
-        }
-
-        Object o = (object instanceof Idea ? root.findIdea((Idea) object) : root.findTopic((Topic) object));
-        t.add(o);
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                refreshIdeas();
-            }
-        });
-        return t;
     }
 
     Quizzes quizzes;
@@ -1696,11 +1442,13 @@ public class Model {
     }
 
     public Idea getIdea(String uniqueID){
-        return root.findIdea(uniqueID);
+        return ideas.get(uniqueID);
+        //return root.findIdea(uniqueID);
     }
 
     public Topic getTopic(String uniqueID){
-        return root.findTopic(uniqueID);
+        return topics.get(uniqueID);
+        //return root.findTopic(uniqueID);
     }
 
     public void setCurrentSubject(String subject){
@@ -1738,11 +1486,9 @@ public class Model {
         });
     }
 
-
     public boolean isRootSubject(){
         return currentSubject.getName().equals("All");
     }
-
 
     public void remove(StudySession session){
         study.remove(session);
@@ -1782,11 +1528,9 @@ public class Model {
         return study.findPlan(id);
     }
 
-
     public List<StudyPlan> getStudyPlans(){
         return this.study.getStudyPlans();
     }
-
 
     public double getScoreIncrement(){
         return quizzes.getScoreIncrement();
@@ -1805,7 +1549,6 @@ public class Model {
         this.folders = new ArrayList<>();
 
     }
-
 
     public boolean studySessionNameExists(String name){
 

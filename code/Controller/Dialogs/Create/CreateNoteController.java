@@ -1,9 +1,11 @@
 package Code.Controller.Dialogs.Create;
 import Code.Controller.Controller;
+import Code.Model.Book;
 import Code.Model.Model;
 import Code.Model.Note;
 import Code.Model.Text;
 import Code.View.View;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,6 +14,7 @@ import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
 import org.apache.commons.lang3.StringUtils;
 import java.io.File;
+import java.util.Collections;
 
 
 /**
@@ -161,7 +164,18 @@ public class CreateNoteController{
         window.setVisible(false);
 
         if(loadedFile.getPath().contains("pdf") ){
-            model.addBook(Name.getText(),loadedFile.getPath());
+            Book book = model.addBook(Name.getText(),loadedFile.getPath());
+            Task<String> task = new Task<String>() {
+                @Override
+                protected String call() throws Exception {
+                    if(book!=null){
+                        book.setupForViewing();
+                        model.addNumberOfPages(book,book.getMaximumNumberOfPages());
+                    }
+                    return null;
+                }
+            };
+            Controller.executeTask(task);
         }else{
             model.addImage(Name.getText(),loadedFile.getPath());
         }

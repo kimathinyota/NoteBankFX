@@ -18,9 +18,11 @@ public class UtilisedNotesListTask extends Task<ObservableList<Note>> {
     @Override
     protected ObservableList<Note> call() throws Exception {
         try{
+
             ObservableList<Note> underusedNotesCopy = FXCollections.observableArrayList(underusedNotes.subList(0,underusedNotes.size()));
             ObservableList<Note> allNotesCopy = FXCollections.observableArrayList(allNotes.subList(0,allNotes.size()));
             ObservableList<Note> copy = FXCollections.observableArrayList(model.getHighlyUsedNotes(filterSettings,underusedNotesCopy,allNotesCopy));
+            //ObservableList<Note> copy = allNotesCopy;
             return copy;
         }catch (Exception e){
             e.printStackTrace();
