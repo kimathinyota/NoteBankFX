@@ -1,0 +1,6 @@
+<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Arial">The human vision system
+can be modelled in three parts:&nbsp;</font></p><p><ol><li><font face="Arial"><font color="#336633"><b>the eye</b> </font>− this is a <b>physical</b> model since much of its function can be determined by
+pathology;&nbsp;</font></li><li><font face="Arial"><b><font color="#1a4d1a">the neural system</font></b> − this is an <b>experimental </b>model since the function can be modelled,
+but not determined precisely;</font></li><li><font face="Arial"><b><font color="#1a4d1a">processing by the brain</font></b> − this is a <b>psychological</b> model since we cannot access or
+model such processing directly, but only determine behaviour by experiment and
+inference.</font></li></ol></p></body></html>

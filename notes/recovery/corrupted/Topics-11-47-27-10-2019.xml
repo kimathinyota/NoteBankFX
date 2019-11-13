@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Topic>
+<Name>All</Name>
+<ID>b1bd1b6a-5cf8-4f8c-8b97-521289720b8c</ID>
+<Idea>
+<Prompt>What is cloud computing</Prompt>
+<ID>d0e69974-0d99-4cba-9084-2c237838eacc</ID>
+<PromptType>Question</PromptType>
+<KeyWords>pay for use,on demand,utility,consumption and delivery model</KeyWords>
+<PromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Overview-L1.pdf</Path><Pages>2,3</Pages></Book></Note>
+</PromptNotes>
+<NonPromptNotes>
+</NonPromptNotes>
+<SubjectNotes>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Compare and contrast traditional hosting to cloud computing</Prompt>
+<ID>1a0b0344-079b-4063-aa73-24a773a22c0b</ID>
+<PromptType>Question</PromptType>
+<KeyWords>self service,server,release management,long payback,storage,change management,utilisation</KeyWords>
+<PromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Overview-L1.pdf</Path><Pages>5</Pages></Book></Note>
+</PromptNotes>
+<NonPromptNotes>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Cloud Computing</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Define Image and Instances and explain how storage is handled</Prompt>
+<ID>eb78aa80-55d0-45f3-8327-2d4fe8805c37</ID>
+<PromptType>KeyWords</PromptType>
+<KeyWords>template,ephemeral storage,running machines,virtual machines,persistant,volume storage,bigger instances higher cost,terminate</KeyWords>
+<PromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Overview-L1.pdf</Path><Pages>7,8,9,10,11</Pages></Book></Note>
+</PromptNotes>
+<NonPromptNotes>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Cloud Computing</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>How is networking handled with instances</Prompt>
+<ID>d1017d25-8879-4564-8d88-d4f972acb355</ID>
+<PromptType>Question</PromptType>
+<KeyWords>temporary,virtual IP address,instance IP address</KeyWords>
+<PromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Overview-L1.pdf</Path><Pages>12,13</Pages></Book></Note>
+</PromptNotes>
+<NonPromptNotes>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Cloud Computing</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>How is security handled within instances</Prompt>
+<ID>095c841d-9942-495d-8fd1-787ca3332bdc</ID>
+<PromptType>Question</PromptType>
+<KeyWords>public key,private key</KeyWords>
+<PromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Overview-L1.pdf</Path><Pages>14</Pages></Book></Note>
+</PromptNotes>
+<NonPromptNotes>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Cloud Computing</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Responsibilities of a cloud provider</Prompt>
+<ID>41c6a25c-5018-4e93-94e8-39c70afe7e49</ID>
+<PromptType>Question</PromptType>
+<KeyWords>virtulisation,self service,standardisation,automation,service management,infrastructure</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Overview-L1.pdf</Path><Pages>15,16</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Cloud Computing</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>List some self service interfaces</Prompt>
+<ID>0146a753-032c-4616-beaf-717596d9b23a</ID>
+<PromptType>Question</PromptType>
+<KeyWords>image,cloud console,create,destroy,programming API</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Overview-L1.pdf</Path><Pages>17</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Cloud Computing</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Explain the other transforms (see prompt)</Prompt>
+<ID>02ebaec4-6aa9-468e-8945-38323754c00b</ID>
+<PromptType>Question</PromptType>
+<KeyWords>discrete cosine transform, complex arithmetic,hartely transform,convolution,compression</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Topic>
+<Name>Human Vision</Name>
+<ID>52e463b1-de47-4eb5-8c1b-ece97a173662</ID>
+<Idea>
+<Prompt>Synthetic Image</Prompt>
+<ID>d53cd57f-db12-4005-88b3-70631169e855</ID>
+<PromptType>KeyWords</PromptType>
+<KeyWords>artificial,performance,evaluating</KeyWords>
+<PromptNotes>
+<Note><Image><Path>/Users/faithnyota1/NoteBankFX/src/notes/Synithesised-Images-Examples.png</Path></Image></Note>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Use-of-synthesised-images.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What is the purpose of computer and human vision</Prompt>
+<ID>0eb28320-ff89-4257-8743-b48c304b5a3b</ID>
+<PromptType>Question</PromptType>
+<KeyWords>spatial data,interpret,dimension</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Computer-and-human-vision-purpose.txt</Path></Text></Note>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Eye-and-Human-Vision-L1.pdf</Path><Pages>2</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Explain whether computer vision should aim to replicate the human eye</Prompt>
+<ID>ae4eb5d9-ec49-4234-b289-ad3d9c01aa53</ID>
+<PromptType>Question</PromptType>
+<KeyWords>no,pick and choose,limited understanding,improve,desirable,human eye,properties</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Compare computer and human vision with determining distance</Prompt>
+<ID>66751573-75a5-4247-8a3d-772a63de7793</ID>
+<PromptType>Question</PromptType>
+<KeyWords>absolute,relative</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/comparison-of-human-and-computer-vision-with-distance.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Modelling human vision</Prompt>
+<ID>089a78e6-acff-4af7-9018-ccb32b178024</ID>
+<PromptType>Statement</PromptType>
+<KeyWords>eye,psychological,experimental,processing by the brain,physical,neural system</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/modelling-human-vision.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Explain how the Eye works</Prompt>
+<ID>6e1d3b52-cdeb-40fc-8b55-42270d0baa07</ID>
+<PromptType>Question</PromptType>
+<KeyWords>choroid,iris,selective,cornea,retina,ciliary muscles,objects of interest,fovea,focus,high acuity</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/workings-of-the-eye.txt</Path></Text></Note>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Eye-and-Human-Vision-L1.pdf</Path><Pages>2,3</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Define sensors and describe rods and cones</Prompt>
+<ID>7b2ed762-b47d-4b35-9a35-e25f1960ca93</ID>
+<PromptType>Question</PromptType>
+<KeyWords>scotopic,colour,photopic,5,photochemical,alpha,black and white,beta,gamma</KeyWords>
+<PromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Rods-and-cones-considerations.txt</Path></Text></Note>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Sensor-definition.txt</Path></Text></Note>
+<Note><Image><Path>/Users/faithnyota1/NoteBankFX/src/notes/Rods-and-cones.png</Path></Image></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Describe mach bands via explaining diagram (see prompts)</Prompt>
+<ID>eba8389c-e2a7-4783-beb7-f6b27fd11b33</ID>
+<PromptType>Question</PromptType>
+<KeyWords>different intensity,differentiate objects,introduced by eye,boundaries,field of view</KeyWords>
+<PromptNotes>
+<Note><Image><Path>/Users/faithnyota1/NoteBankFX/src/notes/mach-band-diagram.png</Path></Image></Note>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Image><Path>/Users/faithnyota1/NoteBankFX/src/notes/Explanation-of-mach-band-diagram.png</Path></Image></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Modelling input neural signals preprocessing</Prompt>
+<ID>aaf97316-e4ae-4251-b399-61e81b7a9ee4</ID>
+<PromptType>Statement</PromptType>
+<KeyWords>wavelength dependent receptors,weight,logarithmic,filtering</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Neural-system-vision.pdf</Path><Pages>1</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Processing of output neural signals</Prompt>
+<ID>c7e5d8e9-0e7c-4fa6-bb1b-ec004f559712</ID>
+<PromptType>Statement</PromptType>
+<KeyWords>patterns,links,occipital cortex,associative cortex</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Neural-system-vision.pdf</Path><Pages>2</Pages></Book></Note>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/EVALUATED-Processing-of-output-neural-signals-01_32_18-17_10_2019.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Describe the implications of prompt images</Prompt>
+<ID>3a867ec4-f967-4005-b285-3dde6740396e</ID>
+<PromptType>Question</PromptType>
+<KeyWords>boundary,zollner,detection,static,ebbinghaus,illusion,colour perception,edge,disk,benham,physics,dynamic,psychological explanation</KeyWords>
+<PromptNotes>
+<Note><Image><Path>/Users/faithnyota1/NoteBankFX/src/notes/illusion-images.png</Path></Image></Note>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Neural-system-vision.pdf</Path><Pages>2,3</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+</Topic>
+<Topic>
+<Name>Image Formation</Name>
+<ID>358421fc-ce59-4769-b2e0-50244d783ccf</ID>
+<Idea>
+<Prompt>Greyscale image as a matrix</Prompt>
+<ID>07aa69aa-2019-4752-bb6e-e51225b9700d</ID>
+<PromptType>Statement</PromptType>
+<KeyWords>2D array,brightness,matrix of pixels,N × N m-bit pixels,pixel</KeyWords>
+<PromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Greyscale-image-considerations.txt</Path></Text></Note>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Formation.pdf</Path><Pages>1,2</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Forming colour images</Prompt>
+<ID>e8da6bfb-4a56-4729-90a5-e922048f838c</ID>
+<PromptType>Statement</PromptType>
+<KeyWords>24 bit,colour mapping,CMYK,reduce memory,true colour,single image plane,index,palette,RGB,reduced quality</KeyWords>
+<PromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Forming-colour-images-considerations.txt</Path></Text></Note>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/EVALUATED-Forming-colour-images-02_05_59-17_10_2019.txt</Path></Text></Note>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/EVALUATED-Forming-colour-images-02_00_46-17_10_2019.txt</Path></Text></Note>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Formation.pdf</Path><Pages>2,3</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Describe the effect of differing image resolution</Prompt>
+<ID>969911e5-18ed-452a-8925-f12f92f87aec</ID>
+<PromptType>Question</PromptType>
+<KeyWords>coarsely quantised,processing time,blocky,spatial detail</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Formation.pdf</Path><Pages>4</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+</Topic>
+<Topic>
+<Name>Fourier Transform</Name>
+<ID>bd2ba1c0-d596-4c3a-aeec-55d00c60a4b4</ID>
+<Idea>
+<Prompt>Fourier transform</Prompt>
+<ID>dec9774f-a5fd-4dfa-957d-c8dda25a0a47</ID>
+<PromptType>KeyWords</PromptType>
+<KeyWords>angular frequency,mapping,complex variable,component frequencies,continuous signal,signal</KeyWords>
+<PromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Considerations-on-the-fourier-transform.txt</Path></Text></Note>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Formation.pdf</Path><Pages>5</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Reconstructing a signal from its fourier transform</Prompt>
+<ID>4494f60a-f4e3-4e5e-820b-43cbb03341f4</ID>
+<PromptType>Statement</PromptType>
+<KeyWords>amounts specified by fourier transform,time domain signal,collect sinusoidal signals,originally transformed signal,reconstruction by integration,frequencies</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Formation.pdf</Path><Pages>6,7</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Magnitude and phase and inverse fourier transform</Prompt>
+<ID>ce6ec926-4600-456c-8ba3-4e76b6d45c00</ID>
+<PromptType>KeyWords</PromptType>
+<KeyWords>amount,imaginary,timing,complex number,frequency component,real</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Formation-L2.pdf</Path><Pages>15,16,17</Pages></Book></Note>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Formation.pdf</Path><Pages>8</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Transform pair</Prompt>
+<ID>b24744b3-58db-434d-9968-b7a8133047b8</ID>
+<PromptType>KeyWords</PromptType>
+<KeyWords>time domain,frequency domain,relationship</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Transform-pair.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Topic>
+<Name>Dimensional Fourier Transform</Name>
+<ID>aac75579-0957-4e3f-926d-a3019d054dfc</ID>
+<Idea>
+<Prompt>What will the fourier transform of prompt vertical image show ?</Prompt>
+<ID>8f04ae4e-a9a4-44f6-b88d-fafd8e9c8ad5</ID>
+<PromptType>Question</PromptType>
+<KeyWords>zero,horizontal,spatial frequencies,vertical variation,vertical</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>12</Pages></Book></Note>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/fourier-transform-of-vertical-lines-image.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote><Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>12</Pages></Book></Note></FinalNote>
+</Idea>
+<Topic>
+<Name>Two Dimensional</Name>
+<ID>f6254680-382b-41b1-b71d-b710307484e3</ID>
+<Idea>
+<Prompt>Two dimensional transform</Prompt>
+<ID>fb5cd906-eb5c-4859-af3f-e4fa8b9fa6a8</ID>
+<PromptType>Question</PromptType>
+<KeyWords>2D spatial location,spatial frequencies,horizontal and vertical,transform of pixels,Fourier transform of images</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/2D-fourier-transform.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote><Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/2D-fourier-transform.txt</Path></Text></Note></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Inverse 2D Fourier transform</Prompt>
+<ID>41605e88-e4ed-439a-92bc-1abdcc9184ec</ID>
+<PromptType>Question</PromptType>
+<KeyWords></KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>12</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote><Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>12</Pages></Book></Note></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Applications of 2D Fourier Transform</Prompt>
+<ID>fc9f7323-f993-4974-aac8-ff92dd9ed582</ID>
+<PromptType>Question</PromptType>
+<KeyWords>coding,recognition,understanding,speeding up algorithms,analysis,representation</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling-L3.pdf</Path><Pages>21</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote><Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling-L3.pdf</Path><Pages>21</Pages></Book></Note></FinalNote>
+</Idea>
+</Topic>
+<Topic>
+<Name>One Dimensional</Name>
+<ID>c7e6a077-dd7b-4b09-9b2d-6e7ff44d7773</ID>
+<Idea>
+<Prompt>Inverse DFT</Prompt>
+<ID>ef9c82b0-a42b-4757-b617-4c21068742fe</ID>
+<PromptType>Question</PromptType>
+<KeyWords>close approximation,original signal,frequency component</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>10</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote><Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>10</Pages></Book></Note></FinalNote>
+</Idea>
+<Idea>
+<Prompt>One dimensional transform</Prompt>
+<ID>7d35ed17-dd7c-40a9-9c03-4dd22b773053</ID>
+<PromptType>Question</PromptType>
+<KeyWords>data,continuous frequencies,nyquist sampling rate,continuous fourier transform,sample,discrete version,set of samples</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>8</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>dc component</Prompt>
+<ID>6c429d32-2818-4c75-b825-399c6d393461</ID>
+<PromptType>Question</PromptType>
+<KeyWords>sinewave,average value of samples,lowest frequency component,zero frequency</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+</Topic>
+</Topic>
+<Topic>
+<Name>Transform Operations</Name>
+<ID>9530d365-aec8-4219-951c-e0b30cd582a1</ID>
+<Idea>
+<Prompt>Shift Invariance</Prompt>
+<ID>9aefa16a-5dc5-4f46-a8bd-6aae92af2785</ID>
+<PromptType>Question</PromptType>
+<KeyWords>phase,position of features,magnitude,decomposition into spatial frequency</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>16</Pages></Book></Note>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Shift-invariance.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote><Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Shift-invariance.txt</Path></Text></Note></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Rotation with fourier transform</Prompt>
+<ID>131f7c02-f657-4f2c-94d2-7027836d29de</ID>
+<PromptType>Statement</PromptType>
+<KeyWords>fourier transform of an image rotates</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Rotation-within-fourier-transform.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote><Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Rotation-within-fourier-transform.txt</Path></Text></Note></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Filtering within fourier transform</Prompt>
+<ID>74591a72-f60d-495c-b0b2-4cff40eed2cf</ID>
+<PromptType>Statement</PromptType>
+<KeyWords>filter,frequency component,changing the transform</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Filtering-within-fourier-transform.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote><Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Filtering-within-fourier-transform.txt</Path></Text></Note></FinalNote>
+</Idea>
+</Topic>
+</Topic>
+<Topic>
+<Name>Image Sampling</Name>
+<ID>745afa48-de6e-4dca-9508-3525f337ab22</ID>
+<Idea>
+<Prompt>Describe the other transform pair for Cosine waves and Gaussian and Delta functions</Prompt>
+<ID>952355ab-bf20-4b7a-b4b4-aee0000f0cf3</ID>
+<PromptType>Question</PromptType>
+<KeyWords>infinite,equal amount,all frequencies,2 points</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Other-transform-pairs.txt</Path></Text></Note>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>4</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Use prompt image to describe the process of sampling</Prompt>
+<ID>40dd93f3-7cee-4d6d-94f1-e1f2f4272426</ID>
+<PromptType>Question</PromptType>
+<KeyWords>instantaneous values,continuous signal</KeyWords>
+<PromptNotes>
+<Note><Image><Path>/Users/faithnyota1/NoteBankFX/src/notes/Sampling-function-transform-pair.png</Path></Image></Note>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/sampling-process.txt</Path></Text></Note>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>5,7</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What is Nyquist sampling and what is the optimal sampling frequency according to it ?</Prompt>
+<ID>b2013c0d-afb7-4095-8b0c-38abb96a1d82</ID>
+<PromptType>Question</PromptType>
+<KeyWords>twice,maximum frequency,signal</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>5,7</Pages></Book></Note>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Nyquist-sampling-criterion.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Aliasing</Prompt>
+<ID>7cfee8dc-3ae4-422e-b4be-67a593e8a008</ID>
+<PromptType>KeyWords</PromptType>
+<KeyWords>sampling,signal,obtaining,wrong</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Aliasing-definition.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Why is the corruption of higher frequencies of less importance in sampling than the corruption of lower frequencies ?</Prompt>
+<ID>e37d7fa1-f590-4630-b1ba-f4e2f39e8f46</ID>
+<PromptType>Question</PromptType>
+<KeyWords>lower frequencies,global,local,more information</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Lower-and-Higher-frequency-information-in-images.txt</Path></Text></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote><Note><Text><Path>/Users/faithnyota1/NoteBankFX/src/notes/Lower-and-Higher-frequency-information-in-images.txt</Path></Text></Note></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Can we capture all information from high frequencies</Prompt>
+<ID>6a33fdfc-5608-4e7f-bc06-66610bfa508e</ID>
+<PromptType>Question</PromptType>
+<KeyWords>limited,depth of focus,imaging system</KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Explain the problems of sampling with wheel</Prompt>
+<ID>b7a8cb07-b6fc-4378-84ba-985a677fd39e</ID>
+<PromptType>Question</PromptType>
+<KeyWords></KeyWords>
+<PromptNotes>
+</PromptNotes>
+<NonPromptNotes>
+<Note><Book><Path>/Users/faithnyota1/NoteBankFX/src/notes/Image-Sampling.pdf</Path><Pages>8</Pages></Book></Note>
+</NonPromptNotes>
+<SubjectNotes>
+<Note><Subject><Name>Computer vision</Name></Subject></Note>
+</SubjectNotes>
+<FinalNote></FinalNote>
+</Idea>
+</Topic>
+<Topic>
+<Name>TripAdvisor Interview Preperation</Name>
+<Idea>
+<Prompt>Tell me about yourself</Prompt>
+<ID>72095017-3734-4942-86a1-0b76e1ad4b4d</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What are you currently working on now?</Prompt>
+<ID>31dc70eb-8aa4-401d-9fdd-fc6c06e0260b</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What are your strengths and weaknesses?</Prompt>
+<ID>63aa3727-298f-483d-ad50-c99a088cffac</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What accomplishments are you most proud of?</Prompt>
+<ID>57cf0660-65a3-4e9c-9d98-796e3c13911d</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Do you work better under pressure or with time to plan and organise?</Prompt>
+<ID>c5fd5452-496c-44e4-bd2b-40e0860250f6</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Why are you interested in this internship?</Prompt>
+<ID>981f570d-eb4c-4705-8554-c039f9360592</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Why should we consider you for this internship?</Prompt>
+<ID>8b3ba83c-b507-485b-afe8-1ab572bc7a8d</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>How would your friends describe you?</Prompt>
+<ID>b1495435-2181-4d43-b71b-23926855b620</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What do you about TripAdvisor?</Prompt>
+<ID>ff32ccd9-7339-4ff9-8c33-42641aacc1da</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What three words would you choose to best describe yourself?</Prompt>
+<ID>05e2a7b1-4268-4df8-94fd-623be73d13fd</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Why did you choose your major?</Prompt>
+<ID>b039015a-b9cc-4270-a180-fbdf6aefe7be</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Give an example of how you've dealt with conflict with another person</Prompt>
+<ID>93b0c099-6f8f-42f6-ae64-8f7a04ec8818</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Tell me a story either personal or professional that paints a picture of you</Prompt>
+<ID>5698dea3-f414-40a7-9742-e011020dd293</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Describe a situation where your judgment proved to be an invaluable contribution to a team</Prompt>
+<ID>ee2ea2b2-0a03-47b6-9b3a-2488a8faf8e4</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>How do you handle meeting tight deadlines?</Prompt>
+<ID>c1f0243c-d1db-43fc-8ebc-b0e1592fbf2a</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Give an example of how you set goals and achieve them.</Prompt>
+<ID>76843589-8d41-4c87-9dc8-e00cf13faf43</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What do you do when your schedule is interrupted? Give an example of how you handle this.</Prompt>
+<ID>b53b10d6-1939-421d-94f6-2c68212ee6c0</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Give an example of how you work on a team.</Prompt>
+<ID>69e603f1-891a-4e0b-9ee5-1c18783726a4</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Can you remember a time when you handled a difficult situation with another student or co-worker? What did you do?</Prompt>
+<ID>c345f910-422d-43f2-898e-c5e1fc2cbd6e</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Share an example of how youâve been able to motivate team members.</Prompt>
+<ID>d0874af6-7c61-49ea-b78c-14761d0bdf75</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Describe how you would handle a difficult relationship that you felt was holding you back on the job.</Prompt>
+<ID>cdfdfbc8-e3fb-4c35-a2ca-7debf51fc1ee</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>How much do you know about TripAdvisor company culture and values?</Prompt>
+<ID>eb6710a4-7d8b-4d32-bb6a-d48802554d8e</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What Skills Do You Want to Gain From This Experience, and What Skills Can You Offer Us?</Prompt>
+<ID>1d816a34-78d1-4607-9d3d-f80d6b6c845b</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>What are your expectations?</Prompt>
+<ID>dd2b6e6d-e73c-48f5-a628-9fa97d9195f5</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Who is the most important person to you?</Prompt>
+<ID>b93daa2b-01fd-4e15-a47a-eeea02f823b1</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+<Idea>
+<Prompt>Why are you interested in working for TripAdvisor?</Prompt>
+<ID>1a37f862-8afd-4641-95be-487fcbaffe6c</ID>
+<IsPromptKeyWord>true</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes></PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+</Topic>
+<Topic>
+<Name>UNKNOWN PLEAAASE HELP</Name>
+<Idea>
+<Prompt>Shortcomings of Compare and Set</Prompt>
+<ID>6ac9f3cd-e4b6-4fbf-938c-03368da1d37b</ID>
+<IsPromptKeyWord>false</IsPromptKeyWord>
+<KeyWords></KeyWords>
+<PromptNotes><Note>
+<Image>
+<Name>compare-and-set-shortcomings-q</Name>
+<Path>/Users/faithnyota1/eclipse-workspace/Note Bank/notes/compare-and-set-shortcomings-q.52.30.png</Path>
+</Image>
+</Note>
+</PromptNotes><NonPromptNotes></NonPromptNotes><FinalNote></FinalNote>
+</Idea>
+
+</Topic>
+</Topic>

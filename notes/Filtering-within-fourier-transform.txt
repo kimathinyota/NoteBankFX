@@ -1,0 +1,1 @@
+<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Arial"><b>Filtering:</b> Fourier transform of a signal gives access to frequency components. If you filter the image, some frequency components will also be filtered changing the transform.</font></p></body></html>

@@ -1,0 +1,1 @@
+<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Lucida Grande"><b>Globally</b> lower frequencies carry more information whereas <b>locally</b> the higher frequencies contain more information</font></p><p><font face="Lucida Grande">Corruption of higher frequency information is of less importance</font></p></body></html>

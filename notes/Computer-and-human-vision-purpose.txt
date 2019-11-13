@@ -1,0 +1,2 @@
+<html dir="ltr"><head></head><body contenteditable="true"><p><font size="4" face="Arial">The purpose of both computer and human vision systems is to interpret
+spatial data, data that is indexed by more than one dimension</font></p></body></html>

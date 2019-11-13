@@ -1,0 +1,1 @@
+<html dir="ltr"><head></head><body contenteditable="true"><p><ul><li><span style="font-family: Arial;"><font size="4">Only the horizontal spatial frequencies</font></span></li><li><span style="font-family: Arial;"><font size="4">Vertical spatial frequencies are zero since there is no vertical variation along the y-axis</font></span></li></ul></p></body></html>
