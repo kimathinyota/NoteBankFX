@@ -209,7 +209,7 @@ public class MainWindowController implements RefreshSubjectsController {
         controller = Controller.getInstance();
         controller.setMainWindowController(this);
 
-        String notesDirectory = "/Users/faithnyota1/NoteBankFX/src/notes";
+        String notesDirectory = "/Users/faithnyota1/NoteBankFX/notes";
         try {
 
             /* Assumes Subject.xml, Topics.xml and Notes are all stored in the same directory */

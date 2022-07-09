@@ -1,1 +1,0 @@
-<html dir="ltr"><head></head><body contenteditable="true"><p><font face="Arial" size="5"><b>Aliasing</b>: The process of obtaining the wrong signal through sampling. Interpolated signal is an alias of its proper form.</font></p></body></html>

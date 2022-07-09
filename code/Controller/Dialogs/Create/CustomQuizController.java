@@ -271,7 +271,7 @@ class SpecialSelectLists<T extends ObservableObject> extends SelectObjectsLists<
     protected void refresh(){
         ArrayList<T> firstList = new ArrayList<>() ;
         for(T o: listOne){
-            if(o.toString().contains(search.getText())){
+            if(o.toString().toLowerCase().contains(search.getText().toLowerCase())){
                 firstList.add(o);
             }
         }

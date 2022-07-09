@@ -1,3 +1,0 @@
-<html dir="ltr"><head></head><body contenteditable="true"><p><ul><li><font size="4" face="Arial">Human vision can distinguish relative distance well, but is poor for absolute
-distance.&nbsp;</font></li><li><span style="font-family: Arial; font-size: large;">Prove by placing one finger from each hand in front of face and determine if you can give the exact distance between them (absolute) and then check if you can tell they are apart after placing them really close together (relative).</span></li><li><font size="4" face="Arial">Computer vision is good for estimating absolute
-difference, but with relatively poor resolution for relative difference</font></li></ul></p></body></html>

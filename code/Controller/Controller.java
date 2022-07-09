@@ -148,6 +148,9 @@ public class Controller {
 
 
     public void displayNotes(List<Note>notes, ViewMode mode){
+        if(notes.isEmpty()){
+            return;
+        }
         this.viewNotesController.displayNotes(notes, mode);
 
     }

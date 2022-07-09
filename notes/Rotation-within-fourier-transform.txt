@@ -1,1 +1,0 @@
-<html dir="ltr"><head></head><body contenteditable="true"><p><span style="font-family: Arial;">The Fourier transform of an image rotates when the source image rotates.&nbsp;</span></p><p><span style="font-family: Arial;">WHY: Decomposition into spatial frequency reflects the orientation of features within the imae</span></p></body></html>

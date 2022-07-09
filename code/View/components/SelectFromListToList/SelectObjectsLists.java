@@ -44,12 +44,16 @@ public abstract class SelectObjectsLists<T extends ObservableObject> extends Gri
     protected void refresh(){
         ArrayList<T> firstList = new ArrayList<>() ;
         for(T o: listOne){
-            if(o.getDisplayName().contains(search.getText())){
+            if(o.getDisplayName().toLowerCase().replaceAll("[^A-Za-z0-9]","").contains(search.getText().toLowerCase().replaceAll("[^A-Za-z0-9]",""))){
                 firstList.add(o);
             }
         }
         this.firstList.setItems(FXCollections.observableArrayList(firstList));
+
+
+
     }
+
 
     public ListView getSecondListView(){
         return secondList;
@@ -93,6 +97,7 @@ public abstract class SelectObjectsLists<T extends ObservableObject> extends Gri
             refresh();
         }
         });
+
     }
 
 }

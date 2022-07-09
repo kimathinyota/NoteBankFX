@@ -191,7 +191,7 @@ public class CreateNoteController{
         return tabPane.getSelectionModel().getSelectedItem().getText().contains("Text");
     }
 
-    public static FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+    public static FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png","*.gif","*.jpeg");
     public static FileChooser.ExtensionFilter bookFilter = new FileChooser.ExtensionFilter("PDF Files", "*.pdf");
 
     Controller controller;

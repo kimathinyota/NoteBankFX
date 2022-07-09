@@ -36,6 +36,7 @@ class AddIdeasListCellFactory extends AddListCellFactory<Idea> {
     public AddIdeasListCellFactory(ListView<Idea> listOne, ListView<Idea> listTwo, Note note) {
         super(listOne, listTwo);
         this.note = note;
+
     }
 
     @Override

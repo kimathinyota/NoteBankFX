@@ -328,7 +328,7 @@ public class QuizPageController {
     }
 
     private String highlightAndBold(String htmlText, String keywords){
-        if(!htmlText.contains(keywords))
+        if(!htmlText.toLowerCase().contains(keywords.toLowerCase()))
             return htmlText;
 
         List<Pair<String,Boolean>> list = new ArrayList<>();
@@ -362,7 +362,7 @@ public class QuizPageController {
             if(p.getValue().booleanValue()==true){
                 content += p.getKey();
             }else{
-                content += p.getKey().replaceAll(keywords,"<font color=\"#17fc26\"><b>"+keywords+"</b></font>");
+                content += p.getKey().replaceAll("(?i)"+keywords,"<font color=\"#17fc26\"><b>"+keywords+"</b></font>");
             }
         }
 
@@ -391,7 +391,7 @@ public class QuizPageController {
         String content = this.responseEditor.getHtmlText();
         for(String keyword: keywords){
             content = highlightAndBold(content,keyword);
-            if(!responseEditor.getHtmlText().contains(keyword)){
+            if(!responseEditor.getHtmlText().toLowerCase().contains(keyword.toLowerCase())){
                 temp += ("<strike>" + keyword + "</strike>") + "," ;
             }
         }

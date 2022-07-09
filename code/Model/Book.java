@@ -81,8 +81,11 @@ public class Book extends Note {
 			return pageToImage.get(pageNumber);
 		}
 
+		System.out.println("Document: " + document);
+
 		if(document==null)
 			document =  PDDocument.load(new File(this.getPath().toString()), MemoryUsageSetting.setupTempFileOnly());
+
 
 		if(pdfRenderer==null){
 			pdfRenderer = new PDFRenderer(document);
@@ -133,16 +136,31 @@ public class Book extends Note {
 	}
 
 	public void stopViewing(){
+
+		System.out.println("Stop Viewing");
+		try{
+			if(document!=null)
+				document.close();
+
+			pdfRenderer = null;
+			document = null;
+
+		}catch (IOException e){
+
+		}
+
+
+		/*
 		pageToImage.clear();
 
 		try{
-			if(document==null)
+			if(document!=null)
 				document.close();
-			document=null;
 
 		}catch (IOException e){
 			e.printStackTrace();
 		}
+		*/
 	}
 
 	public /*synchronized*/ boolean isLoaded(int page){
@@ -160,7 +178,9 @@ public class Book extends Note {
 
 	public Book(String path, String specifyPages) throws IOException{
 		super(path,NoteType.Book );
+
 		if(!new File(path).exists()) {
+			System.out.println(path);
 			throw new IOException();
 		}
 		this.specifyPages = (specifyPages.contains("null") ? null : specifyPages);
